@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "miahoot-jandot": {
+      "hosting": {
+        "Miahoot": [
+          "miahoot-jandot"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "miahoot-jandot"
+  }
+}
