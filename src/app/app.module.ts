@@ -27,6 +27,7 @@ import { EditorComponent } from './editor/editor.component';
 import { PresentatorComponent } from './presentator/presentator.component';
 import { ParticipantComponent } from './participant/participant.component';
 import { ResultComponent } from './result/result.component';
+import { QuestionService } from './question.service';
 
 
 @NgModule({
@@ -61,7 +62,7 @@ import { ResultComponent } from './result/result.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [QuestionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
