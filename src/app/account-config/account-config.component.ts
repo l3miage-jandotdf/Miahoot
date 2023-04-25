@@ -38,11 +38,12 @@ export class AccountConfigComponent {
       })
     ).toPromise();
   }
-
+  /*
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     const path = `users/${this.userId}/profile-picture/${file.name}`;
     const task = this.storage.upload(path, file);
     // TODO: update user profile picture URL in Firestore
   }
+  */
 }
