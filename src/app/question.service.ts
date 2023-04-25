@@ -12,7 +12,7 @@ export class QuestionService {
 
   constructor(private http: HttpClient) { }
 
-  getQuestion(id: string): Observable<Question> {
+  getQuestion(id: number): Observable<Question> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<Question>(url);
   }
@@ -22,7 +22,7 @@ export class QuestionService {
     return this.http.put(url, question);
   }
 
-  deleteQuestion(id: string): Observable<any> {
+  deleteQuestion(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete(url);
   }
