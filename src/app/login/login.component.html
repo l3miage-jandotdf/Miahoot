@@ -1,6 +1,7 @@
-<p></p>
+<body style="background-color:whitesmoke;">
+  <p></p>
 <mat-toolbar>
-  <img src="../../assets/logo.png" width="90" height="90"/>
+  <img src="../../assets/logo.png" width="90" height="90" *ngIf="!(isLoggedIn$ | async) && !isAuthenticating"/>
     <div class="mat-toolbar-row">
       <div *ngIf="!(isLoggedIn$ | async) && !isAuthenticating" class="mat-toolbar-spacer">
         <button class="mat-raised-button mat-primary" (click)="login()">Se connecter avec Google</button>
@@ -9,16 +10,23 @@
         <img [src]="currentUser!.photoURL" width="30">
         {{currentUser!.displayName}}
         <button (click)="this.goToPage('/accountConfig')">Paramètres</button>
-          <button class="mat-raised-button mat-primary" (click)="logout()">Se déconnecter</button>
-        <app-role></app-role>
+          <button class="LogoutBouton" (click)="logout()">Se déconnecter</button>
       </div>
       <div *ngIf="isAuthenticating">
         <mat-spinner [diameter]="30"></mat-spinner>
       </div>
     </div>
   </mat-toolbar>
+
+  <div *ngIf="isLoggedIn$ | async">
+  <img class="img" src="../../assets/logo.png" width="90" height="90" />
+  <p classe="p">Bienvenue sur Miahoot pour apprendre en s'amusant ! </p>
+  <p><button class="ButtonQuizz">New Quizz</button></p>
+  <p><button class="ButtonQuizz">My Quizz</button></p>
+  </div>
   <!--<div *ngIf="miahootUser">
     <h1>{{miahootUser.name}}</h1>
   </div>-->
-  
+
 <router-outlet></router-outlet>
+</body>
