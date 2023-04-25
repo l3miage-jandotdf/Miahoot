@@ -20,13 +20,27 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
+import { RoleComponent } from './role/role.component';
+import { CreatorComponent } from './creator/creator.component';
+import { EditorComponent } from './editor/editor.component';
+import { PresentatorComponent } from './presentator/presentator.component';
+import { ParticipantComponent } from './participant/participant.component';
+import { ResultComponent } from './result/result.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     AccueilComponent,
-    AccountConfigComponent
+    AccountConfigComponent,
+    LoginComponent,
+    RoleComponent,
+    CreatorComponent,
+    EditorComponent,
+    PresentatorComponent,
+    ParticipantComponent,
+    ResultComponent
   ],
   imports: [
     BrowserModule,
