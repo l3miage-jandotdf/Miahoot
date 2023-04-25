@@ -5,4 +5,16 @@
 .mat-raised-button  {
   background-color: blue;
   color: white;
+  border-radius: 10px;
+}
+
+mat-toolbar {
+  background-color: lightgray;
+  height: 90px;
+}
+
+
+
+.mat-toolbar-row{
+  height: 90;
 }
