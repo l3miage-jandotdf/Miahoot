@@ -12,6 +12,8 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./account-config.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
+
 export class AccountConfigComponent {
   nouveauNom : string = "";
   fg? : FormGroup<{
@@ -21,7 +23,7 @@ export class AccountConfigComponent {
   }>;
   constructor(private auth : Auth, private fireStore : Firestore){}
 
-  
+
 
 
   updateName(newName: string): Promise<unknown> {
