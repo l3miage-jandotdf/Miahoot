@@ -1,1 +1,3 @@
 <p>role works!</p>
+<div *ngIf="concepteur"><button (click)="updateRole()">Devenir Presentateur</button></div>
+<div *ngIf="!concepteur"><button (click)="updateRole()">Devenir Concepteur</button></div>
