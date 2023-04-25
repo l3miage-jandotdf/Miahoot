@@ -14,7 +14,9 @@
         <mat-spinner [diameter]="30"></mat-spinner>
     </div>
 </mat-toolbar>
-
+<div *ngIf="miahootUser">
+    <h1>{{miahootUser.name}}</h1>
+</div>
 <router-outlet></router-outlet>
 
 

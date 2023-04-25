@@ -1,1 +1,9 @@
-<p>account-config works!</p>
+<form [formGroup]="fg!"(ngSubmit)="updateName(nouveauNom)">
+    <mat-form-field>
+      <mat-label>Nom</mat-label>
+      <input matInput [(ngModel)]="fg?.value!.name" formControlName="name"  required>
+      <mat-label>Photo de Profil</mat-label>
+      <input type="file" formControlName="photoFile" (change)="onFileSelected($event)">
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Enregistrer</button>
+</form>
