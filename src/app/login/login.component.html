@@ -1,4 +1,4 @@
-
+<p></p>
 <mat-toolbar>
     <div class="mat-toolbar-row">
       <div *ngIf="!(isLoggedIn$ | async) && !isAuthenticating" class="mat-toolbar-spacer">
@@ -8,7 +8,7 @@
         <img [src]="currentUser!.photoURL" width="30">
         {{currentUser!.displayName}}
         <button (click)="this.goToPage('/accountConfig')">Paramètres</button>
-        <button (click)="logout()">Se déconnecter</button>
+          <button class="mat-raised-button mat-primary" (click)="logout()">Se déconnecter</button>
         <app-role></app-role>
       </div>
       <div *ngIf="isAuthenticating">

@@ -1,1 +1,11 @@
-<p>creator works!</p>
+<h2>Bienvenue ! Vous pouvez créer un nouveau Miahoot</h2>
+<div *ngFor="let q of questions">
+  <h3>{{ q.question }}</h3>
+  <div *ngFor="let a of q.reponses">
+    <label>
+      <input type="radio" name="{{ q.question }}" [value]="a" />
+      {{ a }}
+    </label>
+  </div>
+</div>
+
