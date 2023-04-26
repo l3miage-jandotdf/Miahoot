@@ -1,1 +1,17 @@
-<p>presentator works!</p>
+<div id="presenter">
+    <div class="idQuestion">{{currentQuestion?.id}}</div>
+    <div class="question">{{ currentQuestion?.text }}</div>
+    <div class="answers">
+      <div *ngFor="let answer of currentQuestion?.answers; let i = index">
+        <input type="radio" name="answer" id="answer{{i}}" [value]="answer">
+        <label for="answer{{i}}">{{ answer }}</label>
+      </div>
+    </div>
+    <div id="navigation">
+      <button mat-raised-button color="primary" class="prev" (click)="showPrevQuestion()">Précédent</button>
+      <button mat-raised-button color="primary" class="next" (click)="showNextQuestion()">Suivant</button>
+      <button mat-raised-button color="primary" class="valid" (click)="validateAnswer()">Valider</button>
+    </div>
+  </div>
+  
+  
