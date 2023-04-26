@@ -4,11 +4,13 @@ import { AccountConfigComponent } from './account-config/account-config.componen
 import { AccueilComponent } from './accueil/accueil.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { CreatorComponent } from './creator/creator.component';
+import { RoleComponent } from './role/role.component';
 
 const routes: Routes = [
 {path:'', component:AccueilComponent},
 {path:"accountConfig", component:AccountConfigComponent},
 {path:"creator", component:CreatorComponent},
+{path:"role", component:RoleComponent}
 /*{ path: '**', component: NotFoundComponent }*/];
 
 @NgModule({

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Observable, from } from 'rxjs';
 
 @Component({
   selector: 'app-creator',

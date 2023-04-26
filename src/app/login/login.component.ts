@@ -35,11 +35,12 @@ export class LoginComponent implements OnInit {
         this.currentUser = u;
         return !!u})
       );
-
+      this.pageCreation=false;
     }
   }
 
   ngOnInit(): void {
+
     this.dataService.getMiahootUser$().subscribe(user => {
       this.miahootUser = user;
       console.log ("y'a de l'action");
@@ -61,11 +62,17 @@ export class LoginComponent implements OnInit {
   }
 
   async logout() {
+    this.pageCreation=false;
     return await signOut(this.auth);
   }
 
   goToPage(pageName:string){
+    console.log(pageName);
     this.router.navigate([`${pageName}`]);
+  }
+
+  updatePage() : void{
+    this.pageCreation=true;
   }
 
 
