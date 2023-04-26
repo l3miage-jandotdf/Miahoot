@@ -1,0 +1,26 @@
+.question-container {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+h2 {
+    font-size: 2em;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 1em 0;
+  }
+  li {
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+    background-color: #f3f3f3;
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+    transition: background-color 0.2s ease-in-out;
+  }
+  li:hover {
+    background-color: #ccc;
+  }
