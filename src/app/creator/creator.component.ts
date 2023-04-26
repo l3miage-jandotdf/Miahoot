@@ -10,7 +10,7 @@ import { Observable, from } from 'rxjs';
 })
 export class CreatorComponent {
   question !: string;
-  answers ! : string[];
+  answers  : string[] = [''];
   correctAnswer !: number;
 
 
@@ -36,4 +36,15 @@ export class CreatorComponent {
     const url = 'url du backend';
     return this.http.post(url, data);
   }
+
+
+  addOption(): void {
+    this.answers.push('');
+  }
+
+  removeOption(index: number): void {
+    this.answers.splice(index, 1);
+  }
+
+ 
 }

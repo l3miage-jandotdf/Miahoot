@@ -1,4 +1,3 @@
-<p>hello<p>
 <h2>Bienvenue ! Vous pouvez créer un nouveau Miahoot</h2>
 <form (ngSubmit)="submitMiahoot()">
     <div class="form-group">
@@ -6,12 +5,17 @@
       <input type="text" class="form-control" id="question" [(ngModel)]="question" name="question" required>
     </div>
 
-    <div class="form-group">
-      <label for="answers">Réponses</label>
-      <input type="text" class="form-control" id="answer1" [(ngModel)]="answers[0]" name="answers" required>
-      <input type="text" class="form-control" id="answer2" [(ngModel)]="answers[1]" name="answers" required>
-      <input type="text" class="form-control" id="answer3" [(ngModel)]="answers[2]" name="answers" required>
-      <input type="text" class="form-control" id="answer4" [(ngModel)]="answers[3]" name="answers" required>
+    <div class="options-container">
+      <div class="option" *ngFor="let answer of answers; let i=index">
+        <div>
+        <label for="answer{{i+1}}">Option {{i+1}}:</label>
+        <input type="text" class="form-control answer-input" id="answer{{i+1}}" [(ngModel)]="answers[i]" name="answers" required>
+      </div>
+      <div class="col-md-2 d-flex align-items-center justify-content-end">
+        <button type="button" class="btn btn-danger" (click)="removeOption(i)">Supprimer</button>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="addOption()">Ajouter une option</button>
+    </div>
     </div>
     <div class="form-group">
       <label>Réponse correcte</label>

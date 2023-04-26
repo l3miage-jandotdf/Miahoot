@@ -1,0 +1,27 @@
+.answer-input {
+    display: block;
+  }
+
+  
+  .option {
+    margin-bottom: 10px;
+  }
+  
+  .btn {
+    margin-left: 10px;
+  }
+  
+  :host {
+    .row {
+      margin-bottom: 1rem;
+    }
+    button {
+      margin-left: 1rem;
+    }
+    .col-md-2 {
+      display: flex;
+    }
+    .col-md-2 .btn-danger {
+      align-items: center;
+    }
+  }
