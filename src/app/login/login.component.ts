@@ -67,6 +67,9 @@ export class LoginComponent implements OnInit {
   }
 
   goToPage(pageName:string){
+    if(pageName=="/creator"){
+      this.pageCreation=true;
+    }
     console.log(pageName);
     this.router.navigate([`${pageName}`]);
   }
