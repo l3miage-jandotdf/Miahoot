@@ -19,12 +19,13 @@ export class LoginComponent implements OnInit {
   public readonly user$?: Observable<User | null>;
   public currentUser? : User | null;
   miahootUser: MiahootUser | undefined;
+  pageCreation = false;
 
-  
+
   public readonly isLoggedIn$?: Observable<boolean>;
 
   public isAuthenticating = false;
-  
+
   constructor(@Optional() private auth: Auth, private router: Router, private dataService: DataService) {
     if (auth) {
       this.user$ = authState(this.auth);
@@ -34,27 +35,27 @@ export class LoginComponent implements OnInit {
         this.currentUser = u;
         return !!u})
       );
-      
-    } 
+
+    }
   }
-  
+
   ngOnInit(): void {
     this.dataService.getMiahootUser$().subscribe(user => {
       this.miahootUser = user;
       console.log ("y'a de l'action");
     });
     }
-  
+
   async login() {
     this.isAuthenticating = true; // On indique que l'authentification est en cours
     try {
       await signInWithPopup(this.auth, new GoogleAuthProvider());
-    } 
+    }
       finally {
       this.isAuthenticating = false; // On réinitialise la variable une fois que la promesse est résolue
     }
   }
-  
+
   async loginAnonymously() {
     return await signInAnonymously(this.auth);
   }
@@ -66,6 +67,6 @@ export class LoginComponent implements OnInit {
   goToPage(pageName:string){
     this.router.navigate([`${pageName}`]);
   }
-  
+
 
 }

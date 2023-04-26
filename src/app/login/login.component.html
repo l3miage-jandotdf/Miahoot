@@ -21,12 +21,9 @@
   <div *ngIf="isLoggedIn$ | async">
   <img class="img" src="../../assets/logo.png" width="90" height="90" />
   <p classe="p">Bienvenue sur Miahoot pour apprendre en s'amusant ! </p>
-  <p><button class="ButtonQuizz">New Quizz</button></p>
+  <p><button class="ButtonQuizz" (click)="this.goToPage('/creator')">New Quizz</button></p>
   <p><button class="ButtonQuizz">My Quizz</button></p>
   </div>
-  <!--<div *ngIf="miahootUser">
-    <h1>{{miahootUser.name}}</h1>
-  </div>-->
-
+  <a routerLink="../creator">Lien vers la page de création</a>
 <router-outlet></router-outlet>
 </body>

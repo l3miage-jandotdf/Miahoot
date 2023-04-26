@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-creator',
   templateUrl: './creator.component.html',
-  styleUrls: ['./creator.component.scss']
+  styleUrls: ['./creator.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreatorComponent {
   question !: string;
