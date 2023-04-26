@@ -61,3 +61,29 @@ export const MiahootUserConverter =  {
 }
 
 
+/**
+   * Structures de données pour les Miahoot projetés
+   */
+
+export interface MiahootProjected{
+    readonly id  : string;
+    creator : string;
+    presentator : string ;
+    currentMCQ : string;
+    QCMs : QcmProjected;
+
+}
+
+export type VOTES = {
+  [participantUID:string] : true    
+}
+
+
+export interface QcmProjected {
+  question : string;
+  responses : string[]; //réponses possibles
+  votes : VOTES[]; //Autant d'entrée dans le tableau que de réponses possibles
+
+}
+
+
