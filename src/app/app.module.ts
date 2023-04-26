@@ -29,6 +29,7 @@ import { ParticipantComponent } from './participant/participant.component';
 import { ResultComponent } from './result/result.component';
 import { QuestionService } from './question.service';
 import { LoggedComponent } from './logged/logged.component';
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { LoggedComponent } from './logged/logged.component';
     MatCheckboxModule,
     MatRadioModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [QuestionService],
   bootstrap: [AppComponent]
