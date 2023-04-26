@@ -28,6 +28,7 @@ import { PresentatorComponent } from './presentator/presentator.component';
 import { ParticipantComponent } from './participant/participant.component';
 import { ResultComponent } from './result/result.component';
 import { QuestionService } from './question.service';
+import { LoggedComponent } from './logged/logged.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { QuestionService } from './question.service';
     EditorComponent,
     PresentatorComponent,
     ParticipantComponent,
-    ResultComponent
+    ResultComponent,
+    LoggedComponent
   ],
   imports: [
     BrowserModule,
