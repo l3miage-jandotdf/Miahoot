@@ -3,6 +3,7 @@ import { DocumentSnapshot, Firestore, FirestoreDataConverter, QueryDocumentSnaps
 import { Auth, authState } from '@angular/fire/auth';
 import { Observable, of, switchMap } from 'rxjs';
 import { setDoc } from 'firebase/firestore';
+import { MatIconAnchor } from '@angular/material/button';
 
 
 export interface MiahootUser{
@@ -70,7 +71,7 @@ export interface MiahootProjected{
     creator : string;
     presentator : string ;
     currentMCQ : string;
-    QCMs : QcmProjected;
+    //QCMs : QcmProjected;
 
 }
 
@@ -85,5 +86,17 @@ export interface QcmProjected {
   votes : VOTES[]; //Autant d'entrée dans le tableau que de réponses possibles
 
 }
+
+export const FsMiahootProjectedConverter : FirestoreDataConverter<MiahootProjected> = {
+  toFirestore : M => M,
+  fromFirestore : snap => ({
+    id : snap.id,
+    creator : snap.get("creator"),
+    presentator : snap.get("presentator"),
+    currentQCM : snap.get("currentQCM")
+  })
+}
+
+
 
 

@@ -14,6 +14,7 @@ import { MiahootUserConverter } from '../data.service';
 
 export class LoggedComponent {
   //readonly obsProjectedMiahootID : Observable <string | undefined>;
+  //readonly obsProjectedMiahoot : Observable<undefined | MiahootProjected>
 
   /*constructor(private auth : Auth, private fs : Firestore){
     this.obsProjectedMiahootID  = authState(auth).pipe(
@@ -28,6 +29,17 @@ export class LoggedComponent {
           )
         }
       })
+    )
+
+    this.obsProjectedMiahoot = this.obsProjectedMiahootID.pipe(
+      switchMap(projectedMiahootID => {
+        if(projectedMiahootID === undefined){
+          return of(undefined);
+        }else{
+          const docProjectedMiahoot = doc(fs, `miahoot/${projectedMiahootID}`).withConverter(MiahootUserConverter)
+        }
+      }
+       
     )
   }*/
 }
