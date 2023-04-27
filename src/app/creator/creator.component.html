@@ -1,50 +1,53 @@
-<h2>Bienvenue ! Vous pouvez créer un nouveau Miahoot</h2>
+<body>
+<h2>Bienvenue sur la page de création de votre nouveau Miahoot ! </h2>
 <form (ngSubmit)="submitMiahoot()">
-    <div class="form-group">
-      <label for="question">Question</label>
-      <input type="text" class="form-control" id="question" [(ngModel)]="question" name="question" required>
+    <div class="form-group1">
+      <label for="question"></label>
+      <input type="text" placeholder="Ecrivez votre question ici" maxlength=100 class="form-control" id="question" [(ngModel)]="question" name="question" required>
     </div>
 
     <div class="options-container">
       <div class="option" *ngFor="let answer of answers; let i=index">
         <div>
-        <label for="answer{{i+1}}">Option {{i+1}}:</label>
-        <input type="text" class="form-control answer-input" id="answer{{i+1}}" [(ngModel)]="answers[i]" name="answers" required>
+          <label for="answer{{i+1}}">Option {{i+1}}:</label>
+          <input type="text" class="form-control" id="answer{{i+1}}" [(ngModel)]="answers[i]" name="answers" required>
+        </div>
+        <div class="right">
+          <button type="button" class="btn btn-danger" (click)="removeOption(i)">Supprimer</button>
+        </div>
       </div>
-      <div class="col-md-2 d-flex align-items-center justify-content-end">
-        <button type="button" class="btn btn-danger" (click)="removeOption(i)">Supprimer</button>
+      <div class="right">
+        <button type="button" class="btn btn-primary" (click)="addOption()">Ajouter une option</button>
       </div>
-      <button type="button" class="btn btn-primary" (click)="addOption()">Ajouter une option</button>
-    </div>
-    </div>
+    </div>        
     <div class="form-group">
-      <label>Réponse correcte</label>
+      <label>Réponse(s) correcte(s)</label>
       <div class="form-check">
         <input class="form-check-input" type="radio" name="correctAnswer" [(ngModel)]="correctAnswer" [value]="0" required>
         <label class="form-check-label" for="correctAnswer">
-          Answer 1
+          Réponse 1
         </label>
       </div>
       <div class="form-check">
         <input class="form-check-input" type="radio" name="correctAnswer" [(ngModel)]="correctAnswer" [value]="1" required>
         <label class="form-check-label" for="correctAnswer">
-          Answer 2
+          Réponse 2
         </label>
       </div>
       <div class="form-check">
         <input class="form-check-input" type="radio" name="correctAnswer" [(ngModel)]="correctAnswer" [value]="2" required>
         <label class="form-check-label" for="correctAnswer">
-          Answer 3
+          Réponse 3
         </label>
       </div>
       <div class="form-check">
         <input class="form-check-input" type="radio" name="correctAnswer" [(ngModel)]="correctAnswer" [value]="3" required>
         <label class="form-check-label" for="correctAnswer">
-          Answer 4
+          Réponse 4
         </label>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary">Create Miahoot</button>
+    <button type="submit" class="btn btn-primary">Créer votre Miahoot</button>
   </form>
-
+</body>
 

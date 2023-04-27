@@ -10,7 +10,7 @@ import { Observable, from } from 'rxjs';
 })
 export class CreatorComponent {
   question !: string;
-  answers  : string[] = [''];
+  answers: string[] = [];
   correctAnswer !: number;
 
 
