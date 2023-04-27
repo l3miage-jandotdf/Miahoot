@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Question } from '../question';
 
 @Component({
@@ -12,6 +12,22 @@ export class ParticipantComponent {
   currentQuestionIndex = 0;
   currentQuestion: Question | undefined;
   selectedAnswer = '';
+
+  @Output() startGameEvent = new EventEmitter<{ name: string, firstName: string, age: number }>();
+
+  participantName !: string;
+  participantFirstName !: string;
+  participantAge !: number;
+
+  //Début de jeu 
+  startGame() {
+    const participantData = {
+      name: this.participantName,
+      firstName: this.participantFirstName,
+      age: this.participantAge
+    };
+    this.startGameEvent.emit(participantData);
+  }
 
   ngOnInit() {
     // Initialiser la première question

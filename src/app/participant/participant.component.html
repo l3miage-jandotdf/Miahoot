@@ -1,5 +1,22 @@
 <p>participant works!</p>
 
+<h2>Bienvenue sur le Miahoot ! Pour commencer, veuillez renseigner les informations ci-dessous.</h2>
+    <form (ngSubmit)="startGame()">
+      <div>
+        <label>Nom :</label>
+        <input type="text" placeholder="Saisissez votre nom" [(ngModel)]="participantName" name="name" required>
+      </div>
+      <div>
+        <label>Prénom :</label>
+        <input type ="text" placeholder= "Saisissez votre prénom" [(ngModel)]="participantFirstName" name="firstName" required>
+      </div>
+      <div>
+        <label>Âge :</label>
+        <input  placeholder=" Saissisez votre âge" [(ngModel)]="participantAge" name="age" type="number" min="18" required>
+      </div>
+      <button type="submit" [disabled]="!participantName || !participantFirstName || !participantAge">Commencer</button>
+    </form>
+
 <div class="question-container">
     <h2>{{ currentQuestion?.text }}</h2>
     <ul>
