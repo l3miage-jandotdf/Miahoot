@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { DataService, MiahootUser } from '../data.service';
 import { traceUntilFirst } from '@angular/fire/performance';
 import { setDoc } from 'firebase/firestore';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit {
 
   public isAuthenticating = false;
 
-  constructor(@Optional() private auth: Auth, private router: Router, private dataService: DataService) {
+  constructor(@Optional() private auth: Auth, private router: Router, private dataService: DataService, private http: HttpClient) {
     if (auth) {
       this.user$ = authState(this.auth);
       this.isLoggedIn$ = authState(this.auth).pipe(
@@ -37,6 +38,12 @@ export class LoginComponent implements OnInit {
       );
       this.pageCreation=false;
     }
+  }
+
+  createNewMiahoot() {
+    this.http.post('http://localhost:8080/api/miahoot', {}).subscribe(() => {
+      console.log("MIAHOOT CREE !!")
+    });
   }
 
   ngOnInit(): void {
