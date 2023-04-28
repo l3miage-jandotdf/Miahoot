@@ -9,7 +9,7 @@
     <div class="options-container">
       <div class="option" *ngFor="let answer of answers; let i=index">
         <div>
-          <label for="answer{{i+1}}">Réponse possible{{i+1}}:</label>
+          <label for="answer{{i+1}}">Réponse possible {{i+1}}:</label>
           <input type="text" class="form-control" id="answer{{i+1}}" [ngModel]="answers[i]" (ngModelChange)="answers[i]=$event" name="answers" required>
         </div>
         <div class="right">
