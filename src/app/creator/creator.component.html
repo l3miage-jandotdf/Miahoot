@@ -9,15 +9,15 @@
     <div class="options-container">
       <div class="option" *ngFor="let answer of answers; let i=index">
         <div>
-          <label for="answer{{i+1}}">Option {{i+1}}:</label>
-          <input type="text" class="form-control" id="answer{{i+1}}" [(ngModel)]="answers[i]" name="answers" required>
+          <label for="answer{{i+1}}">Réponse possible{{i+1}}:</label>
+          <input type="text" class="form-control" id="answer{{i+1}}" [ngModel]="answers[i]" (ngModelChange)="answers[i]=$event" name="answers" required>
         </div>
         <div class="right">
-          <button type="button" class="btn btn-danger" (click)="removeOption(i)">Supprimer</button>
+           <button type="button" class="btn btn-danger" (click)="removeOption(i)">Supprimer</button> 
         </div>
       </div>
       <div class="right">
-        <button type="button" class="btn btn-primary" (click)="addOption()">Ajouter une option</button>
+        <button type="button" class="btn btn-primary" (click)="addOption()">Ajouter une réponse possible</button>
       </div>
     </div>  
     
