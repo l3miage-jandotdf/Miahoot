@@ -10,18 +10,19 @@
       <div class="option" *ngFor="let answer of answers; let i=index">
         <div>
           <label for="answer{{i+1}}">Réponse possible {{i+1}}:</label>
-          <input type="text" class="form-control" id="answer{{i+1}}" [ngModel]="answers[i]" (ngModelChange)="answers[i]=$event" name="answers" required>
+          <!--<input type="text" class="form-control" id="answer{{i+1}}" [(ngModel)]="answers[i]"  name="answers" required>-->
+          <textarea placeholder="Entrez votre reponse" class="area" id="answer{{i+1}}" [(ngModel)]="answers[i]"  name="answers" required >Entrez votre reponse</textarea>
         </div>
         <div class="right">
-           <button type="button" class="btn btn-danger" (click)="removeOption(i)">Supprimer</button> 
+           <button type="button" class="btn btn-danger" (click)="removeOption(i)">Supprimer</button>
         </div>
       </div>
       <div class="right">
         <button type="button" class="btn btn-primary" (click)="addOption()">Ajouter une réponse possible</button>
       </div>
-    </div>  
-    
-    
+    </div>
+
+<!--(ngModelChange)="answers[i]=$event"-->
     <!--  <div class="form-group">
       <label>Réponse(s) correcte(s)</label>
       <div class="form-check">

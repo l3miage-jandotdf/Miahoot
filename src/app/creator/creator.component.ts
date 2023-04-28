@@ -2,6 +2,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
 
+interface Answer {
+  answer : String;
+}
+
 @Component({
   selector: 'app-creator',
   templateUrl: './creator.component.html',
@@ -10,7 +14,8 @@ import { Observable, from } from 'rxjs';
 })
 export class CreatorComponent {
   question !: string;
-  answers: string[] = [];
+  answers: Answer[] = [];
+
   correctAnswer !: number;
 
 
@@ -39,12 +44,13 @@ export class CreatorComponent {
 
 
   addOption(): void {
-    this.answers.push('');
+
+    this.answers.push({answer:''});
   }
 
   removeOption(index: number): void {
     this.answers.splice(index, 1);
   }
 
- 
+
 }

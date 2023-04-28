@@ -2,15 +2,15 @@
     display: block;
   }
 
-  
+
   .option {
     margin-bottom: 10px;
   }
-  
+
   .btn {
     margin-left: 10px;
   }
-  
+
   :host {
     .row {
       margin-bottom: 1rem;
@@ -47,4 +47,7 @@
     max-width: 500px;
     width: 100%;
   }
-  
+
+  .area{
+    height: 10px;
+  }
