@@ -1,25 +1,30 @@
 <body>
 <h2>Bienvenue sur la page de création de votre nouveau Miahoot ! </h2>
+<h3>Entrez le titre du Miahoot :</h3>
+<input type="text" placeholder="titre" maxlength=100 [(ngModel)]="nom">
 <form (ngSubmit)="submitMiahoot()">
     <div class="form-group1">
-      <label for="question"></label>
-      <input type="text" placeholder="Ecrivez votre question ici" maxlength=100 class="form-control" id="question" [(ngModel)]="question" name="question" required>
-    </div>
-
-    <div class="options-container">
-      <div class="option" *ngFor="let answer of answers; let i=index">
-        <div>
-          <label for="answer{{i+1}}">Réponse possible {{i+1}}:</label>
-          <!--<input type="text" class="form-control" id="answer{{i+1}}" [(ngModel)]="answers[i]"  name="answers" required>-->
-          <textarea placeholder="Entrez votre reponse" class="area" id="answer{{i+1}}" [(ngModel)]="answers[i]"  name="answers" required >Entrez votre reponse</textarea>
-        </div>
-        <div class="right">
-           <button type="button" class="btn btn-danger" (click)="removeOption(i)">Supprimer</button>
+      <div class="option" *ngFor="let question of questions; index as j">
+        <label><h2>Question n°{{j+1}}</h2></label>
+        <input type="text" placeholder="Écrivez votre question ici" maxlength=100 required>
+    
+        <div class="options-container">
+          <div class="option" *ngFor="let answer of question.answers; let i=index">
+            <div>
+              <label>Réponse possible {{i+1}}:</label>
+              <!--<input type="text" class="form-control" id="answer{{i+1}}" [(ngModel)]="answers[i]"  name="answers" required>-->
+              <input type="text" placeholder="Entrez votre reponse" maxlength=100 required>
+            </div>
+            <div class="right">
+              <button type="button" class="btn btn-danger" (click)="removeOption(question, i)">Supprimer</button>
+            </div>
+          </div>
+          <div class="right">
+            <button type="button" class="btn btn-primary" (click)="addOption(question)">Ajouter une réponse possible</button>
+          </div>
         </div>
       </div>
-      <div class="right">
-        <button type="button" class="btn btn-primary" (click)="addOption()">Ajouter une réponse possible</button>
-      </div>
+      <button type="button" class="btn btn-primary" (click)="addQuestion()">Ajouter une question</button>
     </div>
 
 <!--(ngModelChange)="answers[i]=$event"-->
