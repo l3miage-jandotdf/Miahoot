@@ -1,60 +1,41 @@
 <body>
-<h2>Bienvenue sur la page de création de votre nouveau Miahoot ! </h2>
-<h3>Entrez le titre du Miahoot :</h3>
-<input type="text" placeholder="titre" maxlength=100 [(ngModel)]="nom">
-<form (ngSubmit)="submitMiahoot()">
-    <div class="form-group1">
-      <div class="option" *ngFor="let question of questions; index as j">
-        <label><h2>Question n°{{j+1}}</h2></label>
-        <input type="text" placeholder="Écrivez votre question ici" maxlength=100 required>
-    
-        <div class="options-container">
-          <div class="option" *ngFor="let answer of question.answers; let i=index">
-            <div>
+  <h2>Bienvenue sur la page de création de votre nouveau Miahoot ! </h2>
+  <h3>Entrez le titre du Miahoot :</h3>
+  <input type="text" placeholder="titre" maxlength=100 [(ngModel)]="nom">
+
+
+  <form (ngSubmit)="submitMiahoot()">
+      <div class="form-group1">
+
+
+        <div class="option" *ngFor="let question of questions; index as j">
+          <label><h2>Question n°{{j+1}}</h2></label>
+          <input type="text" [(ngModel)]="question.label" [ngModelOptions]="{standalone: true}" placeholder="Écrivez votre question ici" maxlength=100 required>
+      
+          <div class="options-container">
+            <div class="option" *ngFor="let answer of question.answers; let i=index">
+              
               <label>Réponse possible {{i+1}}:</label>
-              <!--<input type="text" class="form-control" id="answer{{i+1}}" [(ngModel)]="answers[i]"  name="answers" required>-->
-              <input type="text" placeholder="Entrez votre reponse" maxlength=100 required>
+              <input type="text" [(ngModel)]="answer.label" [ngModelOptions]="{standalone: true}" placeholder="Entrez votre reponse" maxlength=100 required>
+              <label>Réponse correcte</label> <input type="checkbox" [(ngModel)]="answer.estValide" [ngModelOptions]="{standalone: true}"> 
+              
+              <div class="right">
+                <button type="button" class="btn btn-danger" (click)="removeOption(question, i)">Supprimer la réponse</button>
+              </div>
             </div>
             <div class="right">
-              <button type="button" class="btn btn-danger" (click)="removeOption(question, i)">Supprimer</button>
+              <button type="button" class="btn btn-primary" (click)="addOption(question)">Ajouter une réponse possible</button>
             </div>
+            <button type="button" class="btn btn-danger" (click)="removeQuestion(j)">Supprimer la question</button>
           </div>
-          <div class="right">
-            <button type="button" class="btn btn-primary" (click)="addOption(question)">Ajouter une réponse possible</button>
-          </div>
-        </div>
-      </div>
-      <button type="button" class="btn btn-primary" (click)="addQuestion()">Ajouter une question</button>
-    </div>
 
-<!--(ngModelChange)="answers[i]=$event"-->
-    <!--  <div class="form-group">
-      <label>Réponse(s) correcte(s)</label>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="correctAnswer" [(ngModel)]="correctAnswer" [value]="0" required>
-        <label class="form-check-label" for="correctAnswer">
-          Réponse 1
-        </label>
+        </div>
+
+
+        <button type="button" class="btn btn-primary" (click)="addQuestion()">Ajouter une question</button>
       </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="correctAnswer" [(ngModel)]="correctAnswer" [value]="1" required>
-        <label class="form-check-label" for="correctAnswer">
-          Réponse 2
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="correctAnswer" [(ngModel)]="correctAnswer" [value]="2" required>
-        <label class="form-check-label" for="correctAnswer">
-          Réponse 3
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="correctAnswer" [(ngModel)]="correctAnswer" [value]="3" required>
-        <label class="form-check-label" for="correctAnswer">
-          Réponse 4
-        </label>
-      </div>
-    </div> -->
+
+
     <button type="submit" class="btn btn-primary">Créer votre Miahoot</button>
   </form>
 </body>

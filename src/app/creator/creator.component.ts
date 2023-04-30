@@ -3,12 +3,12 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
 
 interface Question{
-  question : String;
+  label : String;
   answers: Answer[];
 }
 
 interface Answer {
-  answer : String;
+  label : String;
   estValide : boolean;
 }
 
@@ -19,7 +19,6 @@ interface Answer {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreatorComponent {
-  //question !: string;
   nom : String = "";
   questions : Question[] = [];
 
@@ -27,7 +26,7 @@ export class CreatorComponent {
   constructor(private http: HttpClient) {}
 
   addOption(question: Question): void {
-    question.answers.push({answer:'', estValide:false});
+    question.answers.push({label:'', estValide:false});
   }
 
   removeOption(question: Question, index: number): void {
@@ -35,11 +34,11 @@ export class CreatorComponent {
   }
 
   addQuestion(): void{
-    this.questions.push({question:'', answers:[]});
+    this.questions.push({label:'', answers:[]});
   }
 
   removeQuestion(index: number): void{
-    this.questions.slice(index, 1);
+    this.questions.splice(index, 1);
   }
 
   submitMiahoot(){
@@ -54,26 +53,35 @@ export class CreatorComponent {
   }
 
   submitQuestions(idMiahoot : Long){
+    const promises: Promise<Long>[] = [];
     const url = 'http://localhost:8080/api/miahoot/id/' + idMiahoot + '/question';
-    console.log(url);
-    return this.http.post(url, { }) //TODO
-    .toPromise()
-    .then(idQuestion => {
-      console.log('Question créée avec l id '+ idQuestion)
-      this.submitReponses(idMiahoot, idQuestion as Long);
-    })
-    .catch(this.handleError);
+
+    for (let i = 0; i < this.questions.length; i++) {
+      const promise = this.http.post(url, {"label" : this.questions[i].label, "answers" : []}).toPromise()
+      .then(idQuestion => {
+        console.log(`Question créée avec l'id ${idQuestion}`);
+        return this.submitReponses(idMiahoot, idQuestion as Long, this.questions[i].answers);
+      }) as Promise<Long>
+      promises.push(promise);
+    }
+
+    return Promise.all(promises).then(() => {
+      console.log('Toutes les questions ont été créées avec succès');
+    }).catch(this.handleError);
   }
 
-  submitReponses(idMiahoot : Long, idQuestion : Long){
+  submitReponses(idMiahoot : Long, idQuestion : Long, answersQuestion : Answer[] ){
+    const promises: Promise<Long>[] = [];
     const url = 'http://localhost:8080/api/miahoot/id/' + idMiahoot + '/question/' + idQuestion + '/reponse';
-    console.log(url);
-    return this.http.post(url, { }) //TODO
-    .toPromise()
-    .then(idReponse => {
-      console.log('Question créée avec l id '+ idReponse)
-    })
-    .catch(this.handleError);
+
+    for (let i = 0; i < answersQuestion.length; i++) {
+      const promise = this.http.post(url, {"label" : answersQuestion[i].label, "estValide" : answersQuestion[i].estValide}).toPromise() as Promise<Long>;
+      promises.push(promise);
+    }
+
+    return Promise.all(promises).then(() => {
+      console.log('Toutes les réponses de la question ' + idQuestion + ' ont été créées avec succès');
+    }).catch(this.handleError);
   }
 
   private handleError(error: any): Promise<Array<any>> {
