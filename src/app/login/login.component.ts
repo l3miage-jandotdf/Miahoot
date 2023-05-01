@@ -39,28 +39,8 @@ export class LoginComponent implements OnInit {
       this.pageCreation=false;
     }
   }
-/*
-  createNewMiahoot() {
-    this.http.post('http://localhost:8080/api/miahoot', {}).subscribe(() => {
-      console.log("MIAHOOT CREE !!")
-    });
-  }
-*/
-  afficheMiahoot() {
-    this.http.get('http://localhost:8080/api/miahoot/nom/testM', {}).subscribe((response) => {
-      console.log(response);
-      console.log("MIAHOOT affiche !!");
-    });
-  }
-  createNewMiahoot() {
-    this.http.post('http://localhost:8080/api/miahoot/', {"nom":"testM"}).subscribe((response) => {
-      this.afficheMiahoot();
-      console.log("MIAHOOT CREE !!");
-    });
-  }
   
   ngOnInit(): void {
-
     this.dataService.getMiahootUser$().subscribe(user => {
       this.miahootUser = user;
       console.log ("y'a de l'action");
