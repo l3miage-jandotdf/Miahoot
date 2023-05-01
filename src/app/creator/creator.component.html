@@ -17,13 +17,13 @@
               
               <label>Réponse possible {{i+1}}:</label>
               <input type="text" [(ngModel)]="answer.label" [ngModelOptions]="{standalone: true}" placeholder="Entrez votre reponse" maxlength=100 required>
-              <label>Réponse correcte</label> <input type="checkbox" [(ngModel)]="answer.estValide" [ngModelOptions]="{standalone: true}"> 
+              <label>Réponse correcte</label> <input type="checkbox" [(ngModel)]="answer.estValide" [disabled]="alreadyOneTrueOption(question, i)" [ngModelOptions]="{standalone: true}"> 
               
               <div class="right">
                 <button type="button" class="btn btn-danger" (click)="removeOption(question, i)">Supprimer la réponse</button>
               </div>
             </div>
-            <div class="right">
+            <div *ngIf='moreThanFourOptions(question)' class="right">
               <button type="button" class="btn btn-primary" (click)="addOption(question)">Ajouter une réponse possible</button>
             </div>
             <button type="button" class="btn btn-danger" (click)="removeQuestion(j)">Supprimer la question</button>

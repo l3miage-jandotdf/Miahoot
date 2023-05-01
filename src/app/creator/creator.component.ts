@@ -41,6 +41,19 @@ export class CreatorComponent {
     this.questions.splice(index, 1);
   }
 
+  moreThanFourOptions(question : Question) : boolean{
+    return (question.answers.length < 4);
+  }
+
+  alreadyOneTrueOption(question : Question, index : number) : boolean{
+    if (question.answers.length > 1 && question.answers[index].estValide == false){
+      return question.answers.reduce((acc, val) => acc || val.estValide, false);
+    }
+    else{
+      return false;
+    }
+  }
+
   submitMiahoot(){
       const url = 'http://localhost:8080/api/miahoot/';
       return this.http.post(url, { "nom": this.nom })
