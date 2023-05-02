@@ -39,7 +39,7 @@ export class LoggedComponent {
           const docProjectedMiahoot = doc(fs, `miahoot/${projectedMiahootID}`).withConverter(MiahootUserConverter)
         }
       }
-       
+
     )
   }*/
 }

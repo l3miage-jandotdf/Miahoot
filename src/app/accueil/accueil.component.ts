@@ -15,13 +15,20 @@ import { traceUntilFirst } from '@angular/fire/performance';
 })
 export class AccueilComponent implements OnInit {
 
+constructor(private router: Router){}
 
-  
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
+  goToPage(pageName:string){
+    if(pageName=="/creator"){
+    }
+    console.log(pageName);
+    this.router.navigate([`${pageName}`]);
   }
 
-  public readonly user$?: Observable<User | null>;
+  ngOnInit(): void {
+    //throw new Error('Method not implemented.');
+  }
+
+  /*public readonly user$?: Observable<User | null>;
   public currentUser? : User | null;
   miahootUser: MiahootUser | undefined;
   pageCreation = false;
@@ -40,7 +47,6 @@ export class AccueilComponent implements OnInit {
         this.currentUser = u;
         return !!u})
       );
-      this.pageCreation=false;
     }
   }
 
@@ -57,7 +63,7 @@ export class AccueilComponent implements OnInit {
       console.log("MIAHOOT CREE !!");
     });
   }
-  
+
   async logout() {
     this.pageCreation=false;
     return await signOut(this.auth);
@@ -73,6 +79,6 @@ export class AccueilComponent implements OnInit {
 
   updatePage() : void{
     this.pageCreation=true;
-  }
+  }*/
 
 }

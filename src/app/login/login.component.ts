@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
       console.log("MIAHOOT CREE !!");
     });
   }
-  
+
   ngOnInit(): void {
     this.dataService.getMiahootUser$().subscribe(user => {
       this.miahootUser = user;
@@ -74,15 +74,18 @@ export class LoginComponent implements OnInit {
       finally {
       this.isAuthenticating = false; // On réinitialise la variable une fois que la promesse est résolue
     }
+    this.goToPage('/accueil')
   }
 
   async loginAnonymously() {
     return await signInAnonymously(this.auth);
   }
 
- /* async logout() {
+  async logout() {
     this.pageCreation=false;
+    this.goToPage('');
     return await signOut(this.auth);
+
   }
 
   goToPage(pageName:string){
@@ -91,7 +94,8 @@ export class LoginComponent implements OnInit {
     }
     console.log(pageName);
     this.router.navigate([`${pageName}`]);
-  }*/
+  }
+
 
   updatePage() : void{
     this.pageCreation=true;
@@ -99,3 +103,4 @@ export class LoginComponent implements OnInit {
 
 
 }
+
