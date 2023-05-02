@@ -1,0 +1,39 @@
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input[type="text"]{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-right: 10px;
+
+  &.btn-primary{
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  &.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+  }
+}
+
+.form-check-input {
+  margin-right: 10px;
+}

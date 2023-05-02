@@ -48,3 +48,23 @@ p{
   margin: auto;
 
 }
+
+
+.body{
+  background-image: url("/../im2.png");
+  background-size: cover;
+  animation: fade 10s infinite;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0.2;
+  }
+
+}
