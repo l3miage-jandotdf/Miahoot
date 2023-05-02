@@ -1,5 +1,5 @@
-<app-login></app-login>
-<router-outlet></router-outlet>
+<app-login (log)="receiveLog($event)"></app-login>
+<router-outlet *ngIf="log"></router-outlet>
 
 
 

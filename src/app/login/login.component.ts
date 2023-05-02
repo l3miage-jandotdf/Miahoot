@@ -1,4 +1,4 @@
-import { Component, OnInit, Optional } from '@angular/core';
+import { Component, OnInit, Optional, EventEmitter, Output } from '@angular/core';
 import { Auth, authState, signInAnonymously, signOut, User, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -16,6 +16,8 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class LoginComponent implements OnInit {
+  @Output() log = new EventEmitter<boolean>();
+
 
   public readonly user$?: Observable<User | null>;
   public currentUser? : User | null;
@@ -58,7 +60,7 @@ export class LoginComponent implements OnInit {
       console.log("MIAHOOT CREE !!");
     });
   }
-  
+
   ngOnInit(): void {
     this.dataService.getMiahootUser$().subscribe(user => {
       this.miahootUser = user;
@@ -74,24 +76,29 @@ export class LoginComponent implements OnInit {
       finally {
       this.isAuthenticating = false; // On réinitialise la variable une fois que la promesse est résolue
     }
+    this.log.emit(true);
+    this.goToPage('/accueil')
   }
 
   async loginAnonymously() {
     return await signInAnonymously(this.auth);
   }
 
- /* async logout() {
+  async logout() {
     this.pageCreation=false;
+    this.goToPage('');
+    this.log.emit(false);
     return await signOut(this.auth);
+
   }
 
   goToPage(pageName:string){
     if(pageName=="/creator"){
       this.pageCreation=true;
     }
-    console.log(pageName);
     this.router.navigate([`${pageName}`]);
-  }*/
+  }
+
 
   updatePage() : void{
     this.pageCreation=true;
@@ -99,3 +106,4 @@ export class LoginComponent implements OnInit {
 
 
 }
+
