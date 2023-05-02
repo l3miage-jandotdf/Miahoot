@@ -20,8 +20,8 @@
       <mat-spinner [diameter]="30"></mat-spinner>
     </div>
   </mat-toolbar>
-  <button class="button">
-    <img src="../../assets/accueil.png" width="50" height="50" *ngIf="isLoggedIn$ | async"/>
+  <button class="button" *ngIf="isLoggedIn$ | async">
+    <img src="../../assets/accueil.png" width="50" height="50" />
   </button>
 
 
