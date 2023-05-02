@@ -30,6 +30,7 @@ import { ResultComponent } from './result/result.component';
 import { QuestionService } from './question.service';
 import { LoggedComponent } from './logged/logged.component';
 import {HttpClientModule} from "@angular/common/http";
+import { AllMiahootComponent } from './all-miahoot/all-miahoot.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import {HttpClientModule} from "@angular/common/http";
     PresentatorComponent,
     ParticipantComponent,
     ResultComponent,
-    LoggedComponent
+    LoggedComponent,
+    AllMiahootComponent
   ],
   imports: [
     BrowserModule,

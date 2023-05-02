@@ -1,22 +1,4 @@
-
-    <div *ngIf="isLoggedIn$ | async">
-        <img [src]="currentUser!.photoURL" width="30">
-        {{currentUser!.displayName}}
-        <button (click)="this.goToPage('/accountConfig')">Paramètres</button>
-          <button class="LogoutBouton" (click)="logout()">Se déconnecter</button>
-      </div>
-      <div *ngIf="isAuthenticating">
-        <mat-spinner [diameter]="30"></mat-spinner>
-      </div>
-
-
-      <div *ngIf="(isLoggedIn$ | async) && !pageCreation">
-        <img class="img" src="../../assets/logo.png" width="90" height="90" />
-        <p classe="p">Bienvenue sur Miahoot ! Vous pouvez apprendre et enseigner en s'amusant juste en créant votre QCM en cliquant sur le bouton ci-dessous! </p>
-        <p><button class="ButtonQuizz" (click)="this.goToPage('/creator')">Nouveau QCM</button></p>
-        <p><button class="ButtonQuizz">Mes QCMs</button></p>
-        <button (click)="createNewMiahoot()">→TEST BACK ←</button>
-        </div>
-        <!--<a routerLink="/creator">Lien vers la page de création</a>-->
-        <router-outlet *ngIf="pageCreation"></router-outlet>
-        
+<img class="img" src="../../assets/logo.png" width="90" height="90" />
+<p classe="p">Bienvenue sur Miahoot ! Vous pouvez apprendre et enseigner en s'amusant juste en créant votre QCM en cliquant sur le bouton ci-dessous! </p>
+<p><button class="ButtonQuizz" (click)="this.goToPage('/creator')">Nouveau QCM</button></p>
+<p><button class="ButtonQuizz">Mes QCMs</button></p>
