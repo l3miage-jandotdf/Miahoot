@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Component, OnInit, OnDestroy, Optional } from '@angular/core';
+import { Component, OnInit, OnDestroy, Optional, Input } from '@angular/core';
 import { Auth, authState, signInAnonymously, signOut, User, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 import { EMPTY, Observable, Subscription, from } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -17,12 +17,17 @@ import { LoginComponent } from './login/login.component';
 export class AppComponent implements OnInit {
     title = 'Miahoot';
 
-    constructor(){
+    log = false;
 
-    }
+
 
     ngOnInit(): void {
 
+    }
+
+    receiveLog($event: boolean){
+      this.log = $event;
+      console.log("log = ",this.log);
     }
 
 }
