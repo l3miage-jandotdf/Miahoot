@@ -1,15 +1,19 @@
 <body>
   <h2>Bienvenue sur la page de création de votre nouveau Miahoot ! </h2>
-  <h3>Entrez le titre du Miahoot :</h3>
-  <input type="text" placeholder="titre" maxlength=100 [(ngModel)]="nom">
-
+  <h3 class="titre">Entrez le titre de votre Miahoot dans le champ ci-dessous :</h3>
+  <p>
+    <input type="text" class="champ-de-saisie" placeholder="titre" maxlength=100 [(ngModel)]="nom">
+  </p>
+  
+  <p class="map">Veuillez à présent éditer votre QCM</p>
 
   <form (ngSubmit)="submitMiahoot()">
       <div class="form-group1">
 
+        <!--
 
         <div class="option" *ngFor="let question of questions; index as j">
-          <label><h2>Question n°{{j+1}}</h2></label>
+          <label><h3>Question n°{{j+1}}</h3></label>
           <input type="text" [(ngModel)]="question.label" [ngModelOptions]="{standalone: true}" placeholder="Écrivez votre question ici" maxlength=100 required>
       
           <div class="options-container">
@@ -27,13 +31,36 @@
               <button type="button" class="btn btn-primary" (click)="addOption(question)">Ajouter une réponse possible</button>
             </div>
             <button type="button" class="btn btn-danger" (click)="removeQuestion(j)">Supprimer la question</button>
+          </div> -->
+
+          <div class="option" *ngFor="let question of questions; index as j">
+            <div class="question-container">
+              <label><h3 class="question">Question n°{{j+1}}</h3></label>
+              <p class="inputQ">
+                <input type="text" class="champ" [(ngModel)]="question.label" [ngModelOptions]="{standalone: true}" placeholder="Écrivez votre question ici" maxlength=100 required>
+              </p>
+              <button type="button" class="btn btn-danger" (click)="removeQuestion(j)">Supprimer la question</button>
+            </div>
+          
+            <div class="options-container">
+              <div class="option1" *ngFor="let answer of question.answers; let i=index">
+                <label>Réponse {{i+1}}: </label>
+                <input type="text" [(ngModel)]="answer.label" [ngModelOptions]="{standalone: true}" placeholder="Entrez votre réponse" maxlength=100 required>
+                <label class="rpns">Réponse correcte ?</label> <input type="checkbox" [(ngModel)]="answer.estValide" [disabled]="alreadyOneTrueOption(question, i)" [ngModelOptions]="{standalone: true}"> 
+                <button type="button" class="btn btn-danger" (click)="removeOption(question, i)">Supprimer la réponse</button>
+              </div>
+              <div *ngIf='moreThanFourOptions(question)' class="right">
+                <button type="button" class="btn btn-primary" (click)="addOption(question)">Ajouter une réponse possible</button>
+              </div>
+            </div>
           </div>
 
-        </div>
-
-
-        <button type="button" class="btn btn-primary" (click)="addQuestion()">Ajouter une question</button>
-      </div>
+          </div>
+          <p class="btn">
+            <button type="button" class="btn btn-primary" (click)="addQuestion()">Ajouter une question</button>
+          </p>
+        
+      <!--</div>--> 
 
 
     <button type="submit" class="btn btn-primary">Créer votre Miahoot</button>
