@@ -7,6 +7,7 @@ import { CreatorComponent } from './creator/creator.component';
 import { PresentatorComponent } from './presentator/presentator.component';
 import { ParticipantComponent } from './participant/participant.component';
 import { LoginComponent } from './login/login.component';
+import { AllMiahootComponent } from './all-miahoot/all-miahoot.component';
 
 
 const routes: Routes = [
@@ -15,7 +16,8 @@ const routes: Routes = [
 {path:"accountConfig", component:AccountConfigComponent},
 {path:"creator", component:CreatorComponent},
 {path:"participant", component:ParticipantComponent},
-{path:"presentator", component:PresentatorComponent}
+{path:"presentator", component:PresentatorComponent},
+{path:"all-miahoot", component:AllMiahootComponent}
 /*{ path: '**', component: NotFoundComponent }*/];
 
 @NgModule({
