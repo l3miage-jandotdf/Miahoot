@@ -7,6 +7,7 @@ import { DataService, MiahootUser } from '../data.service';
 import { traceUntilFirst } from '@angular/fire/performance';
 import { setDoc } from 'firebase/firestore';
 import { HttpClient } from '@angular/common/http';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -66,6 +67,14 @@ export class LoginComponent implements OnInit {
       this.miahootUser = user;
       console.log ("y'a de l'action");
     });
+
+    console.log("url = ",this.router.url);
+    if(this.router.url=="/"){
+      this.log.emit(false);
+    }
+    if(this.router.url=="/*"){
+      this.log.emit(true);
+    }
     }
 
   async login() {
@@ -93,9 +102,10 @@ export class LoginComponent implements OnInit {
   }
 
   goToPage(pageName:string){
-    if(pageName=="/creator"){
-      this.pageCreation=true;
-    }
+    /*if(pageName=="**"){
+      this.log.emit(true);
+    }*/
+    //console.log(pageName);
     this.router.navigate([`${pageName}`]);
   }
 
