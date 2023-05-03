@@ -1,3 +1,4 @@
+<app-login></app-login>
 <div id="presenter">
     <div class="idQuestion">{{currentQuestion?.id}}</div>
     <div class="question">{{ currentQuestion?.text }}</div>
@@ -8,10 +9,9 @@
       </div>
     </div>
     <div id="navigation">
-      <button mat-raised-button color="primary" class="prev" (click)="showPrevQuestion()">Précédent</button>
-      <button mat-raised-button color="primary" class="next" (click)="showNextQuestion()">Suivant</button>
-      <button mat-raised-button color="primary" class="valid" (click)="validateAnswer()">Valider</button>
+      <button mat-raised-button color="primary" class="next" (click)="showNextQuestion()">Suivant</button>    
     </div>
   </div>
+  <p>Nombre de participants prêts : {{ readyParticipants }}</p>
   
   

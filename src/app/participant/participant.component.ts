@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Question } from '../question';
+import { nbParticipantService } from '../nbParticipantService';
 
 @Component({
   selector: 'app-participant',
@@ -19,6 +20,8 @@ export class ParticipantComponent {
   participantFirstName !: string;
   participantAge !: number;
 
+  constructor(private participantService: nbParticipantService) { }
+
   //Début de jeu 
   startGame() {
     const participantData = {
@@ -26,6 +29,7 @@ export class ParticipantComponent {
       firstName: this.participantFirstName,
       age: this.participantAge
     };
+    this.participantService.addReadyParticipant();
     this.startGameEvent.emit(participantData);
   }
 

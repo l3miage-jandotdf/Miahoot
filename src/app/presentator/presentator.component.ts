@@ -1,14 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { Question } from '../question';
-
+import { nbParticipantService } from '../nbParticipantService';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-presentator',
   templateUrl: './presentator.component.html',
   styleUrls: ['./presentator.component.scss']
 })
-
-
 
 export class PresentatorComponent implements OnInit {
 
@@ -21,10 +20,15 @@ export class PresentatorComponent implements OnInit {
   correctAnswer = false;    //réponse correcte
   //participantAnswers: string[] = [];    //réponses choisies par les participants
 
-  
-  constructor() {}
+  readyParticipants: number = 0;
+
+  constructor(private participantService: nbParticipantService) { }
+
   
   ngOnInit() {
+    this.participantService.getReadyParticipants().subscribe((count) => {
+      this.readyParticipants = count;
+    });
     this.currentQuestion = this.questions[this.currentQuestionIndex]; //on affiche la première question dès que le composant est affiché
   }
   
@@ -37,6 +41,7 @@ export class PresentatorComponent implements OnInit {
   }
   
   //Fonction qui permet de pouvoir accéder à la question précédente (bouton implémentée dans la vue)
+  //VERSION 1 OU PLUS
   showPrevQuestion() {
     // Afficher la question précédente
     if (this.currentQuestionIndex > 0) {    //on vérifie que ce n'est pas la première question (sinon impossible de revenir en arrière)
@@ -45,23 +50,11 @@ export class PresentatorComponent implements OnInit {
     }
   }
   
-
   showNextQuestion() {
     // Afficher la question suivante
     if (this.currentQuestionIndex < this.questions.length - 1) {    //S'ikl y'a encore des questions (c-à-d pas la dernière question)
       this.currentQuestionIndex++;          //on prend l'index de la question suivante 
       this.showQuestion(this.currentQuestionIndex);   //on l'affiche
-    }
-  }
-
-
-  //Fonction qui vérifie si la réponse sélectionnée est valide (pour les participants)
-  validateAnswer() {
-    // Vérifier si la réponse sélectionnée est correcte
-    if (this.selectedAnswer === this.currentQuestion?.answers[this.currentQuestion?.correctAnswerIndex]) {
-      this.correctAnswer = true;
-    } else {
-      this.correctAnswer= false;
     }
   }
 }

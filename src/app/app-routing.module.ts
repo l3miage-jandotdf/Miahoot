@@ -15,9 +15,9 @@ const routes: Routes = [
 {path:"accueil", component:AccueilComponent},
 {path:"accountConfig", component:AccountConfigComponent},
 {path:"creator", component:CreatorComponent},
-{path:"participant", component:ParticipantComponent},
-{path:"presentator", component:PresentatorComponent},
-{path:"all-miahoot", component:AllMiahootComponent}
+{path:"participant/:idMiahoot", component:ParticipantComponent},
+{path:"presentator/:idMiahoot", component:PresentatorComponent},
+{path:"all-miahoot/:idCreator", component:AllMiahootComponent}
 /*{ path: '**', component: NotFoundComponent }*/];
 
 @NgModule({

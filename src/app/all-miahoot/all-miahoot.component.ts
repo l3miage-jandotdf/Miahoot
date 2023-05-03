@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 export interface Miahoot {
   id: number;
@@ -27,16 +28,17 @@ export interface Reponse {
 
 export class AllMiahootComponent implements OnInit{
   miahoots?: Miahoot[];
+  idCreator?: number;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
   ngOnInit(){
-    setInterval(() => {
-      this.getMiahoots();
-    }, 1000);
+    this.idCreator = Number(this.route.snapshot.paramMap.get('idCreator'));
+    this.getMiahoots();
   }
+
   getMiahoots(): Promise<Miahoot[]> {
-    const url = "http://localhost:8080/api/miahoot/all";
+    const url = "http://localhost:8080/api/creator/${this.idCreator}/miahoot/all";
     return this.http.get(url)
       .toPromise()
       .then(reponse => this.miahoots = reponse as Miahoot[])

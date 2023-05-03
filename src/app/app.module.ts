@@ -31,6 +31,7 @@ import { QuestionService } from './question.service';
 import { LoggedComponent } from './logged/logged.component';
 import {HttpClientModule} from "@angular/common/http";
 import { AllMiahootComponent } from './all-miahoot/all-miahoot.component';
+import { nbParticipantService } from './nbParticipantService';
 
 
 @NgModule({
@@ -68,7 +69,7 @@ import { AllMiahootComponent } from './all-miahoot/all-miahoot.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [QuestionService],
+  providers: [QuestionService, nbParticipantService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
