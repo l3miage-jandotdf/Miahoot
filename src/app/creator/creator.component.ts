@@ -55,7 +55,7 @@ export class CreatorComponent {
   }
 
   submitMiahoot(){
-      const url = 'http://localhost:8080/api/miahoot/';
+      const url = 'http://localhost:8080/api/creator/1/miahoot/';
       return this.http.post(url, { "nom": this.nom })
       .toPromise()
       .then(idMiahoot => {
@@ -67,7 +67,7 @@ export class CreatorComponent {
 
   submitQuestions(idMiahoot : Long){
     const promises: Promise<Long>[] = [];
-    const url = 'http://localhost:8080/api/miahoot/id/' + idMiahoot + '/question';
+    const url = 'http://localhost:8080/api/creator/1/miahoot/id/' + idMiahoot + '/question';
 
     for (let i = 0; i < this.questions.length; i++) {
       const promise = this.http.post(url, {"label" : this.questions[i].label, "answers" : []}).toPromise()
@@ -85,7 +85,7 @@ export class CreatorComponent {
 
   submitReponses(idMiahoot : Long, idQuestion : Long, answersQuestion : Answer[] ){
     const promises: Promise<Long>[] = [];
-    const url = 'http://localhost:8080/api/miahoot/id/' + idMiahoot + '/question/' + idQuestion + '/reponse';
+    const url = 'http://localhost:8080/api/creator/1/miahoot/id/' + idMiahoot + '/question/' + idQuestion + '/reponse';
 
     for (let i = 0; i < answersQuestion.length; i++) {
       const promise = this.http.post(url, {"label" : answersQuestion[i].label, "estValide" : answersQuestion[i].estValide}).toPromise() as Promise<Long>;
