@@ -1,5 +1,6 @@
-<app-login (log)="receiveLog($event)" *ngIf="log"></app-login>
-<router-outlet ></router-outlet>
+<app-login (log)="receiveLog($event)"></app-login>
+<router-outlet *ngIf="log"></router-outlet>
 
-
-
+<script src="/__/firebase/11.29.1/firebase-app.js"></script>
+<script src="/__/firebase/11.29.1/firebase-analytics.js"></script>
+<script src="/__/firebase/init.js"></script>

@@ -1,0 +1,66 @@
+.mat-toolbar-spacer {
+  margin-left: auto;
+}
+
+
+.mat-raised-button  {
+  background-color: blue;
+  color: white;
+  border-radius: 10px;
+}
+
+mat-toolbar {
+  background-color: lightgray;
+  height: 90px;
+}
+
+
+
+.mat-toolbar-row{
+  height: 90;
+}
+
+.LogoutBouton{
+  position: absolute;
+  right: 0;
+  margin : 0 70px;
+  background-color: blue;
+  color: white;
+  border-radius: 10px;
+}
+
+IMG.img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto }
+
+p{
+  text-align: center;
+  margin-top: 30px;
+
+}
+
+.ButtonQuizz{
+  background-color: grey;
+  color : black;
+  border-radius: 100px;
+  width : 150px;
+  height: 75px;
+  margin: auto;
+}
+ .div{
+  position: absolute;
+  left: 0px;
+ }
+
+ body{
+  height: 90px;
+ }
+
+ .button{
+  background : white;
+  width : 60px;
+  height: 60px;
+  border-radius: 10px;
+
+ }

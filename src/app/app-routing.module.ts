@@ -11,7 +11,7 @@ import { AllMiahootComponent } from './all-miahoot/all-miahoot.component';
 
 
 const routes: Routes = [
-{path:'', component:LoginComponent},
+{ path: '', redirectTo: '/accueil', pathMatch: 'full' },
 {path:"accueil", component:AccueilComponent},
 {path:"accountConfig", component:AccountConfigComponent},
 {path:"creator", component:CreatorComponent},
