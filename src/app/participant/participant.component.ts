@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Question } from '../question';
 import { nbParticipantService } from '../nbParticipantService';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-participant',
@@ -20,7 +21,7 @@ export class ParticipantComponent {
   participantFirstName !: string;
   participantAge !: number;
 
-  constructor(private participantService: nbParticipantService) { }
+  constructor(private router : Router, private participantService: nbParticipantService) { }
 
   //Début de jeu 
   startGame() {
@@ -35,6 +36,9 @@ export class ParticipantComponent {
 
   ngOnInit() {
     // Initialiser la première question
+    this.participantService.readyParticipants.subscribe(readyParticipants => {
+      console.log('Ready Participants: ', readyParticipants);
+    });
     this.currentQuestion = this.questions[this.currentQuestionIndex];
   }
 
@@ -54,5 +58,9 @@ export class ParticipantComponent {
     } else {
       console.log('Fin du QCM');
     }
+  }
+
+  goToPage(){
+    this.router.navigate([`/presentator/1`]);
   }
 }

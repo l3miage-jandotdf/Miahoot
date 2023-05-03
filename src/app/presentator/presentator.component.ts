@@ -20,14 +20,15 @@ export class PresentatorComponent implements OnInit {
   correctAnswer = false;    //réponse correcte
   //participantAnswers: string[] = [];    //réponses choisies par les participants
 
-  readyParticipants: number = 0;
+  nb: number = 0;
 
   constructor(private participantService: nbParticipantService) { }
 
   
   ngOnInit() {
-    this.participantService.getReadyParticipants().subscribe((count) => {
-      this.readyParticipants = count;
+    this.participantService.readyParticipants.subscribe(readyParticipants => {
+      this.nb = readyParticipants;
+      console.log('Ready Participants: ', readyParticipants);
     });
     this.currentQuestion = this.questions[this.currentQuestionIndex]; //on affiche la première question dès que le composant est affiché
   }
