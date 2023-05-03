@@ -1,9 +1,23 @@
 <app-login></app-login>
 
-<p>all-miahoot works!</p>
-
-<ul>
-    <li *ngFor="let miahoot of miahoots">
-      {{ miahoot.nom }}
-    </li>
-</ul>
+<h2>Mes Miahoots</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let miahoot of miahoots">
+      <th scope="row">{{ miahoot.id }}</th>
+      <td>{{ miahoot.nom }}</td>
+      <td>
+        <button type="button" class="modifier" (click)="editMiahoot(miahoot.id)">Modifier</button>
+        <button type="button" class="supprimer" (click)="deleteMiahoot(miahoot.id)">Supprimer</button>
+        <button type="button" class="présenter" (click)="presentMiahoot(miahoot.id)">Présenter</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from '../question';
 import { QuestionService } from '../question.service';
 
@@ -13,7 +13,7 @@ export class EditorComponent implements OnInit {
   question !: Question;
   newAnswer !: string;
 
-  constructor(private route: ActivatedRoute, private questionService: QuestionService) { }
+  constructor(private route: ActivatedRoute, private questionService: QuestionService, private router : Router) { }
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -43,6 +43,8 @@ export class EditorComponent implements OnInit {
         // rediriger vers une page de confirmation de modification
       });
   }
+
+  
 
 }
 

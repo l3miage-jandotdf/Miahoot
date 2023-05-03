@@ -28,7 +28,6 @@ import { PresentatorComponent } from './presentator/presentator.component';
 import { ParticipantComponent } from './participant/participant.component';
 import { ResultComponent } from './result/result.component';
 import { QuestionService } from './question.service';
-import { LoggedComponent } from './logged/logged.component';
 import {HttpClientModule} from "@angular/common/http";
 import { AllMiahootComponent } from './all-miahoot/all-miahoot.component';
 import { nbParticipantService } from './nbParticipantService';
@@ -46,7 +45,6 @@ import { nbParticipantService } from './nbParticipantService';
     PresentatorComponent,
     ParticipantComponent,
     ResultComponent,
-    LoggedComponent,
     AllMiahootComponent
   ],
   imports: [

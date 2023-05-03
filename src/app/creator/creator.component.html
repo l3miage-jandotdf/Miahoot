@@ -9,29 +9,6 @@
   <form (ngSubmit)="submitMiahoot()">
       <div class="form-group1">
 
-        <!--
-
-        <div class="option" *ngFor="let question of questions; index as j">
-          <label><h3>Question n°{{j+1}}</h3></label>
-          <input type="text" [(ngModel)]="question.label" [ngModelOptions]="{standalone: true}" placeholder="Écrivez votre question ici" maxlength=100 required>
-      
-          <div class="options-container">
-            <div class="option" *ngFor="let answer of question.answers; let i=index">
-              
-              <label>Réponse possible {{i+1}}:</label>
-              <input type="text" [(ngModel)]="answer.label" [ngModelOptions]="{standalone: true}" placeholder="Entrez votre reponse" maxlength=100 required>
-              <label>Réponse correcte</label> <input type="checkbox" [(ngModel)]="answer.estValide" [disabled]="alreadyOneTrueOption(question, i)" [ngModelOptions]="{standalone: true}"> 
-              
-              <div class="right">
-                <button type="button" class="btn btn-danger" (click)="removeOption(question, i)">Supprimer la réponse</button>
-              </div>
-            </div>
-            <div *ngIf='moreThanFourOptions(question)' class="right">
-              <button type="button" class="btn btn-primary" (click)="addOption(question)">Ajouter une réponse possible</button>
-            </div>
-            <button type="button" class="btn btn-danger" (click)="removeQuestion(j)">Supprimer la question</button>
-          </div> -->
-
           <div class="option" *ngFor="let question of questions; index as j">
             <div class="question-container">
               <label><h3 class="question">Question n°{{j+1}}</h3></label>
@@ -58,10 +35,6 @@
           <p class="btn">
             <button type="button" class="btn btn-primary" (click)="addQuestion()">Ajouter une question</button>
           </p>
-        
-      <!--</div>--> 
-
-
     <button type="submit" class="btn btn-primary">Créer votre Miahoot</button>
   </form>
 </div>
