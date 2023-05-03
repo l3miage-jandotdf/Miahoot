@@ -3,7 +3,7 @@
   <p>
     <input type="text" class="champ-de-saisie" placeholder="Entrez le titre de votre Miahoot ici" maxlength=100 [(ngModel)]="nom">
   </p>
-  
+
   <p class="map">Veuillez à présent éditer votre QCM</p>
 
   <form (ngSubmit)="submitMiahoot()">
@@ -17,12 +17,12 @@
               </p>
               <button type="button" class="btn btn-danger" (click)="removeQuestion(j)">Supprimer la question</button>
             </div>
-          
+
             <div class="options-container">
               <div class="option1" *ngFor="let answer of question.answers; let i=index">
                 <label>Réponse {{i+1}}: </label>
                 <input type="text" [(ngModel)]="answer.label" [ngModelOptions]="{standalone: true}" placeholder="Entrez votre réponse" maxlength=100 required>
-                <label class="rpns">Réponse correcte ?</label> <input type="checkbox" [(ngModel)]="answer.estValide" [disabled]="alreadyOneTrueOption(question, i)" [ngModelOptions]="{standalone: true}"> 
+                <label class="rpns">Réponse correcte ?</label> <input type="checkbox" [(ngModel)]="answer.estValide" [disabled]="alreadyOneTrueOption(question, i)" [ngModelOptions]="{standalone: true}">
                 <button type="button" class="btn btn-danger" (click)="removeOption(question, i)">Supprimer la réponse</button>
               </div>
               <div *ngIf='moreThanFourOptions(question)' class="right">
