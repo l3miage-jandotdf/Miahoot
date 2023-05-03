@@ -60,7 +60,6 @@ export class AllMiahootComponent implements OnInit{
   /**
    * Modifie le miahoot en allant sur la page d'édition
    * @param idMiahoot 
-   * @returns Promise résolue si la raquête réussit, rejetée en cas d'erreur
    */
   editMiahoot(idMiahoot: number): void {
     this.router.navigate([`/editor/${idMiahoot}`]);
@@ -87,7 +86,6 @@ export class AllMiahootComponent implements OnInit{
   /**
    * Présente le miahoot d'id idMiahoot en basculant sur la page du présentateur
    * @param idMiahoot 
-   * @returns Promise résolue si la raquête réussit, rejetée en cas d'erreur
    */
   presentMiahoot(idMiahoot: number): void  {
       this.router.navigate([`/presentator/${idMiahoot}`]);
