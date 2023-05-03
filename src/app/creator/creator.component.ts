@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 interface Question{
   label : String;
@@ -21,9 +23,16 @@ interface Answer {
 export class CreatorComponent {
   nom : String = "";
   questions : Question[] = [];
+  idCreator ? : number;
 
+  constructor(private http: HttpClient, private route : ActivatedRoute, private router : Router) {
+    
+  }
 
-  constructor(private http: HttpClient) {}
+  ngOnInit(): void {
+    this.idCreator = Number(this.route.snapshot.paramMap.get('idCreator'));
+    //throw new Error('Method not implemented.');
+  }
 
   addOption(question: Question): void {
     question.answers.push({label:'', estValide:false});
@@ -102,6 +111,8 @@ export class CreatorComponent {
     return Promise.reject(error.message || error);
   }
 
-
+  createMiahoot(){
+    this.router.navigate(['all-miahoot', this.idCreator]);
+  }
 
 }

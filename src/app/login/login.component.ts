@@ -43,25 +43,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  /*
-    createNewMiahoot() {
-      this.http.post('http://localhost:8080/api/miahoot', {}).subscribe(() => {
-        console.log("MIAHOOT CREE !!")
-      });
-    }
-  */
-  afficheMiahoot() {
-    this.http.get('http://localhost:8080/api/miahoot/nom/testM', {}).subscribe((response) => {
-      console.log(response);
-      console.log("MIAHOOT affiche !!");
-    });
-  }
-  createNewMiahoot() {
-    this.http.post('http://localhost:8080/api/miahoot/', { "nom": "testM" }).subscribe((response) => {
-      this.afficheMiahoot();
-      console.log("MIAHOOT CREE !!");
-    });
-  }
 
   ngOnInit(): void {
     this.dataService.getMiahootUser$().subscribe(user => {
@@ -69,20 +50,13 @@ export class LoginComponent implements OnInit {
       console.log("y'a de l'action");
     });
   }
-  /*
-    async login() {
-      this.isAuthenticating = true; // On indique que l'authentification est en cours
-      try {
-        await signInWithPopup(this.auth, new GoogleAuthProvider());
-      }
-        finally {
-        this.isAuthenticating = false; // On réinitialise la variable une fois que la promesse est résolue
-      }
-    }
-  */
+  
+
   async loginAnonymously() {
     return await signInAnonymously(this.auth);
   }
+
+
 
   async login() {
     this.isAuthenticating = true;
@@ -120,24 +94,12 @@ export class LoginComponent implements OnInit {
     );
   }
 
+
+
   goToPage(pageName: string) {
     console.log(pageName);
     this.router.navigate([`${pageName}`]);
   }
-
-
-  /* async logout() {
-     this.pageCreation=false;
-     return await signOut(this.auth);
-   }
- 
-   goToPage(pageName:string){
-     if(pageName=="/creator"){
-       this.pageCreation=true;
-     }
-     console.log(pageName);
-     this.router.navigate([`${pageName}`]);
-   }*/
 
   updatePage(): void {
     this.pageCreation = true;

@@ -13,6 +13,9 @@ export class EditorComponent implements OnInit {
   question !: Question;
   newAnswer !: string;
 
+  idMiahoot ? : number; 
+
+
   constructor(private route: ActivatedRoute, private questionService: QuestionService, private router : Router) { }
 
   ngOnInit() {
@@ -36,6 +39,7 @@ export class EditorComponent implements OnInit {
         // rediriger vers une page de confirmation de suppression
       });
   }
+
 
   submitForm() {
     this.questionService.updateQuestion(this.question)
