@@ -3,7 +3,7 @@ import { Auth, User, signOut } from 'firebase/auth';
 import { Observable, map } from 'rxjs';
 import { DataService, MiahootUser } from '../data.service';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { authState } from '@angular/fire/auth';
 import { traceUntilFirst } from '@angular/fire/performance';
 
@@ -14,8 +14,9 @@ import { traceUntilFirst } from '@angular/fire/performance';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AccueilComponent implements OnInit {
+idCreator: any;
 
-constructor(private router: Router){}
+constructor(private router: Router, private routeAct : ActivatedRoute){}
 
   goToPage(pageName:string){
     if(pageName=="/creator"){
@@ -25,8 +26,13 @@ constructor(private router: Router){}
   }
 
   ngOnInit(): void {
+    this.idCreator = Number(this.routeAct.snapshot.paramMap.get('idCreator'));
     //throw new Error('Method not implemented.');
   }
+
+  goToMyQuizs(){
+    this.router.navigate(['all-miahoot', this.idCreator]);
+  }  //le lien vers all-miahoot/{idCreator}... en cliquant sur le bouton Mes QCms
 
   /*public readonly user$?: Observable<User | null>;
   public currentUser? : User | null;
