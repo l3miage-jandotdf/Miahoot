@@ -34,7 +34,7 @@ export interface Reponse {
 
 export class AllMiahootComponent implements OnInit{
   miahoots?: Miahoot[];     //les miahoots
-  idCreator?: number;      //id du créateur
+  idCreator?: String;      //id du créateur
   private miahootConverter?: FirestoreDataConverter<Miahoot>;
 
   //constructeur
