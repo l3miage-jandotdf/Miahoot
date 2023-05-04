@@ -8,6 +8,7 @@ import { PresentatorComponent } from './presentator/presentator.component';
 import { ParticipantComponent } from './participant/participant.component';
 import { LoginComponent } from './login/login.component';
 import { AllMiahootComponent } from './all-miahoot/all-miahoot.component';
+import { EditorComponent } from './editor/editor.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
 {path:"creator/:idCreator", component:CreatorComponent},
 {path:"participant/:idMiahoot", component:ParticipantComponent},
 {path:"presentator/:idMiahoot", component:PresentatorComponent},
+{path:"editor/:idMiahoot", component:EditorComponent},
 {path:"all-miahoot/:idCreator", component:AllMiahootComponent}
 /*{ path: '**', component: NotFoundComponent }*/];
 
