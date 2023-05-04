@@ -7,6 +7,7 @@ import { DataService, MiahootUser } from '../data.service';
 import { traceUntilFirst } from '@angular/fire/performance';
 import { setDoc } from 'firebase/firestore';
 import { HttpClient } from '@angular/common/http';
+import { NavigationService } from '../navigation.service';
 
 
 @Component({
@@ -30,10 +31,9 @@ export class LoginComponent implements OnInit {
 
   @Output() log: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(@Optional() private auth: Auth, private router: Router, private dataService: DataService, private http: HttpClient/*, private window : Window*/) {
+  constructor(@Optional() private auth: Auth, private router: Router, private dataService: DataService, private http: HttpClient, private navigation : NavigationService) {
     if(this.url.startsWith("http://localhost:4200/participant/")){
-      console.log("hello");
-      this.participant=true;
+        this.participant=true;
     }
     console.log(this.url);
     console.log(this.participant)
@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
         })
       );
     }
+    navigation.id = this.currentUser?.uid;
 
   }
 
