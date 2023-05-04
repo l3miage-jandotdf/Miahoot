@@ -42,9 +42,9 @@ export class AllMiahootComponent implements OnInit{
     this.initMiahootFirebase();
   }
 
-  ngOnInit(){
-    this.idCreator = Number(this.route.snapshot.paramMap.get('idCreator'));
-    this.getMiahoots();
+  async ngOnInit(){
+    this.idCreator = String(this.route.snapshot.paramMap.get('idCreator'));
+    await this.getMiahoots();
   }
 
   initMiahootFirebase(){
@@ -114,9 +114,18 @@ export class AllMiahootComponent implements OnInit{
    */
   getMiahoots(): Promise<Miahoot[]> {
     const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/all';
+    console.log("idCreator:", this.idCreator);
     return this.http.get(url)
       .toPromise()
-      .then(reponse => this.miahoots = reponse as Miahoot[])
+      //.then(reponse => this.miahoots = reponse as Miahoot[])
+      .then(reponse => {
+        console.log('Raw response:', reponse);
+        this.miahoots = reponse as Miahoot[];
+        console.log('Miahoots:', this.miahoots);
+        return this.miahoots;
+      })
+      
+      
       .catch(this.handleError);
   }
 

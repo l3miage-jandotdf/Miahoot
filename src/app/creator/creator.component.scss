@@ -1,7 +1,16 @@
-.answer-input {
-    display: block;
-  }
 
+ /* règles de style pour les écrans de taille normale */
+@media screen and (min-width: 768px) {
+
+  .champ-de-saisie{
+    width: 50%;
+  }
+  
+  .map{
+    text-align: center;
+    margin-bottom: 70px;
+    font-size: medium;
+  }
 
   .option {
     margin-bottom: 10px;
@@ -24,60 +33,6 @@
     .col-md-2 .btn-danger {
       align-items: center;
     }
-  }
-
-  h2{
-    text-align: center;
-    margin-top: 30px;
-  }
-
-  /*body{
-
-    background-size: cover;
-
-    background-color: rgb(255, 240, 243);
-
-  }*/
-
-  #creator-body{
-    background-color: azure;
-    padding : 10px;
-    min-height: 100vh;
-  }
-
-  .form-group1{
-    align-items: center;
-    align-content: center;
-  }
-
-  #question {
-    display : block;
-    margin: 0 auto;
-    max-width: 500px;
-    width: 100%;
-  }
-
-  .area{
-    height: 10px;
-  }
-
-  .titre{
-    text-align: center;
-  }
-  .map{
-    text-align: center;
-    margin-bottom: 70px;
-    font-size: medium;
-  }
-
-  p{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .champ-de-saisie{
-    width: 50%;
   }
 
   button{
@@ -115,13 +70,192 @@
   .question-container button {
     position : absolute;
     left : auto;
-    right : 50px;
+    right : 25px;
   }
 
   .rpns{
     margin-left: 10px;
   }
 
+  .form-group1{
+    align-items: center;
+    align-content: center;
+  }
+
+  #question {
+    display : block;
+    margin: 0 auto;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .area{
+    height: 10px;
+  }
+
+  .titre{
+    text-align: center;
+  }
+  
+
+  p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .answer-input {
+    display: block;
+  }
+
+  
+  h2{
+    text-align: center;
+    margin-top: 30px;
+  }
+
+}
+
+
+  #creator-body{
+    background-image: url('../../assets/1.png');
+    background-size: cover;
+    //background-color: azure;
+    padding : 10px;
+    min-height: 100vh;
+  }
+
+
+
+  /* règles de style pour les écrans de petite taille */
+  @media screen and (max-width: 767px) {
+
+    
+  .champ-de-saisie{
+    width: 50%;
+  }
+  
+  .map{
+    text-align: center;
+    margin-bottom: 70px;
+    font-size: medium;
+  }
+
+  .option {
+    margin-bottom: 10px;
+  }
+
+  .btn {
+    margin-left: 10px;
+  }
+
+  :host {
+    .row {
+      margin-bottom: 1rem;
+    }
+    button {
+      margin-left: 1rem;
+    }
+    .col-md-2 {
+      display: flex;
+    }
+    .col-md-2 .btn-danger {
+      align-items: center;
+    }
+  }
+
+  button{
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .question{
+    text-align: center;
+  }
+
+  .inputQ{
+    display: flex;
+    display: flex;
+    flex-grow: 1;
+    margin-right: 30px;
+  }
+
+  .btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .champ{
+    width : 40%;
+  }
+
+  .question-container {
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+  }
+
+  .question-container button {
+    position : absolute;
+    left : auto;
+    right : 25px;
+  }
+
+  .rpns{
+    margin-left: 10px;
+  }
+
+  .form-group1{
+    align-items: center;
+    align-content: center;
+  }
+
+  #question {
+    display : block;
+    margin: 0 auto;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .area{
+    height: 10px;
+  }
+
+  .titre{
+    text-align: center;
+  }
+  
+
+  p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .answer-input {
+    display: block;
+  }
+
+  
+  h2{
+    text-align: center;
+    margin-top: 30px;
+  }
+    
+    
+  }
+
+ 
+
+  
+
+ 
+
+
+
+
+  
 
 
 
