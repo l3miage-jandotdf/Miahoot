@@ -1,24 +1,27 @@
 
 <h2>Mes Miahoots</h2>
-<table class="table">
+
+<div class="table-container">
+  <table class="table">
   <thead>
-    <tr>
-      <th scope="col">id-Miahoot</th>
-      <th scope="col">Titre du Miahoot</th>
-      <th scope="col">Actions</th>
-    </tr>
+  <tr>
+    <th scope="col">id-Miahoot</th>
+    <th scope="col">Titre du Miahoot</th>
+    <th scope="col">Actions</th>
+  </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let miahoot of miahoots">
-      <th scope="row">{{ miahoot.id }}</th>
-      <td>{{ miahoot.nom }}</td>
-      <td>
-        <button type="button" class="modifier" (click)="editMiahoot(miahoot.id)">Modifier</button>
-        <button type="button" class="supprimer" (click)="deleteMiahoot(miahoot.id)">Supprimer</button>
-        <button type="button" class="présenter" (click)="presentMiahoot(miahoot.id)">Présenter</button>
-      </td>
-    </tr>
+  <tr *ngFor="let miahoot of miahoots">
+    <th scope="row">{{ miahoot.id }}</th>
+    <td>{{ miahoot.nom }}</td>
+    <td>
+      <button type="button" class="btn btn-primary" (click)="editMiahoot(miahoot.id)">Modifier</button>
+      <button type="button" class="btn btn-primary" (click)="deleteMiahoot(miahoot.id)">Supprimer</button>
+      <button type="button" class="btn btn-primary" (click)="presentMiahoot(miahoot.id)">Présenter</button>
+    </td>
+  </tr>
   </tbody>
-</table>
+  </table>
+</div>
 
 
