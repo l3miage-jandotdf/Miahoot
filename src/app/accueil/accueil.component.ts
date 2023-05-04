@@ -19,6 +19,7 @@ idCreator?: String;
 
 constructor(private router: Router, private routeAct : ActivatedRoute, private navigation:  NavigationService){
   this.idCreator = navigation.id;
+  console.log("dans accueil id = ",navigation.id);
 }
 
   goToPage(pageName:string){
