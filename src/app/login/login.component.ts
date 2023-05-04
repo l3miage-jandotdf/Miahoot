@@ -89,10 +89,10 @@ export class LoginComponent implements OnInit {
           }
         });
 
-        if(this.url=="http://localhost:4200/"){
+        if(this.url.startsWith("http://localhost:4200")){
           this.goToPage("/accueil");
         }
-        else if(this.url=="http://localhost:4200/participant/*"){
+        else if(this.url.startsWith("http://localhost:4200/participant/")){
         }
         this.log.emit(true);
 
@@ -122,9 +122,9 @@ export class LoginComponent implements OnInit {
   }
 
   async logout() {
-    if(this.url=="http://localhost/participant/*"){
+    if(this.url.startsWith("http://localhost:4200/participant/")){
       }
-    else if(this.url=="http://localhost/*"){
+    else if(this.url.startsWith("http://localhost:4200")){
         this.goToPage('');
       }
     this.log.emit(false);
