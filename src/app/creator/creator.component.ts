@@ -64,7 +64,7 @@ export class CreatorComponent {
   }
 
   submitMiahoot(){
-      const url = `http://localhost:8080/api/creator/`+ this.idCreator+`/miahoot/`;
+      const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/';
       return this.http.post(url, { "nom": this.nom })
       .toPromise()
       .then(idMiahoot => {
