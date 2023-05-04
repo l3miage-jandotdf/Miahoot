@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
   @Output() log: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(@Optional() private auth: Auth, private router: Router, private dataService: DataService, private http: HttpClient/*, private window : Window*/) {
-    if(this.url.startsWith("http://localhost:4200/participant/")){
+    if(this.url.startsWith("https://miahoot-jandot.web.app/participant")){
       console.log("hello");
       this.participant=true;
     }
@@ -86,10 +86,10 @@ export class LoginComponent implements OnInit {
           }
         });
 
-        if(this.url=="http://localhost:4200/"){
+        if(this.url.startsWith("https://miahoot-jandot.web.app/")){
           this.goToPage("/accueil");
         }
-        else if(this.url=="http://localhost:4200/participant/*"){
+        else if(this.url=="https://miahoot-jandot.web.app/participant/*"){
         }
         this.log.emit(true);
 
