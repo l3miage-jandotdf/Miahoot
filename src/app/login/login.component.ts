@@ -43,8 +43,9 @@ export class LoginComponent implements OnInit {
         traceUntilFirst('auth'),
         map(u => {
           this.currentUser = u;
-          navigation.id = u?.uid;
-          console.log("dans login id = ",navigation.id);
+          if(this.currentUser!=null){
+          this.navigation.setId(this.currentUser?.uid)
+          }
           return !!u
         })
       );

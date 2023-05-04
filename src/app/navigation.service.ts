@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
+@Injectable({
+  providedIn: 'root'
+})
 
 export class NavigationService {
-  id : String | undefined;
+  private idsubject = new BehaviorSubject<string>('');
+  public id$ = this.idsubject.asObservable();
 
-  constructor() {
-    console.log("dans le service id = ",this.id)
-   }
+  setId(value : string){
+    this.idsubject.next(value);
+  }
 }

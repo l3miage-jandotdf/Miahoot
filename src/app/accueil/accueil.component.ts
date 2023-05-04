@@ -15,18 +15,15 @@ import { NavigationService } from '../navigation.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AccueilComponent implements OnInit {
-idCreator?: String;
+public idCreator?: String;
 
 constructor(private router: Router, private routeAct : ActivatedRoute, private navigation:  NavigationService){
-  this.idCreator = navigation.id;
-  console.log("dans accueil id = ",navigation.id);
+  this.navigation.id$.subscribe(value => this.idCreator=value);
+  console.log("dans accueil id = ", this.idCreator);
 }
 
-  goToPage(pageName:string){
-    if(pageName=="/creator"){
-    }
-    console.log(pageName);
-    this.router.navigate([`${pageName}`]);
+  goToPage(){
+    this.router.navigate(['/creator', this.idCreator]);
   }
 
   ngOnInit(): void {
