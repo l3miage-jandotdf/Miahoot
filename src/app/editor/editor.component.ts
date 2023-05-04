@@ -35,26 +35,6 @@ export class EditorComponent implements OnInit {
     this.idCreator = Number(this.route.snapshot.paramMap.get('idCreator'));
   }
 
-  /*addAnswer() {
-    this.question.answers.push(this.newAnswer);
-    this.newAnswer = '';
-  }
-
-  removeAnswer(index: number) {
-    this.question.answers.splice(index, 1);
-  }
-
-  addQuestion(): void{
-    this.questions.push({
-      text: '', answers: [],
-      id: 0,
-      correctAnswerIndex: 0
-    });
-  }
-
-  removeQuestion(index: number): void{
-    this.questions.splice(index, 1);
-  }*/
 
   addOption(question: Question): void {
     question.answers.push({label:'', estValide:false});
@@ -73,15 +53,6 @@ export class EditorComponent implements OnInit {
   }
 
 
-  /*
-  async submitForm() {
-    try {
-      await this.questionService.updateQuestion(this.question).toPromise();
-      this.router.navigate(['all-miahoot', this.idCreator]);
-    } catch (handleError){}
-  }*/
-
-
   /**
    * 
    * @returns Soumission des modifications
@@ -93,17 +64,11 @@ export class EditorComponent implements OnInit {
     .then(idMiahoot => {
       console.log('Le miahoot d id' + idMiahoot + 'a été modifié')
       this.router.navigate(['all-miahoot', this.idCreator]);
+      this.router.navigate(['all-miahoot', this.idCreator]);
     })
     .catch(this.handleError);
   }
   
-/**
- * Une fois que les modifications ont été faites, on retourne sur la page de tous les miahoots
- */
-  saveChanges(){
-    this.router.navigate(['all-miahoot', this.idCreator]);
-  }
-
 
 
   private handleError(error: any): Promise<Array<any>> {
