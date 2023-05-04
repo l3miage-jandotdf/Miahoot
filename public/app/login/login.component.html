@@ -1,10 +1,11 @@
-<body style="background-color:whitesmoke;">
+<body>
   <p></p>
 <mat-toolbar>
   <img src="../../assets/logo.png" width="90" height="90" *ngIf="!(isLoggedIn$ | async) && !isAuthenticating"/>
     <div class="mat-toolbar-row">
       <div *ngIf="!(isLoggedIn$ | async) && !isAuthenticating" class="mat-toolbar-spacer">
         <button class="mat-raised-button mat-primary" (click)="login()">Se connecter avec Google</button>
+        <button class="mat-raised-button mat-primary" (click)="loginAnonymously()" *ngIf="participant">Se connecter anonymement</button>
       </div>
 
     </div>
@@ -23,13 +24,6 @@
   <button class="button" *ngIf="isLoggedIn$ | async">
     <img src="../../assets/accueil.png" width="50" height="50" />
   </button>
-
-
-
-
-  <!--<div *ngIf="(isLoggedIn$ | async) && !pageCreation">
-    <app-accueil></app-accueil>
-    </div>-->
 </body>
 
 <script src="/__/firebase/11.29.1/firebase-app.js"></script>

@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 interface Question{
   label : String;
@@ -21,9 +23,16 @@ interface Answer {
 export class CreatorComponent {
   nom : String = "";
   questions : Question[] = [];
+  idCreator ? : String;
 
+  constructor(private http: HttpClient, private route : ActivatedRoute, private router : Router) {
+    
+  }
 
-  constructor(private http: HttpClient) {}
+  ngOnInit(): void {
+    this.idCreator = String(this.route.snapshot.paramMap.get('idCreator'));
+    //throw new Error('Method not implemented.');
+  }
 
   addOption(question: Question): void {
     question.answers.push({label:'', estValide:false});
@@ -55,19 +64,21 @@ export class CreatorComponent {
   }
 
   submitMiahoot(){
-      const url = 'http://localhost:8080/api/creator/1/miahoot/';
+      const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/';
       return this.http.post(url, { "nom": this.nom })
       .toPromise()
       .then(idMiahoot => {
         console.log('Miahoot créé avec l id '+ idMiahoot)
         this.submitQuestions(idMiahoot as Long);
+        this.router.navigate(['all-miahoot', this.idCreator]);
       })
       .catch(this.handleError);
+
   }
 
   submitQuestions(idMiahoot : Long){
     const promises: Promise<Long>[] = [];
-    const url = 'http://localhost:8080/api/miahoot/id/' + idMiahoot + '/question';
+    const url = 'http://localhost:8080/api/miahoot/' + idMiahoot + '/question/';
 
     for (let i = 0; i < this.questions.length; i++) {
       const promise = this.http.post(url, {"label" : this.questions[i].label, "answers" : []}).toPromise()
@@ -85,7 +96,7 @@ export class CreatorComponent {
 
   submitReponses(idMiahoot : Long, idQuestion : Long, answersQuestion : Answer[] ){
     const promises: Promise<Long>[] = [];
-    const url = 'http://localhost:8080/api/miahoot/id/' + idMiahoot + '/question/' + idQuestion + '/reponse';
+    const url = 'http://localhost:8080/api/miahoot/id/' + idMiahoot + '/question/' + idQuestion + '/reponse/';
 
     for (let i = 0; i < answersQuestion.length; i++) {
       const promise = this.http.post(url, {"label" : answersQuestion[i].label, "estValide" : answersQuestion[i].estValide}).toPromise() as Promise<Long>;
@@ -102,6 +113,8 @@ export class CreatorComponent {
     return Promise.reject(error.message || error);
   }
 
-
+  createMiahoot(){
+    this.router.navigate(['all-miahoot', this.idCreator]);
+  }
 
 }

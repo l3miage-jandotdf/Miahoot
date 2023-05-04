@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./participant.component.scss']
 })
 export class ParticipantComponent {
+  @Output() participant = new EventEmitter<boolean>();
+
 
   @Input() questions: Question[] = [];
   currentQuestionIndex = 0;
@@ -21,9 +23,11 @@ export class ParticipantComponent {
   participantFirstName !: string;
   participantAge !: number;
 
-  constructor(private router : Router, private participantService: nbParticipantService) { }
+  constructor(private router : Router, private participantService: nbParticipantService) {
+    this.participant.emit(true);
+  }
 
-  //Début de jeu 
+  //Début de jeu
   startGame() {
     const participantData = {
       name: this.participantName,
