@@ -1,12 +1,18 @@
 <app-login></app-login>
-<h2>Bienvenue sur le Miahoot ! Pour commencer, veuillez renseigner les informations ci-dessous.</h2>
-    <form (ngSubmit)="startGame()">
-      <div>
-        <label>Pseudo :</label>
-        <input type="text" placeholder="Saisissez votre nom" [(ngModel)]="participantName" name="name" required>
-      </div>
-      <button type="submit" [disabled]="!participantName || !participantFirstName || !participantAge">Commencer</button>
-    </form>
+<div *ngIf="!partieCommencee">
+  <h2>Bienvenue sur le Miahoot ! Pour commencer, veuillez renseigner les informations ci-dessous.</h2>
+      <form (ngSubmit)="startGame()">
+        <div>
+          <label>Pseudo :</label>
+          <input type="text" placeholder="Saisissez votre nom" [(ngModel)]="participantName" name="name" required>
+        </div>
+        <button type="submit" [disabled]="!participantName" (click)="commencerPartie()">Commencer</button>
+      </form>
+  </div>
+
+<div *ngIf="partieCommencee">
+  <h2>La partie va bientôt commencer ...</h2>
+</div>
 
 <div class="question-container">
     <!--<h2>{{ currentQuestion?.text }}</h2>-
@@ -16,11 +22,6 @@
         {{ answer }}
       </li>
     </ul>-->
-  </div>
-
-  <div class="pyro">
-    <div class="before"></div>
-    <div class="after"></div>
   </div>
 
 <script src="/__/firebase/11.29.1/firebase-app.js"></script>
