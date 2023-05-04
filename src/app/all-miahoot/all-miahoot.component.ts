@@ -168,8 +168,6 @@ export class AllMiahootComponent implements OnInit{
       this.router.navigate([`/presentator/${idMiahoot}`]);
 
   }
-
-
  
   
 }
