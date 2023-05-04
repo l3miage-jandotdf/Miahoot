@@ -48,6 +48,38 @@ export class EditorComponent implements OnInit {
 
   removeQuestion(index: number): void{
     this.questions.splice(index, 1);
+  }*/
+
+  addOption(question: Question): void {
+    question.answers.push({label:'', estValide:false});
+  }
+
+  removeOption(question: Question, index: number): void {
+    question.answers.splice(index, 1);
+  }
+
+  addQuestion(): void{
+    this.questions.push({label:'', answers:[]});
+  }
+
+  removeQuestion(index: number): void{
+    this.questions.splice(index, 1);
+  }*/
+
+  addOption(question: Question): void {
+    question.answers.push({label:'', estValide:false});
+  }
+
+  removeOption(question: Question, index: number): void {
+    question.answers.splice(index, 1);
+  }
+
+  addQuestion(): void{
+    this.questions.push({label:'', answers:[]});
+  }
+
+  removeQuestion(index: number): void{
+    this.questions.splice(index, 1);
   }
 
 

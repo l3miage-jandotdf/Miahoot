@@ -1,10 +1,10 @@
-/*import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 
 interface Question{
   label : String;
-  answers: Answer[];
+  //answers: Answer[];
 }
 
 @Component({
@@ -13,7 +13,7 @@ interface Question{
   styleUrls: ['./presentator.component.scss']
 })
 
-export class PresentatorComponent implements OnInit {
+export class PresentatorComponent {
 
   //On prend en entrée les QCMs
   @Input() questions: Question[] = [];
@@ -26,7 +26,7 @@ export class PresentatorComponent implements OnInit {
 
   nb: number = 0;
 
-  //constructor(private participantService: nbParticipantService) { }
+  constructor() { }
 
   
   /*ngOnInit() {
@@ -61,5 +61,5 @@ export class PresentatorComponent implements OnInit {
       this.currentQuestionIndex++;          //on prend l'index de la question suivante 
       this.showQuestion(this.currentQuestionIndex);   //on l'affiche
     }
-  }
-}*/
+  }*/
+}

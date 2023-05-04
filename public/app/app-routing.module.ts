@@ -11,10 +11,10 @@ import { AllMiahootComponent } from './all-miahoot/all-miahoot.component';
 
 
 const routes: Routes = [
-{path:'', component:LoginComponent},
+{ path: '', component:LoginComponent},
 {path:"accueil", component:AccueilComponent},
 {path:"accountConfig", component:AccountConfigComponent},
-{path:"creator", component:CreatorComponent},
+{path:"creator/:idCreator", component:CreatorComponent},
 {path:"participant/:idMiahoot", component:ParticipantComponent},
 {path:"presentator/:idMiahoot", component:PresentatorComponent},
 {path:"all-miahoot/:idCreator", component:AllMiahootComponent}

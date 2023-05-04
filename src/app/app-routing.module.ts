@@ -4,8 +4,8 @@ import { AccountConfigComponent } from './account-config/account-config.componen
 import { AccueilComponent } from './accueil/accueil.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { CreatorComponent } from './creator/creator.component';
-//import { PresentatorComponent } from './presentator/presentator.component';
-//import { ParticipantComponent } from './participant/participant.component';
+import { PresentatorComponent } from './presentator/presentator.component';
+import { ParticipantComponent } from './participant/participant.component';
 import { LoginComponent } from './login/login.component';
 import { AllMiahootComponent } from './all-miahoot/all-miahoot.component';
 import { EditorComponent } from './editor/editor.component';
@@ -16,8 +16,8 @@ const routes: Routes = [
 {path:"accueil", component:AccueilComponent},
 {path:"accountConfig", component:AccountConfigComponent},
 {path:"creator/:idCreator", component:CreatorComponent},
-//{path:"participant/:idMiahoot", component:ParticipantComponent},
-//{path:"presentator/:idMiahoot", component:PresentatorComponent},
+{path:"participant/:idMiahoot", component:ParticipantComponent},
+{path:"presentator/:idMiahoot", component:PresentatorComponent},
 {path:"editor/:idMiahoot", component:EditorComponent},
 {path:"all-miahoot/:idCreator", component:AllMiahootComponent}
 /*{ path: '**', component: NotFoundComponent }*/];

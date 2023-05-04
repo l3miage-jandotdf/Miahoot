@@ -20,8 +20,9 @@ export class LoginComponent implements OnInit {
   public readonly user$?: Observable<User | null>;
   public currentUser?: User | null;
   miahootUser: MiahootUser | undefined;
-  pageCreation = false;
+  participant=false;
 
+  url = window.location.href;
 
   public readonly isLoggedIn$?: Observable<boolean>;
 
@@ -29,7 +30,13 @@ export class LoginComponent implements OnInit {
 
   @Output() log: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(@Optional() private auth: Auth, private router: Router, private dataService: DataService, private http: HttpClient) {
+  constructor(@Optional() private auth: Auth, private router: Router, private dataService: DataService, private http: HttpClient/*, private window : Window*/) {
+    if(this.url.startsWith("http://localhost:4200/participant/")){
+      console.log("hello");
+      this.participant=true;
+    }
+    console.log(this.url);
+    console.log(this.participant)
     if (auth) {
       this.user$ = authState(this.auth);
       this.isLoggedIn$ = authState(this.auth).pipe(
@@ -39,29 +46,10 @@ export class LoginComponent implements OnInit {
           return !!u
         })
       );
-      this.pageCreation = false;
     }
+
   }
 
-  /*
-    createNewMiahoot() {
-      this.http.post('http://localhost:8080/api/miahoot', {}).subscribe(() => {
-        console.log("MIAHOOT CREE !!")
-      });
-    }
-  */
-  afficheMiahoot() {
-    this.http.get('http://localhost:8080/api/miahoot/nom/testM', {}).subscribe((response) => {
-      console.log(response);
-      console.log("MIAHOOT affiche !!");
-    });
-  }
-  createNewMiahoot() {
-    this.http.post('http://localhost:8080/api/miahoot/', { "nom": "testM" }).subscribe((response) => {
-      this.afficheMiahoot();
-      console.log("MIAHOOT CREE !!");
-    });
-  }
 
   ngOnInit(): void {
     this.dataService.getMiahootUser$().subscribe(user => {
@@ -69,20 +57,14 @@ export class LoginComponent implements OnInit {
       console.log("y'a de l'action");
     });
   }
-  /*
-    async login() {
-      this.isAuthenticating = true; // On indique que l'authentification est en cours
-      try {
-        await signInWithPopup(this.auth, new GoogleAuthProvider());
-      }
-        finally {
-        this.isAuthenticating = false; // On réinitialise la variable une fois que la promesse est résolue
-      }
-    }
-  */
+
+
   async loginAnonymously() {
+    this.log.emit(true);
     return await signInAnonymously(this.auth);
   }
+
+
 
   async login() {
     this.isAuthenticating = true;
@@ -103,7 +85,15 @@ export class LoginComponent implements OnInit {
             console.log('User already exists');
           }
         });
+
+        if(this.url=="http://localhost:4200/"){
+          this.goToPage("/accueil");
+        }
+        else if(this.url=="http://localhost:4200/participant/*"){
+        }
         this.log.emit(true);
+
+
       }
     } finally {
       this.isAuthenticating = false;
@@ -118,32 +108,23 @@ export class LoginComponent implements OnInit {
         console.log('Creator a echoué', error);
       }
     );
+
   }
+
+
 
   goToPage(pageName: string) {
     console.log(pageName);
     this.router.navigate([`${pageName}`]);
   }
 
-
-  /* async logout() {
-     this.pageCreation=false;
-     return await signOut(this.auth);
-   }
- 
-   goToPage(pageName:string){
-     if(pageName=="/creator"){
-       this.pageCreation=true;
-     }
-     console.log(pageName);
-     this.router.navigate([`${pageName}`]);
-   }*/
-
-  updatePage(): void {
-    this.pageCreation = true;
-  }
-
   async logout() {
+    if(this.url=="http://localhost/participant/*"){
+      }
+    else if(this.url=="http://localhost/*"){
+        this.goToPage('');
+      }
+    this.log.emit(false);
     return await signOut(this.auth);
   }
 
