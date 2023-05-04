@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
-
 interface Question{
   label : String;
   answers: Answer[];
@@ -35,21 +34,32 @@ export class EditorComponent implements OnInit {
     this.idCreator = Number(this.route.snapshot.paramMap.get('idCreator'));
   }
 
-  /*addAnswer() {
-    this.question.answers.push(this.newAnswer);
-    this.newAnswer = '';
+  addAnwser(question: Question): void {
+    question.answers.push({label:'', estValide:false});
   }
 
-  removeAnswer(index: number) {
-    this.question.answers.splice(index, 1);
+  removeAnswer(question: Question, index: number): void {
+    question.answers.splice(index, 1);
   }
 
   addQuestion(): void{
-    this.questions.push({
-      text: '', answers: [],
-      id: 0,
-      correctAnswerIndex: 0
-    });
+    this.questions.push({label:'', answers:[]});
+  }
+
+  removeQuestion(index: number): void{
+    this.questions.splice(index, 1);
+  }*/
+
+  addOption(question: Question): void {
+    question.answers.push({label:'', estValide:false});
+  }
+
+  removeOption(question: Question, index: number): void {
+    question.answers.splice(index, 1);
+  }
+
+  addQuestion(): void{
+    this.questions.push({label:'', answers:[]});
   }
 
   removeQuestion(index: number): void{
