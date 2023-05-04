@@ -27,6 +27,7 @@ export class EditorComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private questionService: QuestionService, private router : Router, private http : HttpClient) { }
 
+  
   ngOnInit() {
     this.idMiahoot = Number(this.route.snapshot.paramMap.get('idMiahoot'));
     this.idCreator = Number(this.route.snapshot.paramMap.get('idCreator'));
@@ -68,11 +69,12 @@ export class EditorComponent implements OnInit {
    * @returns Soumission des modifications
    */
   submit(){
-    const url = 'http://localhost:8080/api/' + this.idCreator +'/1/miahoot/';
+    const url = 'http://localhost:8080/api/creator/' + this.idCreator +'/miahoot/'+this.idMiahoot+'/';
     return this.http.post(url, {})
     .toPromise()
     .then(idMiahoot => {
       console.log('Le miahoot d id' + idMiahoot + 'a été modifié')
+      this.router.navigate(['all-miahoot', this.idCreator]);
     })
     .catch(this.handleError);
   }

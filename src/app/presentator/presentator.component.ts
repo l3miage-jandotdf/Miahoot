@@ -1,7 +1,11 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { Question } from '../question';
-import { nbParticipantService } from '../nbParticipantService';
+/*import { Component, Inject, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
+
+interface Question{
+  label : String;
+  answers: Answer[];
+}
 
 @Component({
   selector: 'app-presentator',
@@ -22,10 +26,10 @@ export class PresentatorComponent implements OnInit {
 
   nb: number = 0;
 
-  constructor(private participantService: nbParticipantService) { }
+  //constructor(private participantService: nbParticipantService) { }
 
   
-  ngOnInit() {
+  /*ngOnInit() {
     this.participantService.readyParticipants.subscribe(readyParticipants => {
       this.nb = readyParticipants;
       console.log('Ready Participants: ', readyParticipants);
@@ -58,4 +62,4 @@ export class PresentatorComponent implements OnInit {
       this.showQuestion(this.currentQuestionIndex);   //on l'affiche
     }
   }
-}
+}*/
