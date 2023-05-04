@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { authState } from '@angular/fire/auth';
 import { traceUntilFirst } from '@angular/fire/performance';
+import { NavigationService } from '../navigation.service';
 
 @Component({
   selector: 'app-accueil',
@@ -14,9 +15,11 @@ import { traceUntilFirst } from '@angular/fire/performance';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AccueilComponent implements OnInit {
-idCreator: any;
+idCreator?: String;
 
-constructor(private router: Router, private routeAct : ActivatedRoute){}
+constructor(private router: Router, private routeAct : ActivatedRoute, private navigation:  NavigationService){
+  this.idCreator = navigation.id;
+}
 
   goToPage(pageName:string){
     if(pageName=="/creator"){
@@ -26,7 +29,7 @@ constructor(private router: Router, private routeAct : ActivatedRoute){}
   }
 
   ngOnInit(): void {
-    this.idCreator = Number(this.routeAct.snapshot.paramMap.get('idCreator'));
+    //this.idCreator = Number(this.routeAct.snapshot.paramMap.get('idCreator'));
     //throw new Error('Method not implemented.');
   }
 

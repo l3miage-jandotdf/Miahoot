@@ -1,32 +1,26 @@
-<p>participant works!</p>
-
 <h2>Bienvenue sur le Miahoot ! Pour commencer, veuillez renseigner les informations ci-dessous.</h2>
     <form (ngSubmit)="startGame()">
       <div>
-        <label>Nom :</label>
+        <label>Pseudo :</label>
         <input type="text" placeholder="Saisissez votre nom" [(ngModel)]="participantName" name="name" required>
-      </div>
-      <div>
-        <label>Prénom :</label>
-        <input type ="text" placeholder= "Saisissez votre prénom" [(ngModel)]="participantFirstName" name="firstName" required>
-      </div>
-      <div>
-        <label>Âge :</label>
-        <input  placeholder=" Saissisez votre âge" [(ngModel)]="participantAge" name="age" type="number" min="18" required>
       </div>
       <button type="submit" [disabled]="!participantName || !participantFirstName || !participantAge">Commencer</button>
     </form>
 
 <div class="question-container">
-    <h2>{{ currentQuestion?.text }}</h2>
+    <!--<h2>{{ currentQuestion?.text }}</h2>-
     <ul>
       <li *ngFor="let answer of currentQuestion?.answers; let i = index"
           (click)="selectAnswer(answer)">
         {{ answer }}
       </li>
-    </ul>
+    </ul>-->
   </div>
 
+  <div class="pyro">
+    <div class="before"></div>
+    <div class="after"></div>
+  </div>
 
 <script src="/__/firebase/11.29.1/firebase-app.js"></script>
 <script src="/__/firebase/11.29.1/firebase-analytics.js"></script>

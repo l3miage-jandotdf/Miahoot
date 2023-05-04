@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -27,10 +28,11 @@ import { EditorComponent } from './editor/editor.component';
 import { PresentatorComponent } from './presentator/presentator.component';
 import { ParticipantComponent } from './participant/participant.component';
 import { ResultComponent } from './result/result.component';
-import { QuestionService } from './question.service';
+//import { QuestionService } from './question.service';
 import {HttpClientModule} from "@angular/common/http";
 import { AllMiahootComponent } from './all-miahoot/all-miahoot.component';
-import { nbParticipantService } from './nbParticipantService';
+//import { nbParticipantService } from './nbParticipantService';
+import { NavigationService } from './navigation.service';
 
 
 @NgModule({
@@ -67,7 +69,7 @@ import { nbParticipantService } from './nbParticipantService';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [QuestionService, nbParticipantService],
+  providers: [NavigationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
