@@ -33,6 +33,15 @@ export interface Reponse {
 })
 
 export class AllMiahootComponent implements OnInit{
+
+  
+  playClickSound() {
+    const audio = new Audio();
+    audio.src = '../assets/clickSoundAllMiahoot.mp3'; 
+    audio.load();
+    audio.play();
+  }
+  
   miahoots?: Miahoot[];     //les miahoots
   idCreator?: String;      //id du créateur
 
@@ -121,7 +130,7 @@ export class AllMiahootComponent implements OnInit{
    * @param idMiahoot 
    */
   editMiahoot(idMiahoot: number): void {
-    this.router.navigate([`/editor/${idMiahoot}`]);
+    this.router.navigate([`/editor/${this.idCreator}/${idMiahoot}`]);
 
   }
   

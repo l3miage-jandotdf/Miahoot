@@ -1,21 +1,14 @@
 <app-login></app-login>
-<!-- <h1>Editer le Miahoot dont le titre est : "{{ miahoot.nom }}"</h1>
-<form (ngSubmit)="submitMiahoot()">
-  <div *ngFor="let question of miahoot.questions; let i = index">
-    <h2>Question {{ i + 1 }}</h2>
-    <input [(ngModel)]="question.label" name="question_{{ i }}_label" />
-    <button type="button" (click)="removeQuestion(i)">Supprimer la question</button>
-    <div *ngFor="let answer of question.answers; let j = index">
-      <label>
-        <input type="radio" [(ngModel)]="answer.estValide"  name="question_{{ i }}_answer">
 
-      -->
-
-
-      <div class="container">
+     <div class="container">
         <div class="row">
           <div class="col-12">
-            <h2>Editer Miahoot</h2>
+            <h2>Bienvenu sur la page d'édition de votre miahoot '{{miahoot.nom}}'. Vous avez la possibilité d'ajouter et/ou de supprimer des questions.
+                Vous pouvez également ajouter et/ou supprimer des réponses pour chaque question.
+                Quand vous aurez terminé, n'oubliez pas de sauvegarder vos modifications <img src="../../assets/emoji_rire.png" width="20" height="18"> .
+
+                Vous avez changé d'avis entre temps  <img src="../../assets/emoji_question.png" width="20" height="18"> ? Cliquez juste sur le bouton Annuler <img src="../../assets/em.png" width="20" height="18"> . 
+            </h2>
           </div>
         </div>
       
@@ -23,7 +16,7 @@
           <div class="row">
             <div class="col-12 mb-3">
               <label for="nom" class="form-label">Nom du Miahoot</label>
-              <input type="text" class="form-control" id="nom" name="nom" [(ngModel)]="miahoot.nom" required>
+              <input type="text" class="form-control" id="nom" name="nom" [ngModel]="miahoot.nom" required> 
             </div>
           </div>
       
@@ -35,36 +28,37 @@
             </div>
             <div class="col-12">
               <div class="list-group">
-                <div *ngFor="let question of questions; let i = index" class="list-group-item">
+                <div *ngFor="let question of questions; let i = index" class="list-group-item"> 
                   <div class="form-group mb-3">
                     <label for="question-{{i}}">Question {{i + 1}}</label>
                     <input type="text" class="form-control" id="question-{{i}}" name="question-{{i}}" [(ngModel)]="question.label" required>
                   </div>
-                  <div *ngIf="question.answers.length > 0">
-                    <div class="form-group mb-3">
-                      <label for="answers-{{i}}">Réponses</label>
-                      <div id="answers-{{i}}">
-                        <div *ngFor="let answer of question?.answers; let j = index" class="form-check">
-                          <input type="radio" class="form-check-input" id="answer-{{i}}-{{j}}" name="answer-{{i}}" [(ngModel)]="answer.estValide" [value]="true" required>
-                          <label class="form-check-label" for="answer-{{i}}-{{j}}">Réponse {{j + 1}}</label>
-                          <input type="text" class="form-control" id="answer-{{i}}-{{j}}-label" name="answer-{{i}}-{{j}}-label" [(ngModel)]="answer.label" required>
-                        </div>
+                  <!---->
+                  <div class="form-group mb-3">
+                    <label for="answers-{{i}}">Réponses</label>
+                    <div id="answers-{{i}}">
+                      <div *ngFor="let answer of question?.answers; let j = index" class="form-check">
+                        <label class="form-check-label" for="answer-{{i}}-{{j}}">Réponse {{j + 1}}</label>
+                        <input type="text"  class ="inputR" [(ngModel)]="answer.label" [ngModelOptions]="{standalone: true}" placeholder="Entrez votre réponse" maxlength=100 required>
+                        <label class="rpns">Réponse correcte ?</label><input type="checkbox" [(ngModel)]="answer.estValide" [disabled]="alreadyOneTrueOption(question, i)" [ngModelOptions]="{standalone: true}">
+                        <button  type="button" class="btn btn-success" (click)="removeAnswer(question, i)">Supprimer la réponse</button>
                       </div>
+                      <button type="button" class="btn btn-success" (click)="addAnswer(question)">Ajouter une réponse</button>
                     </div>
-                    <button type="button" class="btn btn-danger mb-3" (click)="removeQuestion(i)">Supprimer cette question</button>
                   </div>
+                  <button type="button" class="btn btn-success" (click)="removeQuestion(i)">Supprimer cette question</button>
                 </div>
               </div>
             </div>
           </div>
       
-          <button type="button" class="btn btn-primary" (click)="addQuestion()">Ajouter une question</button>
+          <button type="button" class="btn btn-success" (click)="addQuestion()">Ajouter une question</button>
           <hr>
       
-          <button type="submit" class="btn btn-success">Sauvegarder</button>
-          <button type="button" class="btn btn-secondary" (click)="cancel()">Annuler</button>
+          <button type="submit" class="btn btn-primary">Sauvegarder</button>
+          <button type="button" class="btn btn-danger mb-3" (click)="cancel()">Annuler</button>
         </form>
-      </div>
+      </div> 
       
 
 
