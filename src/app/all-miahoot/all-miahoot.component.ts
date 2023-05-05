@@ -10,6 +10,7 @@ import { collection, query, QuerySnapshot, where, setDoc } from 'firebase/firest
 export interface Miahoot {
   id: number;
   nom: string;
+  questionCourante: number | null;
   questions: Question[];
 }
 
@@ -37,8 +38,9 @@ export class AllMiahootComponent implements OnInit{
 
 
   miahootTest: Miahoot = {
-    id: 5555,
-    nom: 'Mon cinquieme Miahoot',
+    id: 6666,
+    nom: 'Mon sixieme Miahoot',
+    questionCourante: null,
     questions: [
       {
         id: 1,
@@ -66,7 +68,8 @@ export class AllMiahootComponent implements OnInit{
   async addMiahoot(miahoot: Miahoot): Promise<void> {
     const miahootDocRef = doc(this.firestore, 'miahoots', miahoot.id.toString());
     const miahootData = {
-      nom: miahoot.nom
+      nom: miahoot.nom,
+      questionCourante: miahoot.questions.length > 0 ? miahoot.questions[0].id : null
     };
     await setDoc(miahootDocRef, miahootData);
 
