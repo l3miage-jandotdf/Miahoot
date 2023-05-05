@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Injectable } from '@angular/core';
 import { Firestore, doc, DocumentData, DocumentSnapshot, getDoc, updateDoc } from '@angular/fire/firestore';
 import { Question } from '../miahoot.model';
 
@@ -17,10 +15,8 @@ export class PresentatorComponent {
   @Input() questions: Question[] = [];
 
   currentQuestion? : Question | null;
-  currentQuestionIndex!: number | null;
+  currentQuestionIndex: number | null=1;
   idMiahoot! : number;
-
-  nb: number = 0;
 
   constructor(private route : ActivatedRoute, private router : Router, private firestore : Firestore) {}
 
@@ -67,32 +63,34 @@ export class PresentatorComponent {
     }
   }
 
-  async setNextQuestionCourante(miahootId: number): Promise<void> {
-    const miahootDocRef = doc(this.firestore, 'miahoots', miahootId.toString());
+  async setNextQuestionCourante(): Promise<void> {
+    const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
     const miahootDocSnapshot: DocumentSnapshot<DocumentData> = await getDoc(miahootDocRef);
   
     if (miahootDocSnapshot.exists()) {
       const miahootData = miahootDocSnapshot.data();
-      const currentQuestionIndex = miahootData?.['questionCourante'];
       const questions = miahootData?.['questions'];
+      const currentQuestionIndex = miahootData?.['questionCourante'];
   
-      if (currentQuestionIndex != undefined && questions != undefined) {
-        const nextQuestionIndex = currentQuestionIndex + 1;
-        if (nextQuestionIndex < questions.length) {
-          const newQuestionRef = doc(this.firestore, 'miahoots', miahootId.toString(), 'questions', nextQuestionIndex.toString());
-          await updateDoc(miahootDocRef, {
-            questionCourante: nextQuestionIndex
-          });
-        } else {
-          // Si c'est la dernière question, on ne peut pas mettre la suivante comme question courante
-          console.error("Impossible de mettre la prochaine question comme question courante car c'est la dernière question");
-        }
+      let nextQuestionIndex;
+      if (currentQuestionIndex === null || currentQuestionIndex === undefined) {
+        nextQuestionIndex = 0;
       } else {
-        console.error("Impossible de trouver l'index de la question courante ou la liste des questions");
+        nextQuestionIndex = currentQuestionIndex + 1;
       }
-    } else {
-      console.error("Impossible de trouver le document Miahoot correspondant à l'ID : " + miahootId);
+  
+      if (nextQuestionIndex < questions?.length) {
+        await updateDoc(miahootDocRef, { questionCourante: nextQuestionIndex });
+      }
     }
+  }
+
+  async passerSuivant(){
+    this.setNextQuestionCourante();
+    this.currentQuestionIndex = await this.getQuestionCouranteIndex(this.idMiahoot);
+    console.log("QUESTION n° :" +  this.currentQuestionIndex);
+    this.currentQuestion = await this.getQuestionById( this.firestore, this.idMiahoot, this.currentQuestionIndex!);
+    console.log("QUESTION LABEL : " + this.currentQuestion?.label);
   }
   
 }
