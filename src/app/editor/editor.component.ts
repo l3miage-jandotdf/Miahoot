@@ -11,7 +11,7 @@ interface Miahoot{
 interface Question{
   id : number | null;
   label : String;
-  answers: Answer[];
+  reponses: Answer[];
 }
 
 interface Answer {
@@ -35,7 +35,8 @@ export class EditorComponent implements OnInit {
 
   questions ! : Question[];   //variable qui contin=endra les questions du miahoot à éditer
 
-  réponses ! : Answer[];    //variable qui contiendra les réponses de chaque question du miahoot
+  //réponses ! : Answer[];    //variable qui contiendra les réponses de chaque question du miahoot
+
 
   
   /**
@@ -50,14 +51,36 @@ export class EditorComponent implements OnInit {
     this.idCreator = String(this.route.snapshot.paramMap.get('idCreator')); //On réupère l'id du créateur 
 
     //On stocke le miahoot d'id idMiahoot 
-    this.getMiahootById(this.idMiahoot)
+    /*this.getMiahootById(this.idMiahoot)
     .then(miahoot => {
       this.miahoot = miahoot;
       this.questions = miahoot.questions;
+      //this.réponses = miahoot.questions[0].answers;
+      //console.log("reponse"+this.réponses);
       // Ajouter la boucle pour récupérer les réponses de chaque question
   })
   .catch(error => {
     console.error("An error with the function getMiahootById occured",error);
+  }); */
+
+  this.getMiahootById(this.idMiahoot)
+  .then(miahoot => {
+    this.miahoot = miahoot;
+    this.questions = miahoot.questions;
+
+    // Récupération de toutes les réponses de chaque question
+    const promises = this.questions.map(question => {
+      return this.getAnswersByQuestionId(question.id!).then(answers => {
+        question.answers = answers;
+      });
+    });
+
+    Promise.all(promises)
+      .then(() => console.log('Toutes les réponses ont été récupérées avec succès'))
+      .catch(error => console.error('Une erreur est survenue lors de la récupération des réponses', error));
+  })
+  .catch(error => {
+    console.error('Une erreur est survenue lors de la récupération du Miahoot', error);
   });
   }
 
@@ -68,7 +91,7 @@ export class EditorComponent implements OnInit {
    * @param question 
    */
   addAnswer(question: Question): void {
-    question.answers.push({id : null, label:'', estValide:false});
+    question.reponses.push({id : null, label:'', estValide:false});
   }
 
 
@@ -78,7 +101,7 @@ export class EditorComponent implements OnInit {
    * @param index 
    */
   removeAnswer(question: Question, index: number): void {
-    question.answers.splice(index, 1);
+    question.reponses.splice(index, 1);
   }
 
 
@@ -89,7 +112,7 @@ export class EditorComponent implements OnInit {
     this.miahoot.questions.push({
       id : null,
       label: '',
-      answers: [{ id : null, label: '', estValide: false }]
+      reponses: [{ id : null, label: '', estValide: false }]
     });
   }
 
@@ -104,8 +127,8 @@ export class EditorComponent implements OnInit {
 
 
   alreadyOneTrueOption(question : Question, index : number) : boolean{
-    if (question.answers.length > 1 && question.answers[index].estValide == false){
-      return question.answers.reduce((acc, val) => acc || val.estValide, false);
+    if (question.reponses.length > 1 && question.reponses[index].estValide == false){
+      return question.reponses.reduce((acc, val) => acc || val.estValide, false);
     }
     else{
       return false;
@@ -141,7 +164,12 @@ export class EditorComponent implements OnInit {
  * @param idMiahoot 
  * @returns 
  */
+<<<<<<< HEAD
+/*getMiahootById(idMiahoot: number): Promise<Miahoot> {
+=======
+/*
 getMiahootById(idMiahoot: number): Promise<Miahoot> {
+>>>>>>> 19810ce13436eb26f2530f3899d9d242749f4079
   const url = 'http://localhost:8080/api/creator/' +this.idCreator +'/miahoot/id/' + this.idMiahoot;
   return this.http.get(url)
     .toPromise()
@@ -153,9 +181,57 @@ getMiahootById(idMiahoot: number): Promise<Miahoot> {
       console.error('An error occurred:', error);
       return Promise.reject(error.message || error);
    });
+}*/
+
+
+getMiahootById(idMiahoot: number): Promise<Miahoot> {
+  const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/id/' + idMiahoot;
+  return this.http.get(url)
+    .toPromise()
+    .then(response => {
+      const miahoot = response as Miahoot;
+
+      // Récupérer les réponses pour chaque question
+      const questionPromises = miahoot.questions.map(question => {
+        return this.getAnswersByQuestionId(question.id!);
+      });
+
+      return Promise.all(questionPromises)
+        .then(answersArray => {
+          // Ajouter les réponses à chaque question
+          miahoot.questions.forEach((question, index) => {
+            question.answers = answersArray[index];
+          });
+          return miahoot;
+        })
+        .catch(error => {
+          console.error('An error occurred:', error);
+          return Promise.reject(error.message || error);
+        });
+    })
+    .catch(error => {
+      console.error('An error occurred:', error);
+      return Promise.reject(error.message || error);
+    });
+}
+*/
+getMiahootById(idMiahoot: number): Promise<Miahoot> {
+  const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/id/' + this.idMiahoot;
+  return this.http.get(url)
+    .toPromise()
+    .then(response => {
+      const miahoot = response as Miahoot;
+      console.log('Reponse:', response); 
+      return miahoot;
+    })
+    .catch(error => {
+      console.error('An error occurred:', error);
+      return Promise.reject(error.message || error);
+   });
 }
 
-getAnswersByQuestionId(questionId: number): Promise<any> {
+
+getAnswersByQuestionId(questionId: number): Promise<Answer[]> {
   const url = 'http://localhost:8080/api/question/' + questionId + '/reponse/all';
   return this.http.get(url).toPromise()
     .then(response => response as Answer[])
