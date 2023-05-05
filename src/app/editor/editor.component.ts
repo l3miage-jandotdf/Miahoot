@@ -37,6 +37,7 @@ export class EditorComponent implements OnInit {
 
   réponses ! : Answer[];    //variable qui contiendra les réponses de chaque question du miahoot
 
+
   
   /**
    * 
@@ -50,7 +51,7 @@ export class EditorComponent implements OnInit {
     this.idCreator = String(this.route.snapshot.paramMap.get('idCreator')); //On réupère l'id du créateur 
 
     //On stocke le miahoot d'id idMiahoot 
-    this.getMiahootById(this.idMiahoot)
+    /*this.getMiahootById(this.idMiahoot)
     .then(miahoot => {
       this.miahoot = miahoot;
       this.questions = miahoot.questions;
@@ -58,6 +59,26 @@ export class EditorComponent implements OnInit {
   })
   .catch(error => {
     console.error("An error with the function getMiahootById occured",error);
+  }); */
+
+  this.getMiahootById(this.idMiahoot)
+  .then(miahoot => {
+    this.miahoot = miahoot;
+    this.questions = miahoot.questions;
+
+    // Récupération de toutes les réponses de chaque question
+    const promises = this.questions.map(question => {
+      return this.getAnswersByQuestionId(question.id!).then(answers => {
+        question.answers = answers;
+      });
+    });
+
+    Promise.all(promises)
+      .then(() => console.log('Toutes les réponses ont été récupérées avec succès'))
+      .catch(error => console.error('Une erreur est survenue lors de la récupération des réponses', error));
+  })
+  .catch(error => {
+    console.error('Une erreur est survenue lors de la récupération du Miahoot', error);
   });
   }
 
@@ -141,7 +162,7 @@ export class EditorComponent implements OnInit {
  * @param idMiahoot 
  * @returns 
  */
-getMiahootById(idMiahoot: number): Promise<Miahoot> {
+/*getMiahootById(idMiahoot: number): Promise<Miahoot> {
   const url = 'http://localhost:8080/api/creator/' +this.idCreator +'/miahoot/id/' + this.idMiahoot;
   return this.http.get(url)
     .toPromise()
@@ -153,9 +174,42 @@ getMiahootById(idMiahoot: number): Promise<Miahoot> {
       console.error('An error occurred:', error);
       return Promise.reject(error.message || error);
    });
+}*/
+
+
+getMiahootById(idMiahoot: number): Promise<Miahoot> {
+  const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/id/' + idMiahoot;
+  return this.http.get(url)
+    .toPromise()
+    .then(response => {
+      const miahoot = response as Miahoot;
+
+      // Récupérer les réponses pour chaque question
+      const questionPromises = miahoot.questions.map(question => {
+        return this.getAnswersByQuestionId(question.id!);
+      });
+
+      return Promise.all(questionPromises)
+        .then(answersArray => {
+          // Ajouter les réponses à chaque question
+          miahoot.questions.forEach((question, index) => {
+            question.answers = answersArray[index];
+          });
+          return miahoot;
+        })
+        .catch(error => {
+          console.error('An error occurred:', error);
+          return Promise.reject(error.message || error);
+        });
+    })
+    .catch(error => {
+      console.error('An error occurred:', error);
+      return Promise.reject(error.message || error);
+    });
 }
 
-getAnswersByQuestionId(questionId: number): Promise<any> {
+
+getAnswersByQuestionId(questionId: number): Promise<Answer[]> {
   const url = 'http://localhost:8080/api/question/' + questionId + '/reponse/all';
   return this.http.get(url).toPromise()
     .then(response => response as Answer[])
