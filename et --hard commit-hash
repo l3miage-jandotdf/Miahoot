@@ -1,0 +1,252 @@
+[33mcommit 6cae858b3892b64bcdd0428cc484fd91fe95f2ae[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Merge: aebf554 d73f6ce
+Author: l3miage-xusi <121896780+l3miage-xusi@users.noreply.github.com>
+Date:   Thu May 4 14:05:01 2023 +0200
+
+    Merge branch 'master' of https://github.com/l3miage-jandotdf/Miahoot
+
+[33mcommit d73f6ce92bb33fc07073ebb62e327334d9069bd3[m
+Author: l3miage-koneze <zeinaboubissikone@gmail.com>
+Date:   Thu May 4 14:00:34 2023 +0100
+
+    Fix
+
+[33mcommit aebf5546fa29691ee02c3f5e3bc40423f5a5e1da[m
+Author: l3miage-xusi <121896780+l3miage-xusi@users.noreply.github.com>
+Date:   Thu May 4 14:01:25 2023 +0200
+
+    Modif
+
+[33mcommit 3c163d9c63241322831bcab9b6daba488d21ddfc[m
+Author: l3miage-koneze <zeinaboubissikone@gmail.com>
+Date:   Thu May 4 13:40:19 2023 +0100
+
+    Test
+
+[33mcommit 90f9fa87b5c9cf86fc707f39d8d9b387af33b7da[m
+Merge: 8e67134 a593500
+Author: l3miage-wyssm <mcnw2001@gmail.com>
+Date:   Thu May 4 13:46:06 2023 +0200
+
+    Merge branch 'master' of https://github.com/l3miage-jandotdf/Miahoot
+
+[33mcommit 8e671347382697a3a9f5bdb881eeb7f00c98553b[m
+Author: l3miage-wyssm <mcnw2001@gmail.com>
+Date:   Thu May 4 13:45:55 2023 +0200
+
+    reajout de participant
+
+[33mcommit a593500af72af00e5ba79f317bd2e48f2f7692a3[m
+Merge: fd20cd0 3c163d9
+Author: l3miage-jandotdf <floriane-jandot@hotmail.fr>
+Date:   Thu May 4 13:41:17 2023 +0200
+
+    Merge branch 'master' of https://github.com/l3miage-jandotdf/Miahoot
+
+[33mcommit fd20cd0d301d1a8fda5bc23ebd8c29fd67d6bf30[m
+Author: l3miage-jandotdf <floriane-jandot@hotmail.fr>
+Date:   Thu May 4 13:40:48 2023 +0200
+
+    deploy sur firebase
+
+[33mcommit 05dade01fe01cae928f3f9071396ec671d26bb8d[m
+Merge: 7c6e456 f8ca617
+Author: l3miage-wyssm <mcnw2001@gmail.com>
+Date:   Thu May 4 13:30:02 2023 +0200
+
+    Merge branch 'master' of https://github.com/l3miage-jandotdf/Miahoot
+
+[33mcommit 7c6e456cd40868f969e57b4f518abd152c651f95[m
+Author: l3miage-wyssm <mcnw2001@gmail.com>
+Date:   Thu May 4 13:29:14 2023 +0200
+
+    fix pb id creator
+
+[33mcommit f8ca6175ce5e3e12e9187de2dc27807206ab3e44[m
+Author: l3miage-xusi <121896780+l3miage-xusi@users.noreply.github.com>
+Date:   Thu May 4 13:28:41 2023 +0200
+
+    Fix route
+
+[33mcommit f5ab49a09406bd73a78240d9622afde0087c1956[m
+Merge: 04852e1 53cedda
+Author: l3miage-koneze <zeinaboubissikone@gmail.com>
+Date:   Thu May 4 13:09:53 2023 +0100
+
+    Merge branch 'master' of https://github.com/l3miage-jandotdf/Miahoot
+
+[33mcommit 04852e15b165b869c5d0b735442c79af6e568511[m
+Author: l3miage-koneze <zeinaboubissikone@gmail.com>
+Date:   Thu May 4 13:08:44 2023 +0100
+
+    mise à jour des routes
+
+[33mcommit fe27a3a4d9427d9f74cb3ffa5661c62855336449[m
+Author: l3miage-koneze <zeinaboubissikone@gmail.com>
+Date:   Thu May 4 12:22:04 2023 +0100
+
+    Responsivité modifiée
+
+[33mcommit 53cedda9c7154323bf7dfa5a0c8dc3222ae3cbeb[m
+Author: l3miage-jandotdf <floriane-jandot@hotmail.fr>
+Date:   Thu May 4 13:04:12 2023 +0200
+
+    Resolution erreur conflit
+
+[33mcommit c364adbac9617127291a06187e569b21d310e3ea[m
+Merge: 4e9fde5 fe27a3a
+Author: l3miage-jandotdf <floriane-jandot@hotmail.fr>
+Date:   Thu May 4 13:02:56 2023 +0200
+
+    Merge branch 'master' of https://github.com/l3miage-jandotdf/Miahoot
+
+[33mcommit 4e9fde5b38c84a9d37bfee71c4222632729c76db[m
+Author: l3miage-jandotdf <floriane-jandot@hotmail.fr>
+Date:   Thu May 4 12:58:17 2023 +0200
+
+    premiere tentative liaison firebase miahoot
+
+[33mcommit 0152e6ba6d929bc43f70b69b61bbd9a08bedf00d[m
+Merge: 1df8771 c9f9544
+Author: l3miage-xusi <121896780+l3miage-xusi@users.noreply.github.com>
+Date:   Thu May 4 11:30:16 2023 +0200
+
+    Merge branch 'master' of https://github.com/l3miage-jandotdf/Miahoot
+
+[33mcommit c9f95445b70060739e6d686578ec884b458ffba5[m
+Author: l3miage-koneze <zeinaboubissikone@gmail.com>
+Date:   Thu May 4 10:36:20 2023 +0100
+
+    Résolution de la responsivité des pages
+
+[33mcommit 1df8771700491638864ef02d7db68b79e7742a2e[m
+Author: l3miage-xusi <121896780+l3miage-xusi@users.noreply.github.com>
+Date:   Thu May 4 11:28:52 2023 +0200
+
+    Fix allMiahoot()
+
+[33mcommit 5585c9762e5d8f46646080e56f241d4130bc8d99[m
+Merge: 2405c91 bd30c0c
+Author: l3miage-wyssm <mcnw2001@gmail.com>
+Date:   Thu May 4 10:28:13 2023 +0200
+
+    Merge branch 'master' of https://github.com/l3miage-jandotdf/Miahoot
+
+[33mcommit bd30c0cd55be1870202e92e571e71080b33f7726[m
+Author: l3miage-koneze <zeinaboubissikone@gmail.com>
+Date:   Thu May 4 10:26:10 2023 +0100
+
+    Problème de création des miahoots
+
+[33mcommit 2405c916eaf903423a3782770e4c8c0005c2c227[m
+Author: l3miage-wyssm <mcnw2001@gmail.com>
+Date:   Thu May 4 10:28:02 2023 +0200
+
+    fix navigation et interface participant
+
+[33mcommit c72077e78fd38f4365839e0c080edf491c7f573b[m
+Merge: 8dea427 f57a1aa
+Author: l3miage-jandotdf <floriane-jandot@hotmail.fr>
+Date:   Wed May 3 22:09:00 2023 +0200
+
+    Merge branch 'master' of https://github.com/l3miage-jandotdf/Miahoot
+
+[33mcommit 8dea42736b0c382415524b743db531372876d6ca[m
+Author: l3miage-jandotdf <floriane-jandot@hotmail.fr>
+Date:   Wed May 3 22:08:39 2023 +0200
+
+    notre application est en ligne !
+
+[33mcommit f57a1aae0c87ecb2ca9fdc3c615c03cf37ee67bf[m
+Author: l3miage-koneze <zeinaboubissikone@gmail.com>
+Date:   Wed May 3 16:27:12 2023 +0100
+
+    maj
+
+[33mcommit 25aa66d40628dd21eecefb2db2b465c11271bc44[m
+Author: l3miage-xusi <121896780+l3miage-xusi@users.noreply.github.com>
+Date:   Wed May 3 16:10:11 2023 +0200
+
+    Lianson Creator/Google
+
+[33mcommit b77227b59a64857a9b7f0afe133ef6eb115727bd[m
+Merge: c5dcc1b b5f4851
+Author: l3miage-koneze <zeinaboubissikone@gmail.com>
+Date:   Wed May 3 15:46:20 2023 +0100
+
+    Merge branch 'master' of https://github.com/l3miage-jandotdf/Miahoot
+
+[33mcommit c5dcc1bd29e185e745f39f6b65de0be0d2aa525e[m
+Author: l3miage-koneze <zeinaboubissikone@gmail.com>
+Date:   Wed May 3 15:44:14 2023 +0100
+
+    boutons delete, update et present de miahoots faites; Reste les liaisons
+
+[33mcommit b5f48511d17d87add26ebf39d277821e2471997a[m
+Author: l3miage-diabyfa <diabyfatoumat6@gmail.com>
+Date:   Wed May 3 14:38:06 2023 +0200
+
+    ajout animation
+
+[33mcommit adfda7a7dedac696450a9705323993abdd46cec7[m
+Author: l3miage-jandotdf <floriane-jandot@hotmail.fr>
+Date:   Wed May 3 14:27:02 2023 +0200
+
+    corrections endpoint creator
+
+[33mcommit 4dde12d84f51f8b2f92b710613845d2dc9d5bdf4[m
+Merge: 4eedaa9 91d8495
+Author: l3miage-jandotdf <floriane-jandot@hotmail.fr>
+Date:   Wed May 3 14:19:18 2023 +0200
+
+    Merge branch 'master' of https://github.com/l3miage-jandotdf/Miahoot
+
+[33mcommit 4eedaa9af7a8070ee564fed578fd7a1b5f2302ee[m
+Author: l3miage-jandotdf <floriane-jandot@hotmail.fr>
+Date:   Wed May 3 14:19:13 2023 +0200
+
+    modifications endpoint creator
+
+[33mcommit 91d849540ff154b99d3ce6f0f6d5007cef2e5053[m
+Author: l3miage-diabyfa <diabyfatoumat6@gmail.com>
+Date:   Wed May 3 13:08:59 2023 +0200
+
+    oublie () pour la fonction
+
+[33mcommit 47733b700d0aaec971e4717fa04f6d9848e43f5c[m
+Author: l3miage-diabyfa <diabyfatoumat6@gmail.com>
+Date:   Wed May 3 12:50:58 2023 +0200
+
+    Attachement du lien all-miahoot/idCrator.. au bouton Mes QCMs de l'accueil
+
+[33mcommit ca1e51bbbc2418552bb64e61a398fbbed5c78938[m
+Merge: 38107c9 92b99e2
+Author: l3miage-jandotdf <floriane-jandot@hotmail.fr>
+Date:   Wed May 3 11:25:33 2023 +0200
+
+    Merge branch 'master' of https://github.com/l3miage-jandotdf/Miahoot
+
+[33mcommit 92b99e262a80a995f7410aaed2b2d39f07a220b7[m
+Author: l3miage-koneze <zeinaboubissikone@gmail.com>
+Date:   Wed May 3 10:58:41 2023 +0100
+
+    fix
+
+[33mcommit 38107c9241995abef628908621a737b0b2c1eefd[m
+Author: l3miage-jandotdf <floriane-jandot@hotmail.fr>
+Date:   Wed May 3 11:25:21 2023 +0200
+
+    Le service entre deux localhost ne marche pas
+
+[33mcommit 3835d2f17b4df2c7a47fa078efb27045b2bc70c0[m
+Merge: e4cfbb0 514a95d
+Author: l3miage-jandotdf <floriane-jandot@hotmail.fr>
+Date:   Wed May 3 09:14:56 2023 +0200
+
+    Merge branch 'master' of https://github.com/l3miage-jandotdf/Miahoot
+
+[33mcommit e4cfbb0b8970a4cab28f11fdec18ac8f95557b26[m
+Author: l3miage-jandotdf <floriane-jandot@hotmail.fr>
+Date:   Wed May 3 09:14:47 2023 +0200
+
+    ajout d'un service pour communiquer entre participant et presentator

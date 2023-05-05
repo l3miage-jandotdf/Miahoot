@@ -15,15 +15,15 @@
     <th scope="row">{{ miahoot.id }}</th>
     <td>{{ miahoot.nom }}</td>
     <td>
-      <button type="button" class="btn btn-primary" (click)="editMiahoot(miahoot.id)">Modifier</button>
-      <button type="button" class="btn btn-primary" (click)="deleteMiahoot(miahoot.id)">Supprimer</button>
-      <button type="button" class="btn btn-primary" (click)="presentMiahoot(miahoot.id)">Présenter</button>
+      <button type="button" class="btn btn-primary" (click)="editMiahoot(miahoot.id);playClickSound();">Modifier</button>
+      <button type="button" class="btn btn-primary" (click)="deleteMiahoot(miahoot.id);playClickSound();">Supprimer</button>
+      <button type="button" class="btn btn-primary" (click)="presentMiahoot(miahoot.id);playClickSound();">Présenter</button>
     </td>
   </tr>
   </tbody>
   </table>
 </div>
 
-<button (click)="addMiahoot(miahootTest)">TEST FIREBASE</button>
+<button (click)="addMiahoot(miahootTest);playClickSound();">TEST FIREBASE</button>
 
 

@@ -26,6 +26,7 @@ export class CreatorComponent {
   questions : Question[] = [];
   idCreator ? : String;
 
+
   constructor(private http: HttpClient, private route : ActivatedRoute, private router : Router) {
 
   }
@@ -33,6 +34,13 @@ export class CreatorComponent {
   ngOnInit(): void {
     this.idCreator = String(this.route.snapshot.paramMap.get('idCreator'));
     //throw new Error('Method not implemented.');
+  }
+
+  playClickSound() {
+    const audio = new Audio();
+    audio.src = '../assets/Pika.mp3'; 
+    audio.load();
+    audio.play();
   }
 
   addOption(question: Question): void {
