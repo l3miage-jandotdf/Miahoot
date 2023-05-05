@@ -16,7 +16,7 @@
               <p class="inputQ">
                 <input type="text" class="champ" [(ngModel)]="question.label" [ngModelOptions]="{standalone: true}" placeholder="Écrivez votre question ici" maxlength=100 required>
               </p>
-              <button type="button" class="btn btn-danger" (click)="removeQuestion(j)">Supprimer la question</button>
+              <button type="button" class="btn btn-danger" (click)="removeQuestion(j);playClickSound();">Supprimer la question</button>
             </div>
 
             <div class="options-container">
@@ -24,19 +24,19 @@
                 <label>Réponse {{i+1}}: </label>
                 <input type="text" [(ngModel)]="answer.label" [ngModelOptions]="{standalone: true}" placeholder="Entrez votre réponse" maxlength=100 required>
                 <label class="rpns">Réponse correcte ?</label> <input type="checkbox" [(ngModel)]="answer.estValide" [disabled]="alreadyOneTrueOption(question, i)" [ngModelOptions]="{standalone: true}">
-                <button type="button" class="btn btn-danger" (click)="removeOption(question, i)">Supprimer la réponse</button>
+                <button type="button" class="btn btn-danger" (click)="removeOption(question, i);playClickSound();">Supprimer la réponse</button>
               </div>
               <div *ngIf='moreThanFourOptions(question)' class="right">
-                <button type="button" class="btn btn-primary" (click)="addOption(question)">Ajouter une réponse possible</button>
+                <button type="button" class="btn btn-primary" (click)="addOption(question);playClickSound();">Ajouter une réponse possible</button>
               </div>
             </div>
           </div>
 
           </div>
           <p class="btn">
-            <button type="button" class="btn btn-primary" (click)="addQuestion()">Ajouter une question</button>
+            <button type="button" class="btn btn-primary" (click)="addQuestion();playClickSound();">Ajouter une question</button>
           </p>
-    <button type="submit" class="btn btn-primary">Créer votre Miahoot</button>
+    <button type="submit" class="btn btn-primary" (click)="playClickSound()">Créer votre Miahoot</button>
   </form>
 </div>
 <script src="/__/firebase/11.29.1/firebase-app.js"></script>
