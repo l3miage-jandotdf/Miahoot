@@ -1,4 +1,5 @@
 <app-login></app-login>
+<h1>{{currentQuestion?.label}}</h1>
 <div *ngIf="!partieCommencee">
   <h2>Bienvenue sur le Miahoot ! Pour commencer, veuillez renseigner les informations ci-dessous.</h2>
       <form (ngSubmit)="startGame()">
