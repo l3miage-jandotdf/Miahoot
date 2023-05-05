@@ -64,7 +64,7 @@ export class AllMiahootComponent implements OnInit{
     await this.getMiahoots();
   }
 
-  // Méthode pour enregistrer un Miahoot sur Firestore
+  // Ajouter une partie (miahoot présenté)
   async addMiahoot(miahoot: Miahoot): Promise<void> {
     const miahootDocRef = doc(this.firestore, 'miahoots', miahoot.id.toString());
     const miahootData = {
