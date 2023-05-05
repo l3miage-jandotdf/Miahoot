@@ -118,6 +118,8 @@ export class EditorComponent implements OnInit {
    * 
    * @returns Soumission des modifications
    */
+
+  /*
   submitMiahoot(){
     const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/';
 
@@ -135,7 +137,30 @@ export class EditorComponent implements OnInit {
     this.router.navigate(['all-miahoot', this.idCreator]);
     return promise;
 }
-  
+  */
+
+submitMiahoot() {
+  const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/';
+
+  // The data to update
+  const update = {
+    nom: this.miahoot.nom,
+    questions: this.miahoot.questions.map(question => ({
+      ...question,
+      reponses: question.reponses
+    }))
+  };
+
+  const promise = this.http.patch(url, update)
+    .toPromise()
+    .then(idMiahoot => {
+      console.log('Miahoot with the id ' + idMiahoot + ' has been successfully modified');
+    })
+    .catch(this.handleError);
+  this.router.navigate(['all-miahoot', this.idCreator]);
+  return promise;
+}
+
 
 
 /**
