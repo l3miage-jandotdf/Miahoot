@@ -27,9 +27,9 @@ export class EditorComponent implements OnInit {
 
   miahoot ! : Miahoot; // la variable qui contiendra les informations du Miahoot à éditer
 
-  idMiahoot ? : number;
+  idMiahoot ! : string;
 
-  idCreator ? : number;
+  idCreator ? : string;
 
   questions ! : Question[];
 
@@ -37,8 +37,8 @@ export class EditorComponent implements OnInit {
 
   
   ngOnInit() {
-    this.idMiahoot = Number(this.route.snapshot.paramMap.get('idMiahoot'));
-    this.idCreator = Number(this.route.snapshot.paramMap.get('idCreator'));
+    this.idMiahoot = String(this.route.snapshot.paramMap.get('idMiahoot'));
+    this.idCreator = String(this.route.snapshot.paramMap.get('idCreator'));
   }
 
 
@@ -71,52 +71,43 @@ export class EditorComponent implements OnInit {
     const promise = this.http.post(url, { "nom": this.miahoot.nom })
     .toPromise()
     .then(idMiahoot => {
+      this.getMiahootById(this.idMiahoot)
       console.log('Miahoot avec l id '+ idMiahoot + 'a été modifié avec succès')
-      this.submitQuestions(idMiahoot as Long);
-      this.router.navigate(['all-miahoot', this.idCreator]);
     })
     .catch(this.handleError);
+    this.router.navigate(['all-miahoot', this.idCreator]);
     return promise;
 }
   
 
-  submitQuestions(idMiahoot : Long){
-    const promises: Promise<Long>[] = [];
-    const url = 'http://localhost:8080/api/miahoot/' + idMiahoot + '/question/';
 
-    for (let i = 0; i < this.questions.length; i++) {
-      const promise = this.http.post(url, {"label" : this.questions[i].label, "answers" : []}).toPromise()
-      .then(idQuestion => {
-        console.log(`Question créée avec l'id ${idQuestion}`);
-        return this.submitReponses(idMiahoot, idQuestion as Long, this.questions[i].answers);
-      }) as Promise<Long>
-      promises.push(promise);
-    }
-
-    return Promise.any(promises).then(() => {
-      console.log('Toutes les questions ont été créées avec succès');
-    }).catch(this.handleError);
-  }
+getMiahootById(idMiahoot: string): Promise<Miahoot> {
+  const url = 'http://localhost:8080/api/creator/' +this.idCreator +'/miahoot/' + this.idMiahoot + '/';
+  console.log("idCreator:", this.idCreator);
+  return this.http.get(url)
+    .toPromise()
+    .then(response => {
+      const miahoot = response as Miahoot;
+      return miahoot;
+    })
+    .catch(error => {
+      console.error('An error occurred:', error);
+      return Promise.reject(error.message || error);
+   });
+}
 
 
-  submitReponses(idMiahoot : Long, idQuestion : Long, answersQuestion : Answer[] ){
-    const promises: Promise<Long>[] = [];
-    const url = 'http://localhost:8080/api/miahoot/id/' + idMiahoot + '/question/' + idQuestion + '/reponse/';
-
-    for (let i = 0; i < answersQuestion.length; i++) {
-      const promise = this.http.post(url, {"label" : answersQuestion[i].label, "estValide" : answersQuestion[i].estValide}).toPromise() as Promise<Long>;
-      promises.push(promise);
-    }
-
-    return Promise.any(promises).then(() => {
-      console.log('Toutes les réponses de la question ' + idQuestion + ' ont été créées avec succès');
-    }).catch(this.handleError);
-  }
+ 
 
 
   private handleError(error: any): Promise<Array<any>> {
     console.error('Une erreur est survenue.', error);
     return Promise.reject(error.message || error);
+  }
+
+  cancel() {
+    // Recharge la page pour annuler les modifications
+    location.reload();
   }
 
 }

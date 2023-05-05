@@ -12,6 +12,62 @@
       -->
 
 
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h2>Editer Miahoot</h2>
+          </div>
+        </div>
+      
+        <form #miahootForm="ngForm" (ngSubmit)="submitMiahoot()">
+          <div class="row">
+            <div class="col-12 mb-3">
+              <label for="nom" class="form-label">Nom du Miahoot</label>
+              <input type="text" class="form-control" id="nom" name="nom" [(ngModel)]="miahoot.nom" required>
+            </div>
+          </div>
+      
+          <hr>
+      
+          <div *ngIf="miahoot.questions.length > 0" class="row">
+            <div class="col-12">
+              <h3>Liste des questions</h3>
+            </div>
+            <div class="col-12">
+              <div class="list-group">
+                <div *ngFor="let question of questions; let i = index" class="list-group-item">
+                  <div class="form-group mb-3">
+                    <label for="question-{{i}}">Question {{i + 1}}</label>
+                    <input type="text" class="form-control" id="question-{{i}}" name="question-{{i}}" [(ngModel)]="question.label" required>
+                  </div>
+                  <div *ngIf="question.answers.length > 0">
+                    <div class="form-group mb-3">
+                      <label for="answers-{{i}}">Réponses</label>
+                      <div id="answers-{{i}}">
+                        <div *ngFor="let answer of question?.answers; let j = index" class="form-check">
+                          <input type="radio" class="form-check-input" id="answer-{{i}}-{{j}}" name="answer-{{i}}" [(ngModel)]="answer.estValide" [value]="true" required>
+                          <label class="form-check-label" for="answer-{{i}}-{{j}}">Réponse {{j + 1}}</label>
+                          <input type="text" class="form-control" id="answer-{{i}}-{{j}}-label" name="answer-{{i}}-{{j}}-label" [(ngModel)]="answer.label" required>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-danger mb-3" (click)="removeQuestion(i)">Supprimer cette question</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+          <button type="button" class="btn btn-primary" (click)="addQuestion()">Ajouter une question</button>
+          <hr>
+      
+          <button type="submit" class="btn btn-success">Sauvegarder</button>
+          <button type="button" class="btn btn-secondary" (click)="cancel()">Annuler</button>
+        </form>
+      </div>
+      
+
+
 
 
 
