@@ -2,11 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { DocumentSnapshot, Firestore, FirestoreDataConverter, QueryDocumentSnapshot, SnapshotOptions, doc, docData, getDoc } from '@angular/fire/firestore';
+import { DocumentSnapshot, Firestore, FirestoreDataConverter, QueryDocumentSnapshot, SnapshotOptions, doc, docData, getDocs } from '@angular/fire/firestore';
 import { Auth, authState } from '@angular/fire/auth';
 import { Observable, of, switchMap } from 'rxjs';
-import { setDoc } from 'firebase/firestore';
-
+import { collection, query, QuerySnapshot, where, setDoc } from 'firebase/firestore';
 
 export interface Miahoot {
   id: number;
@@ -37,9 +36,26 @@ export class AllMiahootComponent implements OnInit{
   idCreator?: String;      //id du créateur
   private miahootConverter?: FirestoreDataConverter<Miahoot>;
 
+
+  miahootTest: Miahoot = {
+    id: 4444,
+    nom: 'Mon quatrieme Miahoot',
+    questions: [
+      {
+        id: 1,
+        label: 'Question 1',
+        answers: [
+          { id: 1, label: 'Réponse 1', estValide: true },
+          { id: 2, label: 'Réponse 2', estValide: false },
+          { id: 3, label: 'Réponse 3', estValide: false },
+        ],
+      },
+    ],
+  };
+
   //constructeur
   constructor(private firestore: Firestore, private auth: Auth, private http: HttpClient, private route: ActivatedRoute, private router : Router) {
-    this.initMiahootFirebase();
+    this.initMiahootFirebase(firestore);
   }
 
   async ngOnInit(){
@@ -47,66 +63,75 @@ export class AllMiahootComponent implements OnInit{
     await this.getMiahoots();
   }
 
-  initMiahootFirebase(){
-    this.miahootConverter = {
-      toFirestore(miahoot: Miahoot) {
+  initMiahootFirebase(firestore : Firestore){
+    const questionConverter : FirestoreDataConverter<Question> = {
+      toFirestore(question: Question): any {
         return {
-          nom: miahoot.nom,
-          questions: miahoot.questions.map((question: Question) => {
-            return {
-              id: question.id,
-              label: question.label,
-              answers: question.answers.map((answer: Reponse) => {
-                return {
-                  id: answer.id,
-                  label: answer.label,
-                  estValide: answer.estValide
-                };
-              })
-            };
-          })
+          id: question.id,
+          label: question.label,
+          answers: collection(firestore, 'questions', question.id.toString(), 'answers')
+            .withConverter(reponseConverter)
         };
       },
-      fromFirestore(snapshot: QueryDocumentSnapshot<Miahoot>, options: SnapshotOptions): Miahoot {
-        const data = snapshot.data(options)!;
-        const questions = data.questions.map((question: any) => {
-          return {
-            id: question.id,
-            label: question.label,
-            answers: question.answers.map((answer: any) => {
-              return {
-                id: answer.id,
-                label: answer.label,
-                estValide: answer.estValide
-              };
-            })
-          };
-        });
+      fromFirestore(snapshot: QueryDocumentSnapshot<any>): Question {
+        const data = snapshot.data();
+        return {
+          id: data.id,
+          label: data.label,
+          answers: data.answers,
+        };
+      },
+    };
+    
+    const reponseConverter : FirestoreDataConverter<Reponse> = {
+      toFirestore(answer: Reponse): any {
+        return {
+          id: answer.id,
+          label: answer.label,
+          estValide: answer.estValide,
+        };
+      },
+      fromFirestore(snapshot: QueryDocumentSnapshot<any>): Reponse {
+        const data = snapshot.data();
+        return {
+          id: data.id,
+          label: data.label,
+          estValide: data.estValide,
+        };
+      },
+    };
+    
+    this.miahootConverter = {
+      toFirestore(miahoot: Miahoot): any {
+        return {
+          nom: miahoot.nom,
+          questions: collection(firestore, 'miahoots', miahoot.id.toString(), 'questions')
+            .withConverter(questionConverter)
+        };
+      },
+      fromFirestore(snapshot: QueryDocumentSnapshot<any>): Miahoot {
+        const data = snapshot.data();
         return {
           id: parseInt(snapshot.id),
           nom: data.nom,
-          questions: questions
+          questions: data.questions,
         };
-      }
+      },
     };
   }
-/*
-  addMiahoot(miahoot: Miahoot){
-    return authState(this.auth).pipe(
-      switchMap((user) => {
-        if (user) {
 
-          let docMia = doc(this.firestore, `miahoots/ ${miahoot.id.toString()}`);
-          let refDocMia = docMia.withConverter(this.miahootConverter);
-          let obsDoc: Observable<Miahoot> = docData(refDocMia);
-          return setDoc(doc(this.firestore, ), miahoot, { converter: this.miahootConverter });
-        } else {
-          return of(null);
-        }
-      })
-    );
+  async addMiahoot(miahoot: Miahoot) {
+    const miahootsCollection = collection(this.firestore, 'miahoots');
+    const miahootDocRef = doc(miahootsCollection, miahoot.id.toString());
+    const miahootData = this.miahootConverter?.toFirestore(miahoot);
+
+    try {
+      await setDoc(miahootDocRef, miahootData);
+      console.log('Miahoot added successfully.');
+    } catch (error) {
+      console.error('Error adding miahoot: ', error);
+    }
   }
-  */
 
   /**
    * Récupère tous les miahoots
