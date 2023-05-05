@@ -1,12 +1,12 @@
 <app-login></app-login>
 
-<div *ngIf="currentQuestion==null">
+<div *ngIf="currentQuestionIndex==-1">
   <button (click)="passerSuivant()">COMMENCER</button>
 </div>
 
-<div *ngIf="currentQuestion!=null">
-  <p>coucou</p>
-  <h1>currentQuestion?.label</h1>
+<div *ngIf="currentQuestionIndex!=-1">
+  <h1>{{currentQuestion?.label}}</h1>
+  <button (click)="passerSuivant()">SUIVANT</button>
 </div>
 
 

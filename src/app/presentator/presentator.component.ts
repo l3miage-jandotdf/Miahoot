@@ -1,13 +1,32 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Firestore, doc, DocumentData, DocumentSnapshot, getDoc, updateDoc } from '@angular/fire/firestore';
-import { Question } from '../miahoot.model';
+import { Firestore, doc, DocumentData, DocumentSnapshot, getDoc, updateDoc, collection, getDocs, query, orderBy, QuerySnapshot } from '@angular/fire/firestore';
+
+export interface Miahoot {
+  id: number;
+  nom: string;
+  questionCourante: number | null;
+  questions: Question[];
+}
+
+export interface Question {
+  id: number;
+  label: string;
+  answers: Reponse[];
+}
+
+export interface Reponse {
+  id: number;
+  label: string;
+  estValide: boolean;
+}
 
 @Component({
   selector: 'app-presentator',
   templateUrl: './presentator.component.html',
   styleUrls: ['./presentator.component.scss']
 })
+
 
 export class PresentatorComponent {
 
@@ -24,8 +43,6 @@ export class PresentatorComponent {
     this.idMiahoot = +(this.route.snapshot.paramMap.get('idMiahoot'))!;
     this.currentQuestionIndex = await this.getQuestionCouranteIndex(this.idMiahoot);
     console.log("QUESTION n° :" +  this.currentQuestionIndex);
-    this.currentQuestion = await this.getQuestionById( this.firestore, this.idMiahoot, this.currentQuestionIndex!);
-    console.log("QUESTION LABEL : " + this.currentQuestion?.label);
   }
 
   async getQuestionCouranteIndex(miahootId: number): Promise<number | null> {
@@ -63,33 +80,50 @@ export class PresentatorComponent {
     }
   }
 
-  async setNextQuestionCourante(): Promise<void> {
-    const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
-    const miahootDocSnapshot: DocumentSnapshot<DocumentData> = await getDoc(miahootDocRef);
-  
-    if (miahootDocSnapshot.exists()) {
-      const miahootData = miahootDocSnapshot.data();
-      const questions = miahootData?.['questions'];
-      const currentQuestionIndex = miahootData?.['questionCourante'];
-  
-      let nextQuestionIndex;
-      if (currentQuestionIndex === null || currentQuestionIndex === undefined) {
-        nextQuestionIndex = 0;
-      } else {
-        nextQuestionIndex = currentQuestionIndex + 1;
-      }
-  
-      if (nextQuestionIndex < questions?.length) {
-        await updateDoc(miahootDocRef, { questionCourante: nextQuestionIndex });
+  async getQuestionByIndex(miahootId: number, index: number) {
+    const questionsCollectionRef = collection(this.firestore, 'miahoots', miahootId.toString(), 'questions');
+    const querySnapshot = await getDocs(questionsCollectionRef);
+    
+    if (querySnapshot.size > 0) {
+      const questionDocSnapshot = querySnapshot.docs[index];
+      if (questionDocSnapshot.exists()) {
+        const questionData = questionDocSnapshot.data();
+        return {
+          id: questionData?.['id'],
+          label: questionData?.['label'],
+          answers: questionData?.['answers']
+        } as Question;
       }
     }
+  
+    return null;
   }
+  
+  
+
+
+  async setNextQuestionCourante(): Promise<void> {
+  const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
+  const miahootDocSnapshot = await getDoc(miahootDocRef);
+
+  if (miahootDocSnapshot.exists()) {
+    const miahootData = miahootDocSnapshot.data() as Miahoot;
+    const questions = miahootData.questions;
+
+    let nextQuestionIndex = (miahootData.questionCourante ?? 0) + 1;
+    //if (nextQuestionIndex >= questions.length) {
+    //  nextQuestionIndex = questions.length - 1;
+    //}
+
+    await updateDoc(miahootDocRef, { questionCourante: nextQuestionIndex });
+  }
+}
 
   async passerSuivant(){
-    this.setNextQuestionCourante();
+    await this.setNextQuestionCourante();
     this.currentQuestionIndex = await this.getQuestionCouranteIndex(this.idMiahoot);
     console.log("QUESTION n° :" +  this.currentQuestionIndex);
-    this.currentQuestion = await this.getQuestionById( this.firestore, this.idMiahoot, this.currentQuestionIndex!);
+    this.currentQuestion = await this.getQuestionByIndex(this.idMiahoot, this.currentQuestionIndex!);
     console.log("QUESTION LABEL : " + this.currentQuestion?.label);
   }
   

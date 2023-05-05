@@ -78,7 +78,7 @@ export class AllMiahootComponent implements OnInit{
     const miahootDocRef = doc(this.firestore, 'miahoots', miahoot.id.toString());
     const miahootData = {
       nom: miahoot.nom,
-      questionCourante: null
+      questionCourante: -1 //miahoot.questions.length > 0 ? miahoot.questions[0].id : null //ATTENTION C'EST UN INDEX
     };
     await setDoc(miahootDocRef, miahootData);
 
