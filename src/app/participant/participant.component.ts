@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Injectable } from '@angular/core';
 import { Firestore, doc, DocumentData, DocumentSnapshot, getDoc } from '@angular/fire/firestore';
 import { Question } from '../miahoot.model';
 
