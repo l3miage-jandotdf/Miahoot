@@ -9,11 +9,13 @@ interface Miahoot{
 }
 
 interface Question{
+  id : number | null;
   label : String;
   answers: Answer[];
 }
 
 interface Answer {
+  id : number | null;
   label : String;
   estValide : boolean;
 }
@@ -27,40 +29,88 @@ export class EditorComponent implements OnInit {
 
   miahoot ! : Miahoot; // la variable qui contiendra les informations du Miahoot à éditer
 
-  idMiahoot ! : string;
+  idMiahoot ! : number; //variable qui contiendra l'id du miahoot à modifier 
 
-  idCreator ? : string;
+  idCreator ? : string;   //variable qui contiendra l'id du concepteur du miahoot à éditer
 
-  questions ! : Question[];
+  questions ! : Question[];   //variable qui contin=endra les questions du miahoot à éditer
 
+  réponses ! : Answer[];    //variable qui contiendra les réponses de chaque question du miahoot
+
+  
+  /**
+   * 
+   * CONSTRUCTEUR 
+   */
   constructor(private route: ActivatedRoute,  private router : Router, private http : HttpClient) { }
 
   
   ngOnInit() {
-    this.idMiahoot = String(this.route.snapshot.paramMap.get('idMiahoot'));
-    this.idCreator = String(this.route.snapshot.paramMap.get('idCreator'));
+    this.idMiahoot = Number(this.route.snapshot.paramMap.get('idMiahoot')); //On récupère l'id du miahoot
+    this.idCreator = String(this.route.snapshot.paramMap.get('idCreator')); //On réupère l'id du créateur 
+
+    //On stocke le miahoot d'id idMiahoot 
+    this.getMiahootById(this.idMiahoot)
+    .then(miahoot => {
+      this.miahoot = miahoot;
+      this.questions = miahoot.questions;
+      // Ajouter la boucle pour récupérer les réponses de chaque question
+  })
+  .catch(error => {
+    console.error("An error with the function getMiahootById occured",error);
+  });
   }
 
 
+
+  /**
+   * Fonction qui va rajouter une réponse suppélmentaire aux réponses de la question passée en paramètre
+   * @param question 
+   */
   addAnswer(question: Question): void {
-    question.answers.push({label:'', estValide:false});
+    question.answers.push({id : null, label:'', estValide:false});
   }
 
+
+  /**
+   * Fonction qui supprime la réponse à l'indice index 
+   * @param question 
+   * @param index 
+   */
   removeAnswer(question: Question, index: number): void {
     question.answers.splice(index, 1);
   }
 
+
+  /**
+   * Fonction qui rajoute une question supplémentaire aux questions du miahoot
+   */
   addQuestion() {
     this.miahoot.questions.push({
+      id : null,
       label: '',
-      answers: [{ label: '', estValide: false }]
+      answers: [{ id : null, label: '', estValide: false }]
     });
   }
 
+
+  /**
+   * Foncton qui supprime la question à l'indice index du miahoot
+   * @param index 
+   */
   removeQuestion(index: number): void{
     this.questions.splice(index, 1);
   }
 
+
+  alreadyOneTrueOption(question : Question, index : number) : boolean{
+    if (question.answers.length > 1 && question.answers[index].estValide == false){
+      return question.answers.reduce((acc, val) => acc || val.estValide, false);
+    }
+    else{
+      return false;
+    }
+  }
 
   /**
    * 
@@ -68,10 +118,15 @@ export class EditorComponent implements OnInit {
    */
   submitMiahoot(){
     const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/';
-    const promise = this.http.post(url, { "nom": this.miahoot.nom })
+
+    //Les données à mettre à jour
+    const update = { 
+      nom: this.miahoot.nom, 
+      questions: this.miahoot.questions 
+  }; 
+    const promise = this.http.patch(url, update)
     .toPromise()
     .then(idMiahoot => {
-      this.getMiahootById(this.idMiahoot)
       console.log('Miahoot avec l id '+ idMiahoot + 'a été modifié avec succès')
     })
     .catch(this.handleError);
@@ -81,9 +136,13 @@ export class EditorComponent implements OnInit {
   
 
 
-getMiahootById(idMiahoot: string): Promise<Miahoot> {
-  const url = 'http://localhost:8080/api/creator/' +this.idCreator +'/miahoot/' + this.idMiahoot + '/';
-  console.log("idCreator:", this.idCreator);
+/**
+ * Fonction qui récupère le miahoot dont l'id est passé en paramètre afin de permettre sa modification
+ * @param idMiahoot 
+ * @returns 
+ */
+getMiahootById(idMiahoot: number): Promise<Miahoot> {
+  const url = 'http://localhost:8080/api/creator/' +this.idCreator +'/miahoot/id/' + this.idMiahoot;
   return this.http.get(url)
     .toPromise()
     .then(response => {
@@ -96,8 +155,21 @@ getMiahootById(idMiahoot: string): Promise<Miahoot> {
    });
 }
 
+getAnswersByQuestionId(questionId: number): Promise<any> {
+  const url = 'http://localhost:8080/api/question/' + questionId + '/reponse/all';
+  return this.http.get(url).toPromise()
+    .then(response => response as Answer[])
+    .catch(error => {
+      console.error("An error with the function getAnswersByQuestionId occured",error);
+      return [];
+    });
+}
 
- 
+
+
+
+
+
 
 
   private handleError(error: any): Promise<Array<any>> {
@@ -105,8 +177,11 @@ getMiahootById(idMiahoot: string): Promise<Miahoot> {
     return Promise.reject(error.message || error);
   }
 
+
+  /**
+   * Fonction qui recharge la page pour annuler les modifications
+   */
   cancel() {
-    // Recharge la page pour annuler les modifications
     location.reload();
   }
 

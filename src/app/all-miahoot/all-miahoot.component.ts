@@ -121,7 +121,7 @@ export class AllMiahootComponent implements OnInit{
    * @param idMiahoot 
    */
   editMiahoot(idMiahoot: number): void {
-    this.router.navigate([`/editor/${idMiahoot}`]);
+    this.router.navigate([`/editor/${this.idCreator}/${idMiahoot}`]);
 
   }
   
