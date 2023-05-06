@@ -37,6 +37,8 @@ export class PresentatorComponent {
   currentQuestionIndex: number | null=1;
   idMiahoot! : number;
 
+  miahootTermine : boolean = false; 
+
   constructor(private route : ActivatedRoute, private router : Router, private firestore : Firestore) {}
 
   async ngOnInit(): Promise<void> {
@@ -125,6 +127,15 @@ export class PresentatorComponent {
     console.log("QUESTION n° :" +  this.currentQuestionIndex);
     this.currentQuestion = await this.getQuestionByIndex(this.idMiahoot, this.currentQuestionIndex!);
     console.log("QUESTION LABEL : " + this.currentQuestion?.label);
+
+    //Lorsque nous n'avons plus de question courante, cela signifie que le miahoot a pris fin.
+    if (this.currentQuestion === undefined) {
+      console.log("Le miahoot est terminé !");
+      // On met 'miahootterminé à true pour pouvoir désactiver et ne plus afficher le bouton 'Suivant'
+      this.miahootTermine = true;
+      // Afficher une boite de dialogue pour indiquer au présentateur que le miahoot est terminé
+      alert("Le miahoot est terminé :) !");
+    }
   }
   
 }

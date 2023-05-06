@@ -35,7 +35,7 @@ export class EditorComponent implements OnInit {
 
   questions ! : Question[];   //variable qui contin=endra les questions du miahoot à éditer
 
-  //réponses ! : Answer[];    //variable qui contiendra les réponses de chaque question du miahoot
+  reponses ! : Answer[];    //variable qui contiendra les réponses de chaque question du miahoot
 
   
   /**
@@ -54,9 +54,7 @@ export class EditorComponent implements OnInit {
     .then(miahoot => {
       this.miahoot = miahoot;
       this.questions = miahoot.questions;
-      //this.réponses = miahoot.questions[0].answers;
-      //console.log("reponse"+this.réponses);
-      // Ajouter la boucle pour récupérer les réponses de chaque question
+      
   })
   .catch(error => {
     console.error("An error with the function getMiahootById occured",error);
@@ -105,35 +103,61 @@ export class EditorComponent implements OnInit {
   }
 
 
-  alreadyOneTrueOption(question : Question, index : number) : boolean{
+  /*alreadyOneTrueOption(question : Question, index : number) : boolean{
     if (question.reponses.length > 1 && question.reponses[index].estValide == false){
       return question.reponses.reduce((acc, val) => acc || val.estValide, false);
     }
     else{
       return false;
     }
+  }*/
+
+
+  alreadyOneTrueOption(question: Question, index: number): boolean {
+    if (question.reponses.length > 1) {
+      const alreadyOneTrue = question.reponses.some((r, i) => i !== index && r.estValide);
+      const currentIsTrue = question.reponses[index].estValide;
+      return alreadyOneTrue || currentIsTrue;
+    } else {
+      return false;
+    }
   }
 
   /**
-   * 
-   * @returns Soumission des modifications
-   */
-  submitMiahoot(){
-    const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/';
 
-    //Les données à mettre à jour
-    const update = { 
-      nom: this.miahoot.nom, 
-      questions: this.miahoot.questions 
-  }; 
-    const promise = this.http.patch(url, update)
+Fonction qui permet de modifier l'état de la réponse à l'indice index de la question passée en paramètre
+@param question
+@param index
+*/
+changeValidite(question: Question, index: number): void{
+    if(this.alreadyOneTrueOption(question,index) == true){
+    question.reponses[index].estValide = !question.reponses[index].estValide;
+  }
+}
+
+  
+
+
+submitMiahoot() {
+  const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/';
+
+  // Les données à mettre à jour
+  const update = {
+    nom: this.miahoot.nom,
+    questions: this.miahoot.questions.map(question => ({
+      ...question,
+      reponses: question.reponses
+    }))
+  };
+
+  const promise = this.http.patch(url, update)
     .toPromise()
     .then(idMiahoot => {
-      console.log('Miahoot avec l id '+ idMiahoot + 'a été modifié avec succès')
+      console.log('le Miahoot d id ' + idMiahoot + ' a été modifié avec succès');
     })
     .catch(this.handleError);
-    this.router.navigate(['all-miahoot', this.idCreator]);
-    return promise;
+  this.router.navigate(['all-miahoot', this.idCreator]);
+  return promise;
 }
   
 
@@ -143,21 +167,7 @@ export class EditorComponent implements OnInit {
  * @param idMiahoot 
  * @returns 
  */
-/*
-getMiahootById(idMiahoot: number): Promise<Miahoot> {
-  const url = 'http://localhost:8080/api/creator/' +this.idCreator +'/miahoot/id/' + this.idMiahoot;
-  return this.http.get(url)
-    .toPromise()
-    .then(response => {
-      const miahoot = response as Miahoot;
-      return miahoot;
-    })
-    .catch(error => {
-      console.error('An error occurred:', error);
-      return Promise.reject(error.message || error);
-   });
-}
-*/
+
 getMiahootById(idMiahoot: number): Promise<Miahoot> {
   const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/id/' + this.idMiahoot;
   return this.http.get(url)
@@ -172,6 +182,8 @@ getMiahootById(idMiahoot: number): Promise<Miahoot> {
       return Promise.reject(error.message || error);
    });
 }
+
+
 
   private handleError(error: any): Promise<Array<any>> {
     console.error('Une erreur est survenue.', error);

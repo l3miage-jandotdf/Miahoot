@@ -40,7 +40,7 @@
                       <div *ngFor="let reponse of question?.reponses; let j = index" class="form-check">
                         <label class="form-check-label" for="answer-{{i}}-{{j}}">Réponse {{j + 1}}</label>
                         <input type="text"  class ="inputR" [(ngModel)]="reponse.label" [ngModelOptions]="{standalone: true}" placeholder="Entrez votre réponse" maxlength=100 required>
-                        <label class="rpns">Réponse correcte ?</label><input type="checkbox" [(ngModel)]="reponse.estValide" [disabled]="alreadyOneTrueOption(question, i)" [ngModelOptions]="{standalone: true}">
+                        <label class="rpns">Réponse correcte ?</label><input type="checkbox" [(ngModel)]="reponse.estValide" (change)="changeValidite(question, j)" [disabled]="alreadyOneTrueOption(question,j) == true && !reponse.estValide">
                         <button  type="button" class="btn btn-success" (click)="removeAnswer(question, i)">Supprimer la réponse</button>
                       </div>
                       <button type="button" class="btn btn-success" (click)="addAnswer(question)">Ajouter une réponse</button>
@@ -59,12 +59,6 @@
           <button type="button" class="btn btn-danger mb-3" (click)="cancel()">Annuler</button>
         </form>
       </div> 
-      
-
-
-
-
-
   <script src="/__/firebase/11.29.1/firebase-app.js"></script>
   <script src="/__/firebase/11.29.1/firebase-analytics.js"></script>
   <script src="/__/firebase/init.js"></script>

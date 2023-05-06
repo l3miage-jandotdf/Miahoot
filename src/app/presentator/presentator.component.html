@@ -6,7 +6,8 @@
 
 <div *ngIf="currentQuestionIndex!=-1">
   <h1>{{currentQuestion?.label}}</h1>
-  <button (click)="passerSuivant()">SUIVANT</button>
+  <button *ngIf="!miahootTermine" [disabled]="miahootTermine" (click)="passerSuivant()">SUIVANT</button>
+
 </div>
 
 
