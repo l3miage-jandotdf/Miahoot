@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Firestore, doc, DocumentData, DocumentSnapshot, getDoc, collection, getDocs, onSnapshot } from '@angular/fire/firestore';
 import { Question } from '../miahoot.model';
 import { interval } from 'rxjs';
+import { NavigationService } from '../navigation.service';
 
 @Component({
   selector: 'app-participant',
@@ -13,21 +14,22 @@ export class ParticipantComponent {
   @Output() participant = new EventEmitter<boolean>();
 
   idMiahoot! : number;
-
   partieCommencee = false
-
   currentQuestion? : Question | null;
   currentQuestionIndex!: number | null;
-
-  selectedAnswer = '';
-
-  //@Output() startGameEvent = new EventEmitter<{ name: string, firstName: string, age: number }>();
+  selectedAnswer = ''; //TODO
+  idParticipant?: String;
 
   participantName !: string;
   participantFirstName !: string;
   participantAge !: number;
 
-  constructor(private route : ActivatedRoute, private router : Router, private firestore : Firestore) {}
+  constructor(private route : ActivatedRoute, private router : Router, private firestore : Firestore, private navigation:  NavigationService) {
+    this.navigation.id$.subscribe(value => {
+      this.idParticipant=value;
+      console.log("id du participant = ", this.idParticipant);
+    });
+  }
 
   async ngOnInit(): Promise<void> {
     this.idMiahoot = +(this.route.snapshot.paramMap.get('idMiahoot'))!;
