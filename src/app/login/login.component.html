@@ -23,9 +23,20 @@
         <mat-spinner [diameter]="30"></mat-spinner>
       </div>
     </mat-toolbar>
+
     <button class="button" *ngIf="isLoggedIn$ | async" (click)="this.goToPage('/accueil')">
       <img src="../../assets/accueil.png" width="50" height="50" />
     </button>
+
+    <!--
+      <div class="content">
+      <h1> Bienvenue sur l'application MiaHoot. 
+
+        Parce que la vie est plus belle en apprenant en couleurs, nous vous proposons d'améliorer votre culture générale à travers le logiciel Miahoot en répondant à des QCMs. 
+      </h1>
+    </div>
+    -->
+    
  
   
   <script src="/__/firebase/11.29.1/firebase-app.js"></script>
@@ -34,3 +45,7 @@
 
 
 </body>
+
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>
