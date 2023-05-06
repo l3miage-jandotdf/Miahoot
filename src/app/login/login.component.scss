@@ -13,7 +13,7 @@
 }
 
 mat-toolbar {
-  background-color: lightgray;
+  background-color: rgb(247, 245, 245);
   height: 90px;
 }
 
@@ -24,7 +24,7 @@ mat-toolbar {
 }
 
 .LogoutBouton{
-  position: absolute;
+  position: relative;
   right: 0;
   margin : 0 70px;
   background-color: blue;
@@ -57,13 +57,26 @@ p{
  }
 
 
- .button{
-  background : white;
-  width : 60px;
-  height: 60px;
-  border-radius: 10px;
 
- }
+
+ button {
+  width: 170px;
+  height: 60px;
+  border: 3px solid #315cfd;
+  border-radius: 45px;
+  transition: all 0.3s;
+  cursor: pointer;
+  background: white;
+  font-size: 0.7em;
+  font-weight: 550;
+  font-family: 'Montserrat', sans-serif;
+}
+
+button:hover {
+  background: #315cfd;
+  color: white;
+  font-size: 0.9em;
+}
 
 }
 

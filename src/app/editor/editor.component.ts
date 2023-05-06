@@ -103,39 +103,17 @@ export class EditorComponent implements OnInit {
   }
 
 
-  /*alreadyOneTrueOption(question : Question, index : number) : boolean{
+  alreadyOneTrueOption(question : Question, index : number) : boolean{
     if (question.reponses.length > 1 && question.reponses[index].estValide == false){
       return question.reponses.reduce((acc, val) => acc || val.estValide, false);
     }
     else{
       return false;
     }
-  }*/
-
-
-  alreadyOneTrueOption(question: Question, index: number): boolean {
-    if (question.reponses.length > 1) {
-      const alreadyOneTrue = question.reponses.some((r, i) => i !== index && r.estValide);
-      const currentIsTrue = question.reponses[index].estValide;
-      return alreadyOneTrue || currentIsTrue;
-    } else {
-      return false;
-    }
   }
 
-  /**
 
-Fonction qui permet de modifier l'état de la réponse à l'indice index de la question passée en paramètre
-@param question
-@param index
-*/
-changeValidite(question: Question, index: number): void{
-    if(this.alreadyOneTrueOption(question,index) == true){
-    question.reponses[index].estValide = !question.reponses[index].estValide;
-  }
-}
-
-  
+ 
 
 
 submitMiahoot() {

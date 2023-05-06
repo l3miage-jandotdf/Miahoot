@@ -40,7 +40,7 @@
                       <div *ngFor="let reponse of question?.reponses; let j = index" class="form-check">
                         <label class="form-check-label" for="answer-{{i}}-{{j}}">Réponse {{j + 1}}</label>
                         <input type="text"  class ="inputR" [(ngModel)]="reponse.label" [ngModelOptions]="{standalone: true}" placeholder="Entrez votre réponse" maxlength=100 required>
-                        <label class="rpns">Réponse correcte ?</label><input type="checkbox" [(ngModel)]="reponse.estValide" (change)="changeValidite(question, j)" [disabled]="alreadyOneTrueOption(question,j) == true && !reponse.estValide">
+                        <label class="rpns">Réponse correcte ?</label><input type="checkbox" [(ngModel)]="reponse.estValide" [disabled]="alreadyOneTrueOption(question, i)" [ngModelOptions]="{standalone: true}">
                         <button  type="button" class="btn btn-success" (click)="removeAnswer(question, i)">Supprimer la réponse</button>
                       </div>
                       <button type="button" class="btn btn-success" (click)="addAnswer(question)">Ajouter une réponse</button>
