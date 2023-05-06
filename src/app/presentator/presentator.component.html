@@ -4,15 +4,18 @@
   <button (click)="passerSuivant()">COMMENCER</button>
 </div>
 
-<div *ngIf="currentQuestionIndex!=-1">
-  <h1>{{currentQuestion?.label}}</h1>
-  <div *ngFor="let answer of currentQuestion?.answers; index as i">
-    <p>{{answer.label}}</p>
+<div *ngIf="!miahootTermine">
+  <div *ngIf="currentQuestionIndex!=-1">
+    <h1>{{currentQuestion?.label}}</h1>
+    <div *ngFor="let answer of currentQuestion?.answers; index as i">
+      <p>{{answer.label}}</p>
+    </div>
+    <button [disabled]="miahootTermine" (click)="passerSuivant()">SUIVANT</button>
   </div>
-  <button *ngIf="!miahootTermine" [disabled]="miahootTermine" (click)="passerSuivant()">SUIVANT</button>
-
 </div>
-
+<div *ngIf="miahootTermine">
+  <h2>La partie est terminée !</h2>
+</div>
 
   <script src="/__/firebase/11.29.1/firebase-app.js"></script>
 <script src="/__/firebase/11.29.1/firebase-analytics.js"></script>

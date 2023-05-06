@@ -88,17 +88,19 @@ export class PresentatorComponent {
     
     if (querySnapshot.size > 0) {
       const questionDocSnapshot = querySnapshot.docs[index];
-      if (questionDocSnapshot.exists()) {
-        const questionData = questionDocSnapshot.data();
-        return {
-          id: questionData?.['id'],
-          label: questionData?.['label'],
-          answers: questionData?.['answers']
-        } as Question;
+      if (questionDocSnapshot !== undefined){
+        if (questionDocSnapshot.exists()) {
+          const questionData = questionDocSnapshot.data();
+          return {
+            id: questionData?.['id'],
+            label: questionData?.['label'],
+            answers: questionData?.['answers']
+          } as Question;
+        }
       }
     }
   
-    return null;
+    return undefined;
   }
   
   
@@ -125,17 +127,17 @@ export class PresentatorComponent {
     await this.setNextQuestionCourante();
     this.currentQuestionIndex = await this.getQuestionCouranteIndex(this.idMiahoot);
     console.log("QUESTION n° :" +  this.currentQuestionIndex);
-    this.currentQuestion = await this.getQuestionByIndex(this.idMiahoot, this.currentQuestionIndex!);
-    console.log("QUESTION LABEL : " + this.currentQuestion?.label);
-
     //Lorsque nous n'avons plus de question courante, cela signifie que le miahoot a pris fin.
+    this.currentQuestion = await this.getQuestionByIndex(this.idMiahoot, this.currentQuestionIndex!);
     if (this.currentQuestion === undefined) {
       console.log("Le miahoot est terminé !");
       // On met 'miahootterminé à true pour pouvoir désactiver et ne plus afficher le bouton 'Suivant'
       this.miahootTermine = true;
-      // Afficher une boite de dialogue pour indiquer au présentateur que le miahoot est terminé
-      alert("Le miahoot est terminé :) !");
     }
+    console.log("QUESTION LABEL : " + this.currentQuestion?.label);
+    
+
+    
   }
   
 }
