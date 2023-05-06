@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { DocumentSnapshot, Firestore, FirestoreDataConverter, QueryDocumentSnapshot, SnapshotOptions, doc, docData, getDocs } from '@angular/fire/firestore';
+import { DocumentSnapshot, Firestore, FirestoreDataConverter, QueryDocumentSnapshot, SnapshotOptions, addDoc, doc, docData, getDocs } from '@angular/fire/firestore';
 import { Auth, authState } from '@angular/fire/auth';
 import { Observable, of, switchMap } from 'rxjs';
 import { collection, query, QuerySnapshot, where, setDoc } from 'firebase/firestore';
@@ -10,7 +10,7 @@ import { collection, query, QuerySnapshot, where, setDoc } from 'firebase/firest
 export interface Miahoot {
   id: number;
   nom: string;
-  questionCourante: number | null;
+  //questionCourante: number | null;
   questions: Question[];
 }
 
@@ -47,9 +47,8 @@ export class AllMiahootComponent implements OnInit{
 
 
   miahootTest: Miahoot = {
-    id: 6666,
-    nom: 'Mon sixieme Miahoot',
-    questionCourante: null,
+    id: 7777,
+    nom: 'Mon septième Miahoot',
     questions: [
       {
         id: 1,
@@ -73,6 +72,7 @@ export class AllMiahootComponent implements OnInit{
     await this.getMiahoots();
   }
 
+
   // Ajouter une partie (miahoot présenté)
   async addMiahoot(miahoot: Miahoot): Promise<void> {
     const miahootDocRef = doc(this.firestore, 'miahoots', miahoot.id.toString());
@@ -85,18 +85,15 @@ export class AllMiahootComponent implements OnInit{
     for (const question of miahoot.questions) {
       const questionDocRef = doc(miahootDocRef, 'questions', question.id.toString());
       const questionData = {
-        label: question.label
+        label: question.label,
+        answers: question.answers.map(answer => ({
+          label: answer.label,
+          estValide: answer.estValide
+        }))
       };
       await setDoc(questionDocRef, questionData);
 
-      for (const reponse of question.answers) {
-        const reponseDocRef = doc(questionDocRef, 'reponses', reponse.id.toString());
-        const reponseData = {
-          label: reponse.label,
-          estValide: reponse.estValide
-        };
-        await setDoc(reponseDocRef, reponseData);
-      }
+      const votesCollectionRef = collection(questionDocRef, 'votes');
     }
   }
   /**
