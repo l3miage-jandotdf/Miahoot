@@ -6,6 +6,9 @@
 
 <div *ngIf="currentQuestionIndex!=-1">
   <h1>{{currentQuestion?.label}}</h1>
+  <div *ngFor="let answer of currentQuestion?.answers; index as i">
+    <p>{{answer.label}}</p>
+  </div>
   <button *ngIf="!miahootTermine" [disabled]="miahootTermine" (click)="passerSuivant()">SUIVANT</button>
 
 </div>
