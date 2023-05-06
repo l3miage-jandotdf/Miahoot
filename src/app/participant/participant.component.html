@@ -17,20 +17,12 @@
   <div *ngIf="currentQuestionIndex!=-1">
     <h1>{{currentQuestion?.label}}</h1>
     <div *ngFor="let answer of currentQuestion?.answers; index as i">
-      <p>{{answer.label}}</p>
+      <p>{{answer.label}} <input type="checkbox" (click)="selectVote(i)" [disabled]="!alreadyOneTrueOption(i)"> </p> 
     </div>
+    <button (click)="submitVote()">Valider la réponse</button>
   </div>
 </div>
 
-<div class="question-container">
-    <!--<h2>{{ currentQuestion?.text }}</h2>-
-    <ul>
-      <li *ngFor="let answer of currentQuestion?.answers; let i = index"
-          (click)="selectAnswer(answer)">
-        {{ answer }}
-      </li>
-    </ul>-->
-  </div>
 
 <script src="/__/firebase/11.29.1/firebase-app.js"></script>
 <script src="/__/firebase/11.29.1/firebase-analytics.js"></script>

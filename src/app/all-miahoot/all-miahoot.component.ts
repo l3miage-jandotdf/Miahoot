@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Injectable } from '@angular/core';
 import { DocumentSnapshot, Firestore, FirestoreDataConverter, QueryDocumentSnapshot, SnapshotOptions, addDoc, doc, docData, getDocs } from '@angular/fire/firestore';
 import { Auth, authState } from '@angular/fire/auth';
 import { Observable, of, switchMap } from 'rxjs';
@@ -52,11 +51,20 @@ export class AllMiahootComponent implements OnInit{
     questions: [
       {
         id: 1,
-        label: 'Question 1',
+        label: 'Quelle est la meilleure fillière de l im2ag ?',
         answers: [
-          { id: 1, label: 'Réponse 1', estValide: true },
-          { id: 2, label: 'Réponse 2', estValide: false },
-          { id: 3, label: 'Réponse 3', estValide: false },
+          { id: 1, label: 'MIAGE', estValide: true },
+          { id: 2, label: 'Informatique général', estValide: false },
+          { id: 3, label: 'Maths-Informatique', estValide: false },
+        ],
+      },
+      {
+        id: 5,
+        label: 'Va t-on valider notre semestre ? ',
+        answers: [
+          { id: 1, label: 'Non, à cause de Gestion Comptable', estValide: false },
+          { id: 2, label: 'Non, à cause d Angular', estValide: true },
+          { id: 3, label: 'Non, à cause de BDD', estValide: false },
         ],
       },
     ],
@@ -85,6 +93,7 @@ export class AllMiahootComponent implements OnInit{
     for (const question of miahoot.questions) {
       const questionDocRef = doc(miahootDocRef, 'questions', question.id.toString());
       const questionData = {
+        id: question.id,
         label: question.label,
         answers: question.answers.map(answer => ({
           label: answer.label,
