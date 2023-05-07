@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Firestore, doc, DocumentData, DocumentSnapshot, getDoc, updateDoc, collection, getDocs, query, orderBy, QuerySnapshot } from '@angular/fire/firestore';
+import { Firestore, doc, DocumentData, DocumentSnapshot, getDoc, updateDoc, collection, getDocs, query, orderBy, QuerySnapshot, onSnapshot } from '@angular/fire/firestore';
 
 export interface Miahoot {
   id: number;
   nom: string;
   questionCourante: number | null;
+  nbParticipants : number;
   questions: Question[];
 }
 
@@ -36,6 +37,7 @@ export class PresentatorComponent {
   currentQuestion? : Question | null;
   currentQuestionIndex: number | null=1;
   idMiahoot! : number;
+  nbParticipants: number | null = 0;
 
   miahootTermine : boolean = false; 
   topThree: [string, number][] = [];
@@ -45,6 +47,7 @@ export class PresentatorComponent {
   async ngOnInit(): Promise<void> {
     this.idMiahoot = +(this.route.snapshot.paramMap.get('idMiahoot'))!;
     this.currentQuestionIndex = await this.getQuestionCouranteIndex(this.idMiahoot);
+    this.nbParticipants = await this.getNbParticipants();
     console.log("QUESTION n° :" +  this.currentQuestionIndex);
   }
 
@@ -114,12 +117,7 @@ export class PresentatorComponent {
   if (miahootDocSnapshot.exists()) {
     const miahootData = miahootDocSnapshot.data() as Miahoot;
     const questions = miahootData.questions;
-
     let nextQuestionIndex = (miahootData.questionCourante ?? 0) + 1;
-    //if (nextQuestionIndex >= questions.length) {
-    //  nextQuestionIndex = questions.length - 1;
-    //}
-
     await updateDoc(miahootDocRef, { questionCourante: nextQuestionIndex });
   }
 }
@@ -184,6 +182,23 @@ export class PresentatorComponent {
     return topThree;
   }
   
+  async getNbParticipants(): Promise<number | null> {
+    const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
+    const miahootDocSnapshot: DocumentSnapshot<DocumentData> = await getDoc(miahootDocRef);
+    if (miahootDocSnapshot.exists()) {
+      const miahootData = miahootDocSnapshot.data();
+      const nbParticipants = miahootData?.['nbParticipants'];
+      const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
+      onSnapshot(miahootDocRef, async (docSnapshot) => {  //OBSERVABLE 
+        const miahootData = docSnapshot.data();
+        const nbParticipants = miahootData?.['nbParticipants'];
+        this.nbParticipants = nbParticipants;
+      });
+      return nbParticipants ?? null;
+    } else {
+      return null;
+    }
+  }
   
   
 }

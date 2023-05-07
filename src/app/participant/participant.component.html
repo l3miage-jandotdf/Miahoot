@@ -1,12 +1,12 @@
 <app-login></app-login>
 <div *ngIf="!partieCommencee">
   <h2>Bienvenue sur le Miahoot ! Pour commencer, veuillez renseigner les informations ci-dessous.</h2>
-      <form (ngSubmit)="startGame()">
+      <form>
         <div>
           <label>Pseudo :</label>
           <input type="text" placeholder="Saisissez votre nom" [(ngModel)]="participantName" name="name" required>
         </div>
-        <button type="submit" [disabled]="!participantName" (click)="commencerPartie()">Commencer</button>
+        <button (click)="startGame()" [disabled]="!participantName" (click)="commencerPartie()">Commencer</button>
       </form>
   </div>
 
