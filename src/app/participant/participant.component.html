@@ -1,19 +1,20 @@
 <app-login></app-login>
 
-<div class="context">
-
   <div *ngIf="!partieCommencee">
     <h2>Bienvenue sur le Miahoot ! Pour commencer, veuillez renseigner les informations ci-dessous.</h2>
         <form>
-          <div>
-            <label>Pseudo :</label>
-            <input type="text" class="champ" placeholder="Saisissez votre nom" [(ngModel)]="participantName" name="name" required>
+          <div class="label">
+            <label class="pseudo">Pseudonyme :</label>
+            <input type="text" class="input" placeholder="Saisissez votre pseudo ici" [(ngModel)]="participantName" name="name" required>
           </div>
-          <button (click)="startGame()" class="start" [disabled]="!participantName" (click)="commencerPartie()">Commencer
-            <div class="icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path></svg>
-            </div>
-          </button>
+          <div class="bouton1">
+            <button (click)="startGame()" class="start" [disabled]="!participantName" (click)="commencerPartie()">Commencer
+              <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path></svg>
+              </div>
+            </button>
+          </div>
+          
         </form>
     </div>
   
@@ -26,9 +27,9 @@
   
     <div *ngIf="!miahootTermine">
       <div *ngIf="currentQuestionIndex!=-1">
-        <h1>{{currentQuestion?.label}}</h1>
+        <h1 class="questionCourante">{{currentQuestion?.label}}</h1>
         <div *ngFor="let answer of currentQuestion?.answers; index as i">
-          <p>{{answer.label}} <label class="selection"><input type="checkbox" class="option" (click)="selectVote(i)" [disabled]="!alreadyOneTrueOption(i)"></label> </p> 
+          <p class="choix"><label class="selection">{{answer.label}} <input type="checkbox" class="option" (click)="selectVote(i)" [disabled]="!alreadyOneTrueOption(i)"></label> </p> 
         </div>
         <button [disabled]="voteSubmited" class="valider" (click)="submitVote()"><span class="text">Valider la réponse</span></button>
       </div>
@@ -44,9 +45,8 @@
   <script src="/__/firebase/init.js"></script>
   
  
-</div>
-
-<div class="area" >
+ <!--
+  <div class="area" >
   <ul class="circles">
           <li></li>
           <li></li>
@@ -60,4 +60,8 @@
           <li></li>
   </ul>
 </div >
+
+
+ --> 
+
 
