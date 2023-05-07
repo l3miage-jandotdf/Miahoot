@@ -188,5 +188,7 @@ export class ParticipantComponent {
     const voteDocRef = doc(votesCollectionRef, userId);
     await setDoc(voteDocRef, voteData);
   }
+
+  
   
 }

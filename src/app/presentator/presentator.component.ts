@@ -38,6 +38,7 @@ export class PresentatorComponent {
   idMiahoot! : number;
 
   miahootTermine : boolean = false; 
+  topThree: [string, number][] = [];
 
   constructor(private route : ActivatedRoute, private router : Router, private firestore : Firestore) {}
 
@@ -132,12 +133,57 @@ export class PresentatorComponent {
     if (this.currentQuestion === undefined) {
       console.log("Le miahoot est terminé !");
       // On met 'miahootterminé à true pour pouvoir désactiver et ne plus afficher le bouton 'Suivant'
+      this.topThree = await this.getTopThreeParticipants();
       this.miahootTermine = true;
     }
     console.log("QUESTION LABEL : " + this.currentQuestion?.label);
     
-
-    
   }
+
+  async getParticipantsScores(): Promise<[string, number][]> {
+    const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
+    const miahootSnapshot = await getDoc(miahootDocRef);
+  
+    const participantsScores: {[key: string]: number} = {};
+  
+    const questionsSnapshot = await getDocs(collection(miahootDocRef, 'questions'));
+  
+    for (const questionDoc of questionsSnapshot.docs) {
+      const votesSnapshot = await getDocs(collection(questionDoc.ref, 'votes'));
+  
+      for (const voteDoc of votesSnapshot.docs) {
+        const userId = voteDoc.id;
+        const voteData = voteDoc.data();
+        const point = voteData['point'] || 0;
+        participantsScores[userId] = (participantsScores[userId] || 0) + point;
+        console.log("J'AI TROUVÉ UN PARTICIPANT !");
+        console.log("IL A " + participantsScores[userId] +" POINT");
+      }
+    }
+  
+    return Object.entries(participantsScores);
+  }
+
+  async getTopThreeParticipants(): Promise<[string, number][]> {
+    const participantsScores = await this.getParticipantsScores();
+    participantsScores.sort((a, b) => b[1] - a[1]); // trier par ordre décroissant de score
+  
+    const topThree: [string, number][] = [];
+  
+    // Récupérer les trois premiers participants
+    for (let i = 0; i < Math.min(participantsScores.length, 3); i++) {
+      const [userId, score] = participantsScores[i];
+      const participantDocRef = doc(this.firestore, 'users', userId);
+      const participantDocSnapshot = await getDoc(participantDocRef);
+      if (participantDocSnapshot.exists()) {
+        const participantData = participantDocSnapshot.data()!;
+        topThree.push([participantData['name'], score]);
+      }
+    }
+  
+    return topThree;
+  }
+  
+  
   
 }

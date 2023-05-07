@@ -26,6 +26,13 @@
   </div>
   <div *ngIf="miahootTermine">
     <h2>La partie est terminée !</h2>
+    <h3>Bravo aux trois gagnants :</h3>
+      <ol>
+        <li *ngFor="let participant of topThree">
+          {{ participant[0] }} - {{ participant[1] }} points
+        </li>
+      </ol>
+
   </div>
   
     <script src="/__/firebase/11.29.1/firebase-app.js"></script>
