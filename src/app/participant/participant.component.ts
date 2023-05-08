@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Firestore, doc, DocumentData, DocumentSnapshot, getDoc, collection, getDocs, onSnapshot, addDoc, setDoc, updateDoc } from '@angular/fire/firestore';
 import { interval } from 'rxjs';
 import { NavigationService } from '../navigation.service';
+import { getAuth, updateProfile } from 'firebase/auth';
 
 export interface Miahoot {
   id: number;
