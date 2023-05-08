@@ -1,9 +1,9 @@
 <app-login></app-login>
-
+<div *ngIf="login">
   <div *ngIf="!partieCommencee">
     <h2>Bienvenue sur le Miahoot ! Pour commencer, veuillez renseigner les informations ci-dessous.</h2>
         <form>
-          <div class="label">
+          <div class="label" *ngIf="!loginWithGoogle">
             <label class="pseudo">Pseudonyme :</label>
             <input type="text" class="input" placeholder="Saisissez votre pseudo ici" [(ngModel)]="participantName" name="name" required>
           </div>
@@ -38,7 +38,7 @@
       <h2>La partie est terminée !</h2>
     </div>
   </div>
-
+</div>
 
   <script src="/__/firebase/11.29.1/firebase-app.js"></script>
   <script src="/__/firebase/11.29.1/firebase-analytics.js"></script>
