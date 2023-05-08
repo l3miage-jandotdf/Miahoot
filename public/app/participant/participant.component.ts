@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class ParticipantComponent {
   @Output() participant = new EventEmitter<boolean>();
 
-
+  partieCommencee = false
 
   currentQuestionIndex = 0;
 
@@ -52,5 +52,9 @@ export class ParticipantComponent {
 
   goToPage(){
     this.router.navigate([`/presentator/1`]);
+  }
+
+  commencerPartie() : void {
+    this.partieCommencee = true;
   }
 }

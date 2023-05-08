@@ -1,8 +1,22 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
+@Injectable({
+  providedIn: 'root'
+})
 
 export class NavigationService {
-  id : String | undefined;
+  private idsubject = new BehaviorSubject<string>('');
+  public id$ = this.idsubject.asObservable();
 
-  constructor() { }
+  private pseudoParticipant = new BehaviorSubject<string>('');
+  public pseudo$ = this.pseudoParticipant.asObservable();
+
+  setId(value : string){
+    this.idsubject.next(value);
+  }
+
+  setPseudo(value : string){
+    this.pseudoParticipant.next(value);
+  }
 }
