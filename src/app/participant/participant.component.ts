@@ -8,7 +8,8 @@ export interface Miahoot {
   id: number;
   nom: string;
   questionCourante: number | null;
-  nbParticipants : number;
+  nbParticipants: number;
+  nbVotesQuestionCourante: number;
   questions: Question[];
 }
 
@@ -211,10 +212,20 @@ export class ParticipantComponent {
       indexVoteSoumis: this.selectedAnswerIndex,
       point : nbPointGagne
     };
+    //enregistre le vote dans la collection "votes"
     const userId = this.idParticipant!.toString();
     const votesCollectionRef = collection(questionDocRef, 'votes');
     const voteDocRef = doc(votesCollectionRef, userId);
     await setDoc(voteDocRef, voteData);
+
+    const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
+    const miahootDocSnapshot = await getDoc(miahootDocRef);
+  
+    if (miahootDocSnapshot.exists()) {
+      const miahootData = miahootDocSnapshot.data() as Miahoot;
+      let nbVotesPlusUn = miahootData.nbVotesQuestionCourante +1;
+      await updateDoc(miahootDocRef, { nbVotesQuestionCourante: nbVotesPlusUn }); 
+    }
   }
   
   

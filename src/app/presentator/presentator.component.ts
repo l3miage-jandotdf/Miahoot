@@ -6,7 +6,8 @@ export interface Miahoot {
   id: number;
   nom: string;
   questionCourante: number | null;
-  nbParticipants : number;
+  nbParticipants: number;
+  nbVotesQuestionCourante: number;
   questions: Question[];
 }
 
@@ -36,6 +37,7 @@ export class PresentatorComponent {
 
   currentQuestion? : Question | null;
   currentQuestionIndex: number | null=1;
+  nbVotesCurrentQuestion:number | null=0;
   idMiahoot! : number;
   nbParticipants: number | null = 0;
 
@@ -48,6 +50,7 @@ export class PresentatorComponent {
     this.idMiahoot = +(this.route.snapshot.paramMap.get('idMiahoot'))!;
     this.currentQuestionIndex = await this.getQuestionCouranteIndex(this.idMiahoot);
     this.nbParticipants = await this.getNbParticipants();
+    this.nbVotesCurrentQuestion = await this.getNbVotesCurrentQuestion();
     console.log("QUESTION n° :" +  this.currentQuestionIndex);
   }
 
@@ -118,8 +121,9 @@ export class PresentatorComponent {
     const miahootData = miahootDocSnapshot.data() as Miahoot;
     const questions = miahootData.questions;
     let nextQuestionIndex = (miahootData.questionCourante ?? 0) + 1;
-    await updateDoc(miahootDocRef, { questionCourante: nextQuestionIndex });
+    await updateDoc(miahootDocRef, { questionCourante: nextQuestionIndex, nbVotesQuestionCourante : 0 });
   }
+  
 }
 
   async passerSuivant(){
@@ -154,8 +158,6 @@ export class PresentatorComponent {
         const voteData = voteDoc.data();
         const point = voteData['point'] || 0;
         participantsScores[userId] = (participantsScores[userId] || 0) + point;
-        console.log("J'AI TROUVÉ UN PARTICIPANT !");
-        console.log("IL A " + participantsScores[userId] +" POINT");
       }
     }
   
@@ -199,6 +201,26 @@ export class PresentatorComponent {
       return null;
     }
   }
+
+  //un peu répétitif... je n'ai pas réussi à faire marcher la fonction qui compte dynamiquement votes.length
+  async getNbVotesCurrentQuestion(): Promise<number | null> {
+    const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
+    const miahootDocSnapshot: DocumentSnapshot<DocumentData> = await getDoc(miahootDocRef);
+    if (miahootDocSnapshot.exists()) {
+      const miahootData = miahootDocSnapshot.data();
+      const nbVotes = miahootData?.['nbVotesQuestionCourante'];
+      const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
+      onSnapshot(miahootDocRef, async (docSnapshot) => {  //OBSERVABLE 
+        const miahootData = docSnapshot.data();
+        const nbVotes = miahootData?.['nbVotesQuestionCourante'];
+        this.nbVotesCurrentQuestion = nbVotes;
+      });
+      return nbVotes ?? null;
+    } else {
+      return null;
+    }
+  }
+
   
   
 }
