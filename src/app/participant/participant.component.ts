@@ -84,7 +84,13 @@ export class ParticipantComponent {
   async ngOnInit(): Promise<void> {
     this.idMiahoot = +(this.route.snapshot.paramMap.get('idMiahoot'))!;
     this.currentQuestionIndex = await this.getQuestionCouranteIndex(this.idMiahoot);
+    this.displayVoteSubmited();
 
+  }
+  displayVoteSubmited(): void {
+    setInterval(() => {
+      console.log(this.voteSubmited);
+    }, 50);
   }
 
   /**
@@ -113,21 +119,24 @@ export class ParticipantComponent {
 
         // On extrait la nouvelle valeur de la questionCourante
         const miahootData = docSnapshot.data();
-        const questionCourante = miahootData?.['questionCourante'];
 
-        // On fait une mise à jour de la valeur de la question courante et on la récupère
-        this.currentQuestionIndex = questionCourante;
-        this.currentQuestion = await this.getQuestionByIndex(this.idMiahoot, this.currentQuestionIndex!);
-        if (this.currentQuestion === undefined && this.currentQuestionIndex !==-1) {
-          console.log("Le miahoot est terminé !");
-          // On met 'miahootterminé à true pour pouvoir désactiver et ne plus afficher le bouton 'Suivant'
-          this.miahootTermine = true;
+        if (miahootData?.['questionCourante'] !== this.currentQuestionIndex){
+          const questionCourante = miahootData?.['questionCourante'];
+
+          // On fait une mise à jour de la valeur de la question courante et on la récupère
+          this.currentQuestionIndex = questionCourante;
+          this.currentQuestion = await this.getQuestionByIndex(this.idMiahoot, this.currentQuestionIndex!);
+          if (this.currentQuestion === undefined && this.currentQuestionIndex !==-1) {
+            console.log("Le miahoot est terminé !");
+            // On met 'miahootterminé à true pour pouvoir désactiver et ne plus afficher le bouton 'Suivant'
+            this.miahootTermine = true;
+          }
+          this.voteSubmited = false;
+          this.selectedAnswerIndex = null;
+
+          // On affiche un message dans la console pour indiquer que la question courante a été mise à jour.
+          console.log("QUESTION COURANTE CHANGEE : " + questionCourante);
         }
-        this.voteSubmited = false;
-        this.selectedAnswerIndex = null;
-
-        // On affiche un message dans la console pour indiquer que la question courante a été mise à jour.
-        console.log("QUESTION COURANTE CHANGEE : " + questionCourante);
       });
 
       // On retourne la valeur initiale de la question courante ou null si elle n'existe pas.
@@ -262,6 +271,7 @@ export class ParticipantComponent {
       let nbVotesPlusUn = miahootData.nbVotesQuestionCourante +1;
       await updateDoc(miahootDocRef, { nbVotesQuestionCourante: nbVotesPlusUn }); 
     }
+    this.voteSubmited = true;
   }
 
 
