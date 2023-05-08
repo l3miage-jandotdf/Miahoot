@@ -16,6 +16,7 @@
       <div *ngFor="let answer of currentQuestion?.reponses; index as i">
         <p>{{answer.label}}</p>
       </div>
+      <p>Nombre de réponses : {{nbVotesCurrentQuestion}} / {{nbParticipants}}</p>
       <button [disabled]="miahootTermine" (click)="passerSuivant()"><span>SUIVANT</span>
 
         <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">

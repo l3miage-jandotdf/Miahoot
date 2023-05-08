@@ -1,5 +1,7 @@
+
+
 /*Règles pour les écrans de taille normale*/
-@media screen and (min-width : 768px){
+@media screen and (min-width : 992px){
 
 .mat-toolbar-spacer {
   margin-left: auto;
@@ -145,7 +147,7 @@ body{
 
  /*Règles pour les écran de petite taille*/
 
- @media screen and (max-width : 767px){
+ @media screen and (max-width : 600px){
 
   mat-toolbar-spacer {
     margin-left: auto;
@@ -161,6 +163,8 @@ body{
   mat-toolbar {
     background-color: lightgray;
     height: 90px;
+    display: flex;
+    justify-content: space-between;
   }
   
   
@@ -172,10 +176,15 @@ body{
   .LogoutBouton{
     position: absolute;
     right: 0;
+    padding-top: 0%;
     margin : 0 70px;
     background-color: blue;
     color: white;
     border-radius: 10px;
+  }
+
+  .param{
+    width : 40%
   }
   
   IMG.img{
@@ -197,20 +206,210 @@ body{
     height: 75px;
     margin: auto;
   }
+
    .div{
     position: absolute;
     left: 0px;
    }
   
   
-   .button{
-    background : white;
-    width : 60px;
+   button {
+    width: 50%;
     height: 60px;
-    border-radius: 10px;
+    border: 3px solid #315cfd;
+    border-radius: 45px;
+    transition: all 0.3s;
+    cursor: pointer;
+    background: white;
+    font-size: 0.7em;
+    font-weight: 550;
+    font-family: 'Montserrat', sans-serif;
+  }
   
-   }
+  button:hover {
+    background: #315cfd;
+    color: white;
+    font-size: 0.9em;
+  }
+  
+  
+  html {
+    height:100%;
+  }
+  
+  body {
+    margin:0;
+  }
+  
+  .bg {
+    animation:slide 3s ease-in-out infinite alternate;
+    background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
+    bottom:0;
+    left:-50%;
+    opacity:.5;
+    position:fixed;
+    right:-50%;
+    top:0;
+    z-index:-1;
+  }
+  
+  .bg2 {
+    animation-direction:alternate-reverse;
+    animation-duration:4s;
+  }
+  
+  .bg3 {
+    animation-duration:5s;
+  }
+  
+  @keyframes slide {
+    0% {
+      transform:translateX(-25%);
+    }
+    100% {
+      transform:translateX(25%);
+    }
+  } 
 
  }
 
 
+@media screen and (max-width : 992px){
+
+  
+.mat-toolbar-spacer {
+  margin-left: auto;
+}
+
+
+.mat-raised-button  {
+  background-color: blue;
+  color: white;
+  border-radius: 10px;
+}
+
+mat-toolbar {
+  background-color: rgb(247, 245, 245);
+  height: 90px;
+}
+
+
+
+.mat-toolbar-row{
+  height: 90;
+}
+
+.LogoutBouton{
+  position: relative;
+  right: 0;
+  margin : 0 70px;
+  background-color: blue;
+  color: white;
+  border-radius: 10px;
+}
+
+IMG.img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto }
+
+p{
+  text-align: center;
+  margin-top: 30px;
+
+}
+
+.ButtonQuizz{
+  background-color: grey;
+  color : black;
+  border-radius: 100px;
+  width : 150px;
+  height: 75px;
+  margin: auto;
+}
+ .div{
+  position: absolute;
+  left: 0px;
+ }
+
+
+
+
+ button {
+  width: 170px;
+  height: 60px;
+  border: 3px solid #315cfd;
+  border-radius: 45px;
+  transition: all 0.3s;
+  cursor: pointer;
+  background: white;
+  font-size: 0.7em;
+  font-weight: 550;
+  font-family: 'Montserrat', sans-serif;
+}
+
+button:hover {
+  background: #315cfd;
+  color: white;
+  font-size: 0.9em;
+}
+
+
+html {
+  height:100%;
+}
+
+body {
+  margin:0;
+}
+
+.bg {
+  animation:slide 3s ease-in-out infinite alternate;
+  background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
+  bottom:0;
+  left:-50%;
+  opacity:.5;
+  position:fixed;
+  right:-50%;
+  top:0;
+  z-index:-1;
+}
+
+.bg2 {
+  animation-direction:alternate-reverse;
+  animation-duration:4s;
+}
+
+.bg3 {
+  animation-duration:5s;
+}
+
+@keyframes slide {
+  0% {
+    transform:translateX(-25%);
+  }
+  100% {
+    transform:translateX(25%);
+  }
+}
+
+.content {
+  background-color:rgba(255,255,255,.8);
+  border-radius:.25em;
+  box-shadow:0 0 .25em rgba(0,0,0,.25);
+  box-sizing:border-box;
+  left:50%;
+  padding:50px;
+  margin-bottom: 10%;
+  margin-top: 90px;
+  position:fixed;
+  text-align:center;
+  top:50%;
+  transform:translate(-50%, -50%);
+}
+
+h1 {
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+}
