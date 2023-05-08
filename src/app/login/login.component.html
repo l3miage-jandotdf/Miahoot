@@ -2,14 +2,15 @@
   <p></p>
 
   <mat-toolbar>
-    <img src="../../assets/logo.png" width="90" height="90" *ngIf="!(isLoggedIn$ | async) && !isAuthenticating || participant"/>
+    <img src="../../assets/logo.png" width="90" height="90" *ngIf="!isLogin"/>
+    <!--!(isLoggedIn$ | async) && !isAuthenticating || participant && -->
       <div class="mat-toolbar-row">
         <div *ngIf="!(isLoggedIn$ | async) && !isAuthenticating" class="mat-toolbar-spacer">
-          <button class="mat-raised-button mat-primary" (click)="login()"> 
+          <button class="mat-raised-button mat-primary" (click)="login()">
             Se connecter</button>
           <button class="mat-raised-button mat-primary" (click)="loginAnonymously()" *ngIf="participant">Se connecter anonymement</button>
         </div>
-  
+
       </div>
       <div class="div" *ngIf="isLoggedIn$ | async">
         <img [src]="currentUser!.photoURL" width="30">
@@ -30,15 +31,15 @@
 
     <!--
       <div class="content">
-      <h1> Bienvenue sur l'application MiaHoot. 
+      <h1> Bienvenue sur l'application MiaHoot.
 
-        Parce que la vie est plus belle en apprenant en couleurs, nous vous proposons d'améliorer votre culture générale à travers le logiciel Miahoot en répondant à des QCMs. 
+        Parce que la vie est plus belle en apprenant en couleurs, nous vous proposons d'améliorer votre culture générale à travers le logiciel Miahoot en répondant à des QCMs.
       </h1>
     </div>
     -->
-    
- 
-  
+
+
+
   <script src="/__/firebase/11.29.1/firebase-app.js"></script>
   <script src="/__/firebase/11.29.1/firebase-analytics.js"></script>
   <script src="/__/firebase/init.js"></script>

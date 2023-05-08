@@ -66,15 +66,16 @@ export class CreatorComponent {
 
   submitMiahoot(){
       const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/';
-      return this.http.post(url, { "nom": this.nom })
+      const promise = this.http.post(url, { "nom": this.nom })
       .toPromise()
       .then(idMiahoot => {
         console.log('Miahoot créé avec l id '+ idMiahoot)
         this.submitQuestions(idMiahoot as Long);
-        this.router.navigate(['all-miahoot', this.idCreator]);
+        
       })
       .catch(this.handleError);
-
+      this.router.navigate(['all-miahoot', this.idCreator]);
+      return promise;  
   }
 
   submitQuestions(idMiahoot : Long){
@@ -114,6 +115,7 @@ export class CreatorComponent {
     return Promise.reject(error.message || error);
   }
 
+  
   createMiahoot(){
     this.router.navigate(['all-miahoot', this.idCreator]);
   }

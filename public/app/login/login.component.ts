@@ -43,11 +43,13 @@ export class LoginComponent implements OnInit {
         traceUntilFirst('auth'),
         map(u => {
           this.currentUser = u;
+          if(this.currentUser!=null){
+          this.navigation.setId(this.currentUser?.uid)
+          }
           return !!u
         })
       );
     }
-    navigation.id = this.currentUser?.uid;
 
   }
 
@@ -62,6 +64,8 @@ export class LoginComponent implements OnInit {
 
   async loginAnonymously() {
     this.log.emit(true);
+    //const result = signInAnonymously;
+    const user = signInAnonymously;
     return await signInAnonymously(this.auth);
   }
 
@@ -79,18 +83,17 @@ export class LoginComponent implements OnInit {
           nom: user.displayName,
           photo: user.photoURL,
         };
-        this.dataService.checkIfCreatorExists(user.uid).subscribe((exists) => {
-          if (!exists) {
-            this.createCreator(creatorData);
-          } else {
-            console.log('User already exists');
-          }
-        });
-
-        if(this.url=="http://localhost:4200/"){
+          this.dataService.checkIfCreatorExists(user.uid).subscribe((exists) => {
+            if (!exists) {
+              this.createCreator(creatorData);
+            } else {
+              console.log('User already exists');
+            }
+        })
+        if(this.url.startsWith("http://localhost:4200")){
           this.goToPage("/accueil");
         }
-        else if(this.url=="http://localhost:4200/participant/*"){
+        else if(this.url.startsWith("http://localhost:4200/participant/")){
         }
         this.log.emit(true);
 
@@ -100,6 +103,7 @@ export class LoginComponent implements OnInit {
       this.isAuthenticating = false;
     }
   }
+
   createCreator(creatorData: any) {
     this.dataService.createCreator(creatorData).subscribe(
       (response) => {
@@ -120,9 +124,9 @@ export class LoginComponent implements OnInit {
   }
 
   async logout() {
-    if(this.url=="http://localhost/participant/*"){
+    if(this.url.startsWith("http://localhost:4200/participant/")){
       }
-    else if(this.url=="http://localhost/*"){
+    else if(this.url.startsWith("http://localhost:4200")){
         this.goToPage('');
       }
     this.log.emit(false);

@@ -4,6 +4,10 @@ import { Firestore, doc, DocumentData, DocumentSnapshot, getDoc, collection, get
 import { Question } from '../miahoot.model';
 import { interval } from 'rxjs';
 import { NavigationService } from '../navigation.service';
+import { User, getAuth, updateProfile } from 'firebase/auth';
+import { FirebaseApp } from '@angular/fire/app';
+import { getFirestore } from 'firebase/firestore';
+import { initializeApp } from 'firebase/app';
 
 @Component({
   selector: 'app-participant',
@@ -26,19 +30,45 @@ export class ParticipantComponent {
   participantAge !: number;
   miahootTermine: boolean = false;
 
+  login : boolean = false;
+  loginWithGoogle = false;
+
   constructor(private route : ActivatedRoute, private router : Router, private firestore : Firestore, private navigation:  NavigationService) {
+    console.log("partieCommencee : ",this.partieCommencee)
+
     this.navigation.id$.subscribe(value => {
       this.idParticipant=value;
       console.log("id du participant = ", this.idParticipant);
     });
+
+    this.navigation.log$.subscribe(value => {
+      this.login = value;
+      console.log("login : ",this.login);
+    });
+
+    this.navigation.logWithGoogle$.subscribe(value => {
+      this.loginWithGoogle = value;
+      console.log("loginWithGoogle : ",this.loginWithGoogle);
+    });
+
+    if(this.login == false){
+      this.partieCommencee = false;
+      this.login = false;
+      this.loginWithGoogle = false;
+      this.miahootTermine = false;
+      this.voteSubmited = false;
+      console.log("Logout : ");
+      console.log("partieCommencee : ",this.partieCommencee);
+    }
+
+
   }
 
   async ngOnInit(): Promise<void> {
     this.idMiahoot = +(this.route.snapshot.paramMap.get('idMiahoot'))!;
     this.currentQuestionIndex = await this.getQuestionCouranteIndex(this.idMiahoot);
+
   }
-
-
 
   /**
    * Récupère l'indice de la question courante pour un miahoot donné et crée un observable Firebase pour suivre les mises à jour.
@@ -62,12 +92,12 @@ export class ParticipantComponent {
 
       // On crée un observable Firebase pour 'écouter' les changements de la question courante.
       const miahootDocRef = doc(this.firestore, 'miahoots', miahootId.toString());
-      onSnapshot(miahootDocRef, async (docSnapshot) => {  //OBSERVABLE 
-        
+      onSnapshot(miahootDocRef, async (docSnapshot) => {  //OBSERVABLE
+
         // On extrait la nouvelle valeur de la questionCourante
         const miahootData = docSnapshot.data();
         const questionCourante = miahootData?.['questionCourante'];
-        
+
         // On fait une mise à jour de la valeur de la question courante et on la récupère
         this.currentQuestionIndex = questionCourante;
         this.currentQuestion = await this.getQuestionByIndex(this.idMiahoot, this.currentQuestionIndex!);
@@ -78,7 +108,7 @@ export class ParticipantComponent {
         }
         this.voteSubmited = false;
         this.selectedAnswerIndex = null;
-        
+
         // On affiche un message dans la console pour indiquer que la question courante a été mise à jour.
         console.log("QUESTION COURANTE CHANGEE : " + questionCourante);
       });
@@ -111,17 +141,17 @@ export class ParticipantComponent {
 
     // Si la collection contient des questions...
     if (querySnapshot.size > 0) {
-      
+
       // On récupère le snapshot du document Firebase correspondant à l'indice de la question.
       const questionDocSnapshot = querySnapshot.docs[index];
       if (questionDocSnapshot !== undefined){
 
         // Si le snapshot  du document existe.
         if (questionDocSnapshot.exists()) {
-          
+
           // On extrait les données de la question stockées dans le document Firebase.
           const questionData = questionDocSnapshot.data();
-          
+
           // On retourne l'objet représentant la question (son label, son id...)
           return {
             id: questionData?.['id'],
@@ -159,7 +189,20 @@ export class ParticipantComponent {
   }
 
   commencerPartie() : void {
-    this.partieCommencee = true;
+    if(this.loginWithGoogle){
+      this.partieCommencee=true;
+    }
+    else{
+      this.partieCommencee = true;
+    const auth = getAuth();
+    if(auth.currentUser!=null){
+      updateProfile(auth.currentUser, {
+        displayName : this.participantName,
+        photoURL : "https://lh3.googleusercontent.com/36n3KSg9L1j79qoFeMyE17xeb73E3VzKQU3kWoloRKFmydtnVVFGRHk1nfRm3_Dv-fRX3a1bINDU5tuQ633ggaOFfPw9_KKsjDKppXNIHxPIq0v1aaAw8pXiVqKxYuxSDgYhVF8sGjuSJTzUGAx9614DnQKkbCqWay5W5DO6E8MJIa-aTF94ryRavLnzfL6Exf-tIqHsfpN-3Aplf0--e_Qtz8nDcEPfrzp5KyrI-7ys5WVqE0cb1B8iakOXCz239A3CcEkcJj3VWA_YPMe5P169CEWTsjvakENofQR7uQmYNBdzqECL8O1p5XNvjkNt4HaZl0TIxtSQs7nh_4NXkFXgbIADrZ49SE1UrCzb0zsn5xA1sURXpEVZfKYYc2Z3er-QZkq0vMMF_N5h5T9H47AuZhmx0WCpCjnmw6IhRWPM0ZUykOfdg3c-51ppod_S56Lm_9SVnEpP1Y7ry_SY2l1xipFHdGunBpx9rrKSz9H26FCx_oI3My-SlmDDbSXSrSUcZh6clnaaZJtXoxZLr5lNVfBc8fiXGXVqJ7FDFhjnjPKJvz9Qpj1Kdod5jUpa4KsH0qaUCE2VJDyCAuA2nxDR2GqAHo09DI_JfYc6gzWgeR4pqVJ8a4c0_b4eD7JpbTeTpFXhSHJ6h5IHwJyL6hQoDOZpQtjHH4jumv2kyqLLYk0QmdEunmtrg9XOv13FewYMlAbqzvBN9NWzyweGkPUYtA_or3MZ3crHeNnIIzDUCXtzDPFMfPeRZPJ2TCSOWpMhziCTwSPI3y51kzuVZ9Iw3DHUqwrWrFeyDG5srGfrpDMdDhoKfyxiyp5W5DzvsBzbAkISvWuJfKTduX60HoiREu416DOJxCU9yQBn1V8EaqOFyyYwfi9gEvgcgh9Y3BDOICtd2ud_4ZDUMEFRWFVuYqanikqOWuGdBUc0pMaAwtr3=w512-h512-s-no?authuser=0"
+      }).then(() => {console.log(auth.currentUser?.displayName,auth.currentUser?.uid,auth.currentUser?.photoURL);
+        if(auth.currentUser!=null){this.navigation.setUser(auth.currentUser)}})
+    }
+    }
   }
 
   alreadyOneTrueOption(i : number) : boolean{
@@ -167,10 +210,6 @@ export class ParticipantComponent {
   }
 
   async submitVote(): Promise<void> {
-    let nbPointGagne = 0;
-    if (this.currentQuestion?.answers[this.selectedAnswerIndex!].estValide){
-      nbPointGagne = 1;
-    }
     this.voteSubmited = true;
     const questionDocRef = doc(
       this.firestore,
@@ -181,12 +220,11 @@ export class ParticipantComponent {
     );
     const voteData = {
       indexVoteSoumis: this.selectedAnswerIndex,
-      point : nbPointGagne
     };
     const userId = this.idParticipant!.toString();
     const votesCollectionRef = collection(questionDocRef, 'votes');
     const voteDocRef = doc(votesCollectionRef, userId);
     await setDoc(voteDocRef, voteData);
   }
-  
+
 }

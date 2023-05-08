@@ -1,9 +1,91 @@
-/*
-Media query pour responsivité 
-*/
+body{
+    background-color: honeydew;
+    
+}
 
-@media screen and (min-width : 480px){
-    body{
-        
+/*règles pour les écran de taille normale*/
+@media screen and (min-width : 768px){
+    .table{
+        table-layout: fixed;
+        width: 100%;
+        border-collapse: collapse;
+        border : 3px solid purple;
     }
+
+    .table-container{
+        margin: auto;
+    }
+
+    h2{
+        text-align: center;
+    }
+
+    thead{
+        width: 35%;
+
+    }
+
+    th, td {
+        padding : 20px;
+    }
+
+
+    :host {
+        .row {
+          margin-bottom: 1rem;
+        }
+        button {
+          margin-left: 1rem;
+        }
+        .col-md-2 {
+          display: flex;
+        }
+        .col-md-2 .btn-danger {
+          align-items: center;
+        }
+      }
+}
+
+
+/*règles pour les écran de petite taille*/
+@media screen and (max-width : 767px){
+    .table{
+        table-layout: fixed;
+        width: 100%;
+        border-collapse: collapse;
+        border : 3px solid purple;
+    }
+
+    .table-container{
+        margin: auto;
+    }
+
+    h2{
+        text-align: center;
+    }
+
+
+    thead{
+        width: 35%;
+
+    }
+
+    th, td {
+        padding : 20px;
+    }
+
+    :host {
+        .row {
+          margin-bottom: 1rem;
+        }
+        button {
+          margin-left: 1rem;
+        }
+        .col-md-2 {
+          display: flex;
+        }
+        .col-md-2 .btn-danger {
+          align-items: center;
+        }
+      }
 }

@@ -1,34 +1,35 @@
 <app-login></app-login>
-<div *ngIf="!partieCommencee">
-  <h2>Bienvenue sur le Miahoot ! Pour commencer, veuillez renseigner les informations ci-dessous.</h2>
-      <form (ngSubmit)="startGame()">
-        <div>
-          <label>Pseudo :</label>
-          <input type="text" placeholder="Saisissez votre nom" [(ngModel)]="participantName" name="name" required>
+<div *ngIf="login">
+  <div *ngIf="!partieCommencee">
+    <h2>Bienvenue sur le Miahoot ! Pour commencer, veuillez renseigner les informations ci-dessous.</h2>
+        <form (ngSubmit)="startGame()">
+          <div *ngIf="!loginWithGoogle">
+            <label>Pseudo :</label>
+            <input type="text" placeholder="Saisissez votre nom" [(ngModel)]="participantName" name="name" required>
+          </div>
+          <button type="submit" [disabled]="!participantName" (click)="commencerPartie()">Commencer</button>
+        </form>
+    </div>
+
+  <div *ngIf="partieCommencee">
+    <div *ngIf="currentQuestionIndex==-1">
+      <h2>La partie va bientôt commencer ...</h2>
+    </div>
+
+    <div *ngIf="!miahootTermine">
+      <div *ngIf="currentQuestionIndex!=-1">
+        <h1>{{currentQuestion?.label}}</h1>
+        <div *ngFor="let answer of currentQuestion?.answers; index as i">
+          <p>{{answer.label}} <input type="checkbox" (click)="selectVote(i)" [disabled]="!alreadyOneTrueOption(i)"> </p>
         </div>
-        <button type="submit" [disabled]="!participantName" (click)="commencerPartie()">Commencer</button>
-      </form>
-  </div>
-
-<div *ngIf="partieCommencee">
-  <div *ngIf="currentQuestionIndex==-1">
-    <h2>La partie va bientôt commencer ...</h2>
-  </div>
-
-  <div *ngIf="!miahootTermine">
-    <div *ngIf="currentQuestionIndex!=-1">
-      <h1>{{currentQuestion?.label}}</h1>
-      <div *ngFor="let answer of currentQuestion?.answers; index as i">
-        <p>{{answer.label}} <input type="checkbox" (click)="selectVote(i)" [disabled]="!alreadyOneTrueOption(i)"> </p> 
+        <button [disabled]="voteSubmited" (click)="submitVote()">Valider la réponse</button>
       </div>
-      <button [disabled]="voteSubmited" (click)="submitVote()">Valider la réponse</button>
+    </div>
+    <div *ngIf="miahootTermine">
+      <h2>La partie est terminée !</h2>
     </div>
   </div>
-  <div *ngIf="miahootTermine">
-    <h2>La partie est terminée !</h2>
-  </div>
 </div>
-
 
 <script src="/__/firebase/11.29.1/firebase-app.js"></script>
 <script src="/__/firebase/11.29.1/firebase-analytics.js"></script>

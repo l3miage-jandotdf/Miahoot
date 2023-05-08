@@ -1,7 +1,7 @@
 <body>
   <p></p>
 <mat-toolbar>
-  <img src="../../assets/logo.png" width="90" height="90" *ngIf="!(isLoggedIn$ | async) && !isAuthenticating"/>
+  <img src="../../assets/logo.png" width="90" height="90" *ngIf="!(isLoggedIn$ | async) && !isAuthenticating || participant"/>
     <div class="mat-toolbar-row">
       <div *ngIf="!(isLoggedIn$ | async) && !isAuthenticating" class="mat-toolbar-spacer">
         <button class="mat-raised-button mat-primary" (click)="login()">Se connecter avec Google</button>
@@ -12,7 +12,7 @@
     <div class="div" *ngIf="isLoggedIn$ | async">
       <img [src]="currentUser!.photoURL" width="30">
       {{currentUser!.displayName}}
-      <button (click)="this.goToPage('/accountConfig')">Paramètres</button>
+      <button (click)="this.goToPage('/accountConfig')" *ngIf="!participant">Paramètres</button>
     </div>
       <div>
         <button *ngIf="isLoggedIn$ | async" class="LogoutBouton" (click)="logout()">Se déconnecter</button>
@@ -21,7 +21,7 @@
       <mat-spinner [diameter]="30"></mat-spinner>
     </div>
   </mat-toolbar>
-  <button class="button" *ngIf="isLoggedIn$ | async">
+  <button class="button" *ngIf="isLoggedIn$ | async" (click)="this.goToPage('/accueil')">
     <img src="../../assets/accueil.png" width="50" height="50" />
   </button>
 </body>
