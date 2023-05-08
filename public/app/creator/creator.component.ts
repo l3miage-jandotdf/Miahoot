@@ -26,6 +26,7 @@ export class CreatorComponent {
   questions : Question[] = [];
   idCreator ? : String;
 
+
   constructor(private http: HttpClient, private route : ActivatedRoute, private router : Router) {
 
   }
@@ -33,6 +34,13 @@ export class CreatorComponent {
   ngOnInit(): void {
     this.idCreator = String(this.route.snapshot.paramMap.get('idCreator'));
     //throw new Error('Method not implemented.');
+  }
+
+  playClickSound() {
+    const audio = new Audio();
+    audio.src = '../assets/Pika.mp3'; 
+    audio.load();
+    audio.play();
   }
 
   addOption(question: Question): void {
@@ -98,7 +106,7 @@ export class CreatorComponent {
 
   submitReponses(idMiahoot : Long, idQuestion : Long, answersQuestion : Answer[] ){
     const promises: Promise<Long>[] = [];
-    const url = 'http://localhost:8080/api/miahoot/id/' + idMiahoot + '/question/' + idQuestion + '/reponse/';
+    const url = 'http://localhost:8080/api/question/' + idQuestion + '/reponse/';
 
     for (let i = 0; i < answersQuestion.length; i++) {
       const promise = this.http.post(url, {"label" : answersQuestion[i].label, "estValide" : answersQuestion[i].estValide}).toPromise() as Promise<Long>;

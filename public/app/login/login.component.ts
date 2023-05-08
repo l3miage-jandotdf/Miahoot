@@ -1,3 +1,4 @@
+import { Firestore } from '@angular/fire/firestore';
 import { Component, EventEmitter, OnInit, Optional, Output } from '@angular/core';
 import { Auth, authState, signInAnonymously, signOut, User, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
   public currentUser?: User | null;
   miahootUser: MiahootUser | undefined;
   participant=false;
+  isLogin = false;
 
   url = window.location.href;
 
@@ -63,10 +65,11 @@ export class LoginComponent implements OnInit {
 
 
   async loginAnonymously() {
-    this.log.emit(true);
-    //const result = signInAnonymously;
-    const user = signInAnonymously;
-    return await signInAnonymously(this.auth);
+    const result  = await signInAnonymously(this.auth);
+    this.currentUser = this.navigation.user;
+    this.navigation.setLog(true);
+    this.navigation.setLogWithGoogle(false);
+    this.isLogin = true;
   }
 
 
@@ -83,19 +86,23 @@ export class LoginComponent implements OnInit {
           nom: user.displayName,
           photo: user.photoURL,
         };
-          this.dataService.checkIfCreatorExists(user.uid).subscribe((exists) => {
-            if (!exists) {
-              this.createCreator(creatorData);
-            } else {
-              console.log('User already exists');
-            }
-        })
-        if(this.url.startsWith("http://localhost:4200")){
+        this.dataService.checkIfCreatorExists(user.uid).subscribe((exists) => {
+          if (!exists) {
+            this.createCreator(creatorData);
+          } else {
+            console.log('User already exists');
+          }
+        });
+
+        if(this.url.startsWith("http://localhost:4200/participant/")){
+        }
+        else if(this.url.startsWith("http://localhost:4200")){
           this.goToPage("/accueil");
         }
-        else if(this.url.startsWith("http://localhost:4200/participant/")){
-        }
         this.log.emit(true);
+        this.navigation.setLog(true);
+        this.navigation.setLogWithGoogle(true);
+        this.isLogin = true;
 
 
       }
@@ -125,11 +132,15 @@ export class LoginComponent implements OnInit {
 
   async logout() {
     if(this.url.startsWith("http://localhost:4200/participant/")){
+      this.navigation.setLog(false);
       }
     else if(this.url.startsWith("http://localhost:4200")){
         this.goToPage('');
       }
     this.log.emit(false);
+    this.isLogin=false;
+    this.navigation.setLog(false);
+    this.navigation.setLogWithGoogle(false);
     return await signOut(this.auth);
   }
 

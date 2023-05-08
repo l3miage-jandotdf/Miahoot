@@ -16,7 +16,7 @@ export interface Miahoot {
 export interface Question {
   id: number;
   label: string;
-  answers: Reponse[];
+  reponses: Reponse[];
 }
 
 export interface Reponse {
@@ -44,7 +44,7 @@ export class AllMiahootComponent implements OnInit{
   miahoots?: Miahoot[];     //les miahoots
   idCreator?: String;      //id du créateur
 
-
+/*
   miahootTest: Miahoot = {
     id: 7777,
     nom: 'Mon septième Miahoot',
@@ -69,7 +69,7 @@ export class AllMiahootComponent implements OnInit{
       },
     ],
   };
-
+*/
   //constructeur
   constructor(private firestore: Firestore, private auth: Auth, private http: HttpClient, private route: ActivatedRoute, private router : Router) {
     
@@ -80,7 +80,7 @@ export class AllMiahootComponent implements OnInit{
     await this.getMiahoots();
   }
 
-
+/*
   // Ajouter une partie (miahoot présenté)
   async addMiahoot(miahoot: Miahoot): Promise<void> {
     const miahootDocRef = doc(this.firestore, 'miahoots', miahoot.id.toString());
@@ -106,6 +106,36 @@ export class AllMiahootComponent implements OnInit{
       const votesCollectionRef = collection(questionDocRef, 'votes');
     }
   }
+  */
+ // Ajouter une partie (miahoot présenté)
+ async addMiahoot(miahoot: Miahoot): Promise<void> {
+  const miahootDocRef = doc(this.firestore, 'miahoots', miahoot.id.toString());
+  const miahootData = {
+    nom: miahoot.nom,
+    questionCourante: -1,  //ATTENTION C'EST UN INDEX
+    nbParticipants: 0
+  };
+  await setDoc(miahootDocRef, miahootData);
+  console.log('Miahoot document added:', miahootDocRef); // Add this line
+
+  for (const question of miahoot.questions) {
+    const questionDocRef = doc(miahootDocRef, 'questions', question.id.toString());
+    const questionData = {
+      id: question.id,
+      label: question.label,
+      answers: question.reponses.map(answer => ({
+        label: answer.label,
+        estValide: answer.estValide
+      }))
+    };
+    await setDoc(questionDocRef, questionData);
+    console.log('Question document added:', questionDocRef); // Add this line
+
+    const votesCollectionRef = collection(questionDocRef, 'votes');
+  }
+}
+
+
   /**
    * Récupère tous les miahoots
    * @returns Promise résolue si la requête réussit, rejetée sinon

@@ -1,29 +1,67 @@
 <app-login></app-login>
-<div *ngIf="!partieCommencee">
-  <h2>Bienvenue sur le Miahoot ! Pour commencer, veuillez renseigner les informations ci-dessous.</h2>
-      <form (ngSubmit)="startGame()">
-        <div>
-          <label>Pseudo :</label>
-          <input type="text" placeholder="Saisissez votre nom" [(ngModel)]="participantName" name="name" required>
+
+  <div *ngIf="!partieCommencee">
+    <h2>Bienvenue sur le Miahoot ! Pour commencer, veuillez renseigner les informations ci-dessous.</h2>
+        <form>
+          <div class="label">
+            <label class="pseudo">Pseudonyme :</label>
+            <input type="text" class="input" placeholder="Saisissez votre pseudo ici" [(ngModel)]="participantName" name="name" required>
+          </div>
+          <div class="bouton1">
+           <!-- <button (click)="startGame()" class="start" [disabled]="!participantName" (click)="commencerPartie()">Commencer
+              <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path></svg>
+              </div>
+            </button>-->
+          </div>
+
+        </form>
+    </div>
+
+  <div *ngIf="partieCommencee">
+    <div *ngIf="currentQuestionIndex==-1">
+      <h2>La partie va bientôt commencer ...
+        <div class="loader"></div>
+      </h2>
+    </div>
+
+    <div *ngIf="!miahootTermine">
+      <div *ngIf="currentQuestionIndex!=-1">
+        <h1 class="questionCourante">{{currentQuestion?.label}}</h1>
+        <div *ngFor="let answer of currentQuestion?.answers; index as i">
+          <p class="choix"><label class="selection">{{answer.label}} <input type="checkbox" class="option" (click)="selectVote(i)" [disabled]="!alreadyOneTrueOption(i)"></label> </p>
         </div>
-        <button type="submit" [disabled]="!participantName" (click)="commencerPartie()">Commencer</button>
-      </form>
+        <button [disabled]="voteSubmited" class="valider" (click)="submitVote()"><span class="text">Valider la réponse</span></button>
+      </div>
+    </div>
+    <div *ngIf="miahootTermine">
+      <h2>La partie est terminée !</h2>
+    </div>
   </div>
 
-<div *ngIf="partieCommencee">
-  <h2>La partie va bientôt commencer ...</h2>
-</div>
 
-<div class="question-container">
-    <!--<h2>{{ currentQuestion?.text }}</h2>-
-    <ul>
-      <li *ngFor="let answer of currentQuestion?.answers; let i = index"
-          (click)="selectAnswer(answer)">
-        {{ answer }}
-      </li>
-    </ul>-->
-  </div>
+  <script src="/__/firebase/11.29.1/firebase-app.js"></script>
+  <script src="/__/firebase/11.29.1/firebase-analytics.js"></script>
+  <script src="/__/firebase/init.js"></script>
 
-<script src="/__/firebase/11.29.1/firebase-app.js"></script>
-<script src="/__/firebase/11.29.1/firebase-analytics.js"></script>
-<script src="/__/firebase/init.js"></script>
+
+ <!--
+  <div class="area" >
+  <ul class="circles">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+  </ul>
+</div >
+
+
+ -->
+
+

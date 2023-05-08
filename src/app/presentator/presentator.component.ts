@@ -13,7 +13,7 @@ export interface Miahoot {
 export interface Question {
   id: number;
   label: string;
-  answers: Reponse[];
+  reponses: Reponse[];
 }
 
 export interface Reponse {
@@ -43,13 +43,21 @@ export class PresentatorComponent {
   topThree: [string, number][] = [];
 
   constructor(private route : ActivatedRoute, private router : Router, private firestore : Firestore) {}
-
+/*
   async ngOnInit(): Promise<void> {
     this.idMiahoot = +(this.route.snapshot.paramMap.get('idMiahoot'))!;
     this.currentQuestionIndex = await this.getQuestionCouranteIndex(this.idMiahoot);
     this.nbParticipants = await this.getNbParticipants();
     console.log("QUESTION n° :" +  this.currentQuestionIndex);
   }
+*/
+async ngOnInit(): Promise<void> {
+  this.idMiahoot = +(this.route.snapshot.paramMap.get('idMiahoot'))!;
+  this.currentQuestionIndex = await this.getQuestionCouranteIndex(this.idMiahoot);
+  this.nbParticipants = await this.getNbParticipants();
+  console.log("QUESTION n° :" +  this.currentQuestionIndex);
+  this.currentQuestion = await this.getQuestionByIndex(this.idMiahoot, this.currentQuestionIndex!);
+}
 
   async getQuestionCouranteIndex(miahootId: number): Promise<number | null> {
     const miahootDocRef = doc(this.firestore, 'miahoots', miahootId.toString());
@@ -75,7 +83,7 @@ export class PresentatorComponent {
         return {
           id: questionData?.['id'],
           label: questionData?.['label'],
-          answers: questionData?.['answers']
+          reponses: questionData?.['answers']
         } as Question;
       } else {
         return null;
@@ -98,7 +106,7 @@ export class PresentatorComponent {
           return {
             id: questionData?.['id'],
             label: questionData?.['label'],
-            answers: questionData?.['answers']
+            reponses: questionData?.['answers']
           } as Question;
         }
       }

@@ -1,199 +1,506 @@
-.mat-toolbar-spacer {
-  margin-left: auto;
-}
 
-.mat-raised-button  {
-  background-color: blue;
-  color: white;
-  border-radius: 10px;
-}
+@media  screen and (min-width : 768px) {
 
-mat-toolbar {
-  background-color: lightgray;
-  height: 90px;
-}
-
-
-
-.mat-toolbar-row{
-  height: 90;
-}
-
-.LogoutBouton{
-  position: absolute;
-  right: 0;
-  margin : 0 70px;
-  background-color: blue;
-  color: white;
-  border-radius: 10px;
-}
-
-IMG.img{
-  display: block;
-  margin-left: auto;
-  margin-right: auto }
-
-p{
-  text-align: center;
-  margin-top: 30px;
-
-}
-
-.ButtonQuizz{
-  background-color: grey;
-  color : black;
-  border-radius: 100px;
-  width : 150px;
-  height: 75px;
-  margin: auto;
-
-}
-
-
-/*.body{
-  background-image: url("../../im2.png");
-  background-size: cover;
-  animation: fade 10s infinite;
-}*/
-
-@keyframes fade {
-  0% {
-    opacity: 0.2;
+  .mat-toolbar-spacer {
+    margin-left: auto;
   }
-  50% {
-    opacity: 0.4;
+  
+  .mat-raised-button  {
+    background-color: blue;
+    color: white;
+    border-radius: 10px;
   }
-  100% {
-    opacity: 0.2;
+  
+  mat-toolbar {
+    background-color: rgb(250, 247, 247);
+    height: 90px;
   }
-
+  
+  
+  
+  .mat-toolbar-row{
+    height: 90;
+  }
+  
+  .LogoutBouton{
+    position: absolute;
+    right: 0;
+    margin : 0 70px;
+    background-color: blue;
+    color: white;
+    border-radius: 10px;
+  }
+  
+  IMG.img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto }
+  
+  p{
+    text-align: center;
+    margin-top: 30px;
+  
+  }
+  
+  .ButtonQuizz{
+    border-radius: 100px;
+    width : 150px;
+    height: 75px;
+    margin: auto;
+  
+  }
+  
+  
+  button {
+    text-decoration: none;
+    position: relative;
+    border: none;
+    font-size: 14px;
+    font-family: inherit;
+    color: #fff;
+    width: 9em;
+    height: 3em;
+    line-height: 2em;
+    text-align: center;
+    background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
+    background-size: 300%;
+    border-radius: 30px;
+    z-index: 1;
+  }
+  
+  button:hover {
+    animation: ani 8s linear infinite;
+    border: none;
+  }
+  
+  @keyframes ani {
+    0% {
+      background-position: 0%;
+    }
+  
+    100% {
+      background-position: 400%;
+    }
+  }
+  
+  button:before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    z-index: -1;
+    background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
+    background-size: 400%;
+    border-radius: 35px;
+    transition: 1s;
+  }
+  
+  button:hover::before {
+    filter: blur(20px);
+  }
+  
+  button:active {
+    background: linear-gradient(32deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
+  }
+  
+  /*.body{
+    background-image: url("../../im2.png");
+    background-size: cover;
+    animation: fade 10s infinite;
+  }*/
+  
+  
+  html {
+    height:100%;
+  }
+  
+  body {
+    margin:0;
+  }
+  
+  .bg {
+    animation:slide 3s ease-in-out infinite alternate;
+    background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
+    bottom:0;
+    left:-50%;
+    opacity:.5;
+    position:fixed;
+    right:-50%;
+    top:0;
+    z-index:-1;
+  }
+  
+  .bg2 {
+    animation-direction:alternate-reverse;
+    animation-duration:4s;
+  }
+  
+  .bg3 {
+    animation-duration:5s;
+  }
+  
+  .content {
+    background-color:rgba(255,255,255,.8);
+    border-radius:.25em;
+    box-shadow:0 0 .25em rgba(0,0,0,.25);
+    box-sizing:border-box;
+    left:50%;
+    padding:50px;
+    margin-bottom: 10%;
+    margin-top: 90px;
+    position:fixed;
+    text-align:center;
+    top:50%;
+    transform:translate(-50%, -50%);
+  }
+  
+  h1 {
+    font-family:monospace;
+  }
+  
+  @keyframes slide {
+    0% {
+      transform:translateX(-25%);
+    }
+    100% {
+      transform:translateX(25%);
+    }
+  }
+  
 }
 
 
-//animation
+/*
+@media screen and (max-width : 767px){
+  .mat-toolbar-spacer {
+    margin-left: auto;
+  }
+  
+  .mat-raised-button  {
+    background-color: blue;
+    color: white;
+    border-radius: 10px;
+  }
+  
+  mat-toolbar {
+    background-color: rgb(250, 247, 247);
+    height: 90px;
+  }
+  
+  
+  
+  .mat-toolbar-row{
+    height: 90;
+  }
+  
+  .LogoutBouton{
+    position: absolute;
+    right: 0;
+    margin : 0 70px;
+    background-color: blue;
+    color: white;
+    border-radius: 10px;
+  }
+  
+  IMG.img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto }
+  
+  p{
+    text-align: center;
+    margin-top: 30px;
+  
+  }
+  
+  .ButtonQuizz{
+    border-radius: 100px;
+    width : 150px;
+    height: 75px;
+    margin: auto;
+  
+  }
+  
+  
+  button {
+    text-decoration: none;
+    position: relative;
+    border: none;
+    font-size: 14px;
+    font-family: inherit;
+    color: #fff;
+    width: 9em;
+    height: 3em;
+    line-height: 2em;
+    text-align: center;
+    background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
+    background-size: 300%;
+    border-radius: 30px;
+    z-index: 1;
+  }
+  
+  button:hover {
+    animation: ani 8s linear infinite;
+    border: none;
+  }
+  
+  @keyframes ani {
+    0% {
+      background-position: 0%;
+    }
+  
+    100% {
+      background-position: 400%;
+    }
+  }
+  
+  button:before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    z-index: -1;
+    background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
+    background-size: 400%;
+    border-radius: 35px;
+    transition: 1s;
+  }
+  
+  button:hover::before {
+    filter: blur(20px);
+  }
+  
+  button:active {
+    background: linear-gradient(32deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
+  }
+  
+  
+  
+  
+  html {
+    height:100%;
+  }
+  
+  body {
+    margin:0;
+  }
+  
+  .bg {
+    animation:slide 3s ease-in-out infinite alternate;
+    background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
+    bottom:0;
+    left:-50%;
+    opacity:.5;
+    position:fixed;
+    right:-50%;
+    top:0;
+    z-index:-1;
+  }
+  
+  .bg2 {
+    animation-direction:alternate-reverse;
+    animation-duration:4s;
+  }
+  
+  .bg3 {
+    animation-duration:5s;
+  }
+  
+  .content {
+    background-color:rgba(255,255,255,.8);
+    border-radius:.25em;
+    box-shadow:0 0 .25em rgba(0,0,0,.25);
+    box-sizing:border-box;
+    left:50%;
+    padding:50px;
+    margin-bottom: 10%;
+    margin-top: 90px;
+    position:fixed;
+    text-align:center;
+    top:50%;
+    transform:translate(-50%, -50%);
+  }
+  
+  h1 {
+    font-family:monospace;
+  }
+  
+  @keyframes slide {
+    0% {
+      transform:translateX(-25%);
+    }
+    100% {
+      transform:translateX(25%);
+    }
+  }
+} */
 
-$particles: 60;
-$width: 500;
-$height: 400;
 
-// Create the explosion...
-$box-shadow: ();
-$box-shadow2: ();
-@for $i from 0 through $particles {
-  $box-shadow: $box-shadow,
-               random($width)-$width / 2 + px
-               random($height)-$height / 1.2 + px
-               hsl(random(360), 100, 50);
-  $box-shadow2: $box-shadow2, 0 0 #ffffff
-}
-@mixin keyframes ($animationName) {
-    @-webkit-keyframes #{$animationName} {
-        @content;
+@media screen and (max-width : 767px){
+  .mat-toolbar-spacer {
+    margin-left: auto;
+  }
+  
+  .mat-raised-button  {
+    background-color: blue;
+    color: white;
+    border-radius: 10px;
+  }
+  
+  mat-toolbar {
+    background-color: rgb(250, 247, 247);
+    height: 60px; /* Ajuster la hauteur pour s'adapter aux écrans de petite taille */
+  }
+  
+  .mat-toolbar-row{
+    height: 60px;
+  }
+  
+  .LogoutBouton{
+    position: absolute;
+    right: 10px; /* Réduire la marge pour s'adapter aux écrans de petite taille */
+    background-color: blue;
+    color: white;
+    border-radius: 10px;
+    padding: 5px 10px; /* Ajouter du rembourrage pour une apparence plus propre sur les écrans de petite taille */
+    font-size: 12px; /* Réduire la taille de la police pour s'adapter aux écrans de petite taille */
+  }
+  
+  IMG.img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%; /* Empêcher l'image de dépasser la largeur de l'écran de petite taille */
+  }
+  
+  p{
+    text-align: center;
+    margin-top: 20px; /* Réduire l'espace supérieur pour s'adapter aux écrans de petite taille */
+  }
+  
+  .ButtonQuizz{
+    border-radius: 100px;
+    width : 150px;
+    height: 75px;
+    margin: 20px auto; /* Ajuster la marge pour une apparence plus propre sur les écrans de petite taille */
+  }
+  
+  button {
+    text-decoration: none;
+    position: relative;
+    border: none;
+    font-size: 14px;
+    font-family: inherit;
+    color: #fff;
+    width: 8em; /* Réduire la largeur pour s'adapter aux écrans de petite taille */
+    height: 2.5em; /* Réduire la hauteur pour s'adapter aux écrans de petite taille */
+    line-height: 2em;
+    text-align: center;
+    background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
+    background-size: 300%;
+    border-radius: 30px;
+    z-index: 1;
+  }
+  
+  button:hover {
+    animation: ani 8s linear infinite;
+    border: none;
+  }
+  
+  @keyframes ani {
+    0% {
+      background-position: 0%;
+    }
+  
+    100% {
+      background-position: 400%;
+    }
+  }
+  
+  button:before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    z-index: -1;
+    background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
+    background-size: 400%;
+    border-radius: 35px;
+    transition: 1s;
+  }
+  
+  button:hover::before {
+    filter: blur(20px);
+    }
+    
+    button:active {
+    background: linear-gradient(32deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+    }
+    
+    html, body {
+    height: 100%;
+    }
+    
+    body {
+    margin: 0;
     }
 
-    @-moz-keyframes #{$animationName} {
-        @content;
+    .bg {
+      animation:slide 3s ease-in-out infinite alternate;
+      background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
+      bottom:0;
+      left:-50%;
+      opacity:.5;
+      position:fixed;
+      right:-50%;
+      top:0;
+      z-index:-1;
     }
-
-    @-o-keyframes #{$animationName} {
-        @content;
+    
+    .bg2 {
+      animation-direction:alternate-reverse;
+      animation-duration:4s;
     }
-
-    @-ms-keyframes #{$animationName} {
-        @content;
+    
+    .bg3 {
+      animation-duration:5s;
     }
-
-    @keyframes #{$animationName} {
-        @content;
+    
+    .content {
+      background-color:rgba(255,255,255,.8);
+      border-radius:.25em;
+      box-shadow:0 0 .25em rgba(0,0,0,.25);
+      box-sizing:border-box;
+      left:50%;
+      padding:50px;
+      margin-bottom: 10%;
+      margin-top: 90px;
+      position:fixed;
+      text-align:center;
+      top:50%;
+      transform:translate(-50%, -50%);
     }
-}
-
-@mixin animation-delay ($settings) {
-    -moz-animation-delay: $settings;
-    -webkit-animation-delay: $settings;
-    -o-animation-delay: $settings;
-    -ms-animation-delay: $settings;
-    animation-delay: $settings;
-}
-
-@mixin animation-duration ($settings) {
-    -moz-animation-duration: $settings;
-    -webkit-animation-duration: $settings;
-    -o-animation-duration: $settings;
-    -ms-animation-duration: $settings;
-    animation-duration: $settings;
-}
-
-@mixin animation ($settings) {
-    -moz-animation: $settings;
-    -webkit-animation: $settings;
-    -o-animation: $settings;
-    -ms-animation: $settings;
-    animation: $settings;
-}
-
-@mixin transform ($settings) {
-    transform: $settings;
-    -moz-transform: $settings;
-    -webkit-transform: $settings;
-    -o-transform: $settings;
-    -ms-transform: $settings;
-}
-
-body {
-  margin:0;
-  padding:0;
-  background: #6b0456;
-  overflow: visible;
-  background-color: #ad0d0d;
-}
-
-.pyro > .before, .pyro > .after {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  box-shadow: $box-shadow2;
-  @include animation((1s bang ease-out infinite backwards, 1s gravity ease-in infinite backwards, 5s position linear infinite backwards));
-}
-
-.pyro > .after {
-  @include animation-delay((1.25s, 1.25s, 1.25s));
-  @include animation-duration((1.25s, 1.25s, 6.25s));
-}
-
-@include keyframes(bang) {
-  to {
-    box-shadow:$box-shadow;
+    
+    h1 {
+      font-family:monospace;
+    }
+    
+    @keyframes slide {
+      0% {
+        transform:translateX(-25%);
+      }
+      100% {
+        transform:translateX(25%);
+      }
+    }
   }
-}
 
-@include keyframes(gravity)  {
-  to {
-    @include transform(translateY(200px));
-    opacity: 0;
-  }
-}
+   
 
-@include keyframes(position) {
-  0%, 19.9% {
-    margin-top: 10%;
-    margin-left: 40%;
-  }
-  20%, 39.9% {
-    margin-top: 40%;
-    margin-left: 30%;
-  }
-  40%, 59.9% {
-    margin-top: 20%;
-    margin-left: 70%
-  }
-  60%, 79.9% {
-    margin-top: 30%;
-    margin-left: 20%;
-  }
-  80%, 99.9% {
-    margin-top: 30%;
-    margin-left: 80%;
-  }
-}
+

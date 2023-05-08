@@ -1,16 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Injectable } from '@angular/core';
-import { DocumentSnapshot, Firestore, FirestoreDataConverter, QueryDocumentSnapshot, SnapshotOptions, doc, docData, getDoc } from '@angular/fire/firestore';
+import { DocumentSnapshot, Firestore, FirestoreDataConverter, QueryDocumentSnapshot, SnapshotOptions, addDoc, doc, docData, getDocs } from '@angular/fire/firestore';
 import { Auth, authState } from '@angular/fire/auth';
 import { Observable, of, switchMap } from 'rxjs';
-import { setDoc } from 'firebase/firestore';
-
+import { collection, query, QuerySnapshot, where, setDoc } from 'firebase/firestore';
 
 export interface Miahoot {
   id: number;
   nom: string;
+  //questionCourante: number | null;
   questions: Question[];
 }
 
@@ -33,13 +32,47 @@ export interface Reponse {
 })
 
 export class AllMiahootComponent implements OnInit{
+
+  
+  playClickSound() {
+    const audio = new Audio();
+    audio.src = '../assets/clickSoundAllMiahoot.mp3'; 
+    audio.load();
+    audio.play();
+  }
+  
   miahoots?: Miahoot[];     //les miahoots
   idCreator?: String;      //id du créateur
-  private miahootConverter?: FirestoreDataConverter<Miahoot>;
+
+
+  miahootTest: Miahoot = {
+    id: 7777,
+    nom: 'Mon septième Miahoot',
+    questions: [
+      {
+        id: 1,
+        label: 'Quelle est la meilleure fillière de l im2ag ?',
+        answers: [
+          { id: 1, label: 'MIAGE', estValide: true },
+          { id: 2, label: 'Informatique général', estValide: false },
+          { id: 3, label: 'Maths-Informatique', estValide: false },
+        ],
+      },
+      {
+        id: 5,
+        label: 'Va t-on valider notre semestre ? ',
+        answers: [
+          { id: 1, label: 'Non, à cause de Gestion Comptable', estValide: false },
+          { id: 2, label: 'Non, à cause d Angular', estValide: true },
+          { id: 3, label: 'Non, à cause de BDD', estValide: false },
+        ],
+      },
+    ],
+  };
 
   //constructeur
   constructor(private firestore: Firestore, private auth: Auth, private http: HttpClient, private route: ActivatedRoute, private router : Router) {
-    this.initMiahootFirebase();
+    
   }
 
   async ngOnInit(){
@@ -47,67 +80,32 @@ export class AllMiahootComponent implements OnInit{
     await this.getMiahoots();
   }
 
-  initMiahootFirebase(){
-    this.miahootConverter = {
-      toFirestore(miahoot: Miahoot) {
-        return {
-          nom: miahoot.nom,
-          questions: miahoot.questions.map((question: Question) => {
-            return {
-              id: question.id,
-              label: question.label,
-              answers: question.answers.map((answer: Reponse) => {
-                return {
-                  id: answer.id,
-                  label: answer.label,
-                  estValide: answer.estValide
-                };
-              })
-            };
-          })
-        };
-      },
-      fromFirestore(snapshot: QueryDocumentSnapshot<Miahoot>, options: SnapshotOptions): Miahoot {
-        const data = snapshot.data(options)!;
-        const questions = data.questions.map((question: any) => {
-          return {
-            id: question.id,
-            label: question.label,
-            answers: question.answers.map((answer: any) => {
-              return {
-                id: answer.id,
-                label: answer.label,
-                estValide: answer.estValide
-              };
-            })
-          };
-        });
-        return {
-          id: parseInt(snapshot.id),
-          nom: data.nom,
-          questions: questions
-        };
-      }
+
+  // Ajouter une partie (miahoot présenté)
+  async addMiahoot(miahoot: Miahoot): Promise<void> {
+    const miahootDocRef = doc(this.firestore, 'miahoots', miahoot.id.toString());
+    const miahootData = {
+      nom: miahoot.nom,
+      questionCourante: -1,  //ATTENTION C'EST UN INDEX
+      nbParticipants: 0
     };
-  }
-/*
-  addMiahoot(miahoot: Miahoot){
-    return authState(this.auth).pipe(
-      switchMap((user) => {
-        if (user) {
+    await setDoc(miahootDocRef, miahootData);
 
-          let docMia = doc(this.firestore, `miahoots/ ${miahoot.id.toString()}`);
-          let refDocMia = docMia.withConverter(this.miahootConverter);
-          let obsDoc: Observable<Miahoot> = docData(refDocMia);
-          return setDoc(doc(this.firestore, ), miahoot, { converter: this.miahootConverter });
-        } else {
-          return of(null);
-        }
-      })
-    );
-  }
-  */
+    for (const question of miahoot.questions) {
+      const questionDocRef = doc(miahootDocRef, 'questions', question.id.toString());
+      const questionData = {
+        id: question.id,
+        label: question.label,
+        answers: question.answers.map(answer => ({
+          label: answer.label,
+          estValide: answer.estValide
+        }))
+      };
+      await setDoc(questionDocRef, questionData);
 
+      const votesCollectionRef = collection(questionDocRef, 'votes');
+    }
+  }
   /**
    * Récupère tous les miahoots
    * @returns Promise résolue si la requête réussit, rejetée sinon
@@ -139,7 +137,7 @@ export class AllMiahootComponent implements OnInit{
    * @param idMiahoot 
    */
   editMiahoot(idMiahoot: number): void {
-    this.router.navigate([`/editor/${idMiahoot}`]);
+    this.router.navigate([`/editor/${this.idCreator}/${idMiahoot}`]);
 
   }
   

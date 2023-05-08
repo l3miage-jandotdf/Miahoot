@@ -1,15 +1,23 @@
 <app-login></app-login>
-<img class="img" src="../../assets/logo.png" width="90" height="90" />
-<p classe="p">Bienvenue sur Miahoot ! Vous pouvez apprendre et enseigner en s'amusant juste en créant votre QCM en cliquant sur le bouton ci-dessous! </p>
-<p><button class="ButtonQuizz" (click)="this.goToPage()">Nouveau QCM</button></p>
-<p><button class="ButtonQuizz" (click)="goToMyQuizzs()">Mes QCMs</button></p>
+
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>
+
+<div class="content">
+  <img class="img" src="../../assets/logo.png" width="90" height="90" />
+  <p classe="p">Bienvenue sur Miahoot ! Vous pouvez apprendre et enseigner en s'amusant juste en créant votre QCM en cliquant sur le bouton ci-dessous! </p>
+  <p><button class="ButtonQuizz" (click)="this.goToPage()">Nouveau QCM</button></p>
+  <p><button class="ButtonQuizz" (click)="goToMyQuizzs()">Mes QCMs</button></p>
 
 
-<div class="pyro">
-  <div class="before"></div>
-  <div class="after"></div>
+  <div class="pyro">
+    <div class="before"></div>
+    <div class="after"></div>
+  </div>
+
+  <script src="/__/firebase/11.29.1/firebase-app.js"></script>
+  <script src="/__/firebase/11.29.1/firebase-analytics.js"></script>
+  <script src="/__/firebase/init.js"></script>
+
 </div>
-
-<script src="/__/firebase/11.29.1/firebase-app.js"></script>
-<script src="/__/firebase/11.29.1/firebase-analytics.js"></script>
-<script src="/__/firebase/init.js"></script>
