@@ -11,14 +11,12 @@
   <table class="table">
   <thead>
   <tr>
-    <th scope="col">id-Miahoot</th>
     <th scope="col">Titre du Miahoot</th>
     <th scope="col" class="colonne">Actions</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let miahoot of miahoots">
-    <th scope="row">{{ miahoot.id }}</th>
     <td>{{ miahoot.nom }}</td>
     <td class="boutons">
       <button type="button" class="Btn" (click)="editMiahoot(miahoot.id);playClickSound();"><span class="test">Modifier</span>

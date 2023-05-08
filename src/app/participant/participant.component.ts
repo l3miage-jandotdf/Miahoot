@@ -1,13 +1,28 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Firestore, doc, DocumentData, DocumentSnapshot, getDoc, collection, getDocs, onSnapshot, addDoc, setDoc } from '@angular/fire/firestore';
-import { Question } from '../miahoot.model';
+import { Firestore, doc, DocumentData, DocumentSnapshot, getDoc, collection, getDocs, onSnapshot, addDoc, setDoc, updateDoc } from '@angular/fire/firestore';
 import { interval } from 'rxjs';
 import { NavigationService } from '../navigation.service';
-import { User, getAuth, updateProfile } from 'firebase/auth';
-import { FirebaseApp } from '@angular/fire/app';
-import { getFirestore } from 'firebase/firestore';
-import { initializeApp } from 'firebase/app';
+
+export interface Miahoot {
+  id: number;
+  nom: string;
+  questionCourante: number | null;
+  nbParticipants : number;
+  questions: Question[];
+}
+
+export interface Question {
+  id: number;
+  label: string;
+  answers: Reponse[];
+}
+
+export interface Reponse {
+  id: number;
+  label: string;
+  estValide: boolean;
+}
 
 @Component({
   selector: 'app-participant',
@@ -167,12 +182,21 @@ export class ParticipantComponent {
   }
 
   //Début de jeu
-  startGame() {
+  async startGame() {
     const participantData = {
       name: this.participantName,
       firstName: this.participantFirstName,
       age: this.participantAge
     };
+    //augmenter nbParticipants de 1
+    const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
+    const miahootDocSnapshot = await getDoc(miahootDocRef);
+
+    if (miahootDocSnapshot.exists()) {
+      const miahootData = miahootDocSnapshot.data() as Miahoot;
+      let nbParticipantsPlusUn = miahootData.nbParticipants + 1;
+      await updateDoc(miahootDocRef, { nbParticipants: nbParticipantsPlusUn });
+    }
   }
 
   selectVote(i : number){
@@ -226,5 +250,6 @@ export class ParticipantComponent {
     const voteDocRef = doc(votesCollectionRef, userId);
     await setDoc(voteDocRef, voteData);
   }
+
 
 }
