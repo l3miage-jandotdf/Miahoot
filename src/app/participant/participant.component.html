@@ -1,14 +1,16 @@
 <app-login></app-login>
+<div *ngIf="!login"><h2>Pour commencer, veuillez vous connecter anonymement ou via Google.</h2></div>
 <div *ngIf="login">
   <div *ngIf="!partieCommencee">
-    <h2>Bienvenue sur le Miahoot ! Pour commencer, veuillez renseigner les informations ci-dessous.</h2>
+    <h2>Bienvenue sur le Miahoot ! </h2>
         <form>
           <div class="label" *ngIf="!loginWithGoogle">
+            <h2>Pour commencer, veuillez renseigner les informations ci-dessous.</h2>
             <label class="pseudo">Pseudonyme :</label>
             <input type="text" class="input" placeholder="Saisissez votre pseudo ici" [(ngModel)]="participantName" name="name" required>
           </div>
           <div class="bouton1">
-            <button (click)="startGame()" class="start" [disabled]="!participantName" (click)="commencerPartie()">Commencer
+            <button (click)="startGame()" class="start" (click)="commencerPartie()">Commencer
               <div class="icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path></svg>
               </div>
