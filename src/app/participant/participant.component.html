@@ -26,7 +26,9 @@
 
             <!--<input type="text" class="input" placeholder="Saisissez votre pseudo ici" [(ngModel)]="participantName" name="name" required>-->
           </div>
-          
+          <div *ngIF="loginWithGoogle">
+            <button (click)="partieCommencee=true">Commencer</button>
+          </div>
 
         </form>
     </div>
@@ -77,9 +79,9 @@
     </label></div>
     <button type="text" class="submit">submit</button>
   </div>
-  
+
 
   -->
 
-  
+
 
