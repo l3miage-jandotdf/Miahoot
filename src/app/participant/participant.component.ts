@@ -216,21 +216,28 @@ export class ParticipantComponent {
     this.router.navigate([`/presentator/1`]);
   }
 
-  updateAnonyme() : void {
+  async updateAnonyme() : Promise<void> {
     if(this.loginWithGoogle){
       this.partieCommencee=true;
     }
     else{
       this.partieCommencee = true;
-    const auth = getAuth();
-    if(auth.currentUser!=null){
-      if (this.participantName == null || this.participantName == undefined){this.participantName = "Anonyme";}
-      updateProfile(auth.currentUser, {
-        displayName : this.participantName,
-        photoURL : "https://lh3.googleusercontent.com/36n3KSg9L1j79qoFeMyE17xeb73E3VzKQU3kWoloRKFmydtnVVFGRHk1nfRm3_Dv-fRX3a1bINDU5tuQ633ggaOFfPw9_KKsjDKppXNIHxPIq0v1aaAw8pXiVqKxYuxSDgYhVF8sGjuSJTzUGAx9614DnQKkbCqWay5W5DO6E8MJIa-aTF94ryRavLnzfL6Exf-tIqHsfpN-3Aplf0--e_Qtz8nDcEPfrzp5KyrI-7ys5WVqE0cb1B8iakOXCz239A3CcEkcJj3VWA_YPMe5P169CEWTsjvakENofQR7uQmYNBdzqECL8O1p5XNvjkNt4HaZl0TIxtSQs7nh_4NXkFXgbIADrZ49SE1UrCzb0zsn5xA1sURXpEVZfKYYc2Z3er-QZkq0vMMF_N5h5T9H47AuZhmx0WCpCjnmw6IhRWPM0ZUykOfdg3c-51ppod_S56Lm_9SVnEpP1Y7ry_SY2l1xipFHdGunBpx9rrKSz9H26FCx_oI3My-SlmDDbSXSrSUcZh6clnaaZJtXoxZLr5lNVfBc8fiXGXVqJ7FDFhjnjPKJvz9Qpj1Kdod5jUpa4KsH0qaUCE2VJDyCAuA2nxDR2GqAHo09DI_JfYc6gzWgeR4pqVJ8a4c0_b4eD7JpbTeTpFXhSHJ6h5IHwJyL6hQoDOZpQtjHH4jumv2kyqLLYk0QmdEunmtrg9XOv13FewYMlAbqzvBN9NWzyweGkPUYtA_or3MZ3crHeNnIIzDUCXtzDPFMfPeRZPJ2TCSOWpMhziCTwSPI3y51kzuVZ9Iw3DHUqwrWrFeyDG5srGfrpDMdDhoKfyxiyp5W5DzvsBzbAkISvWuJfKTduX60HoiREu416DOJxCU9yQBn1V8EaqOFyyYwfi9gEvgcgh9Y3BDOICtd2ud_4ZDUMEFRWFVuYqanikqOWuGdBUc0pMaAwtr3=w512-h512-s-no?authuser=0"
-      }).then(() => {console.log(auth.currentUser?.displayName,auth.currentUser?.uid,auth.currentUser?.photoURL);
-        if(auth.currentUser!=null){this.navigation.setUser(auth.currentUser)}})
-    }
+      const auth = getAuth();
+      if(auth.currentUser!=null){
+        if (this.participantName == null || this.participantName == undefined){this.participantName = "Anonyme";}
+        updateProfile(auth.currentUser, {
+          displayName : this.participantName,
+          photoURL : "https://lh3.googleusercontent.com/36n3KSg9L1j79qoFeMyE17xeb73E3VzKQU3kWoloRKFmydtnVVFGRHk1nfRm3_Dv-fRX3a1bINDU5tuQ633ggaOFfPw9_KKsjDKppXNIHxPIq0v1aaAw8pXiVqKxYuxSDgYhVF8sGjuSJTzUGAx9614DnQKkbCqWay5W5DO6E8MJIa-aTF94ryRavLnzfL6Exf-tIqHsfpN-3Aplf0--e_Qtz8nDcEPfrzp5KyrI-7ys5WVqE0cb1B8iakOXCz239A3CcEkcJj3VWA_YPMe5P169CEWTsjvakENofQR7uQmYNBdzqECL8O1p5XNvjkNt4HaZl0TIxtSQs7nh_4NXkFXgbIADrZ49SE1UrCzb0zsn5xA1sURXpEVZfKYYc2Z3er-QZkq0vMMF_N5h5T9H47AuZhmx0WCpCjnmw6IhRWPM0ZUykOfdg3c-51ppod_S56Lm_9SVnEpP1Y7ry_SY2l1xipFHdGunBpx9rrKSz9H26FCx_oI3My-SlmDDbSXSrSUcZh6clnaaZJtXoxZLr5lNVfBc8fiXGXVqJ7FDFhjnjPKJvz9Qpj1Kdod5jUpa4KsH0qaUCE2VJDyCAuA2nxDR2GqAHo09DI_JfYc6gzWgeR4pqVJ8a4c0_b4eD7JpbTeTpFXhSHJ6h5IHwJyL6hQoDOZpQtjHH4jumv2kyqLLYk0QmdEunmtrg9XOv13FewYMlAbqzvBN9NWzyweGkPUYtA_or3MZ3crHeNnIIzDUCXtzDPFMfPeRZPJ2TCSOWpMhziCTwSPI3y51kzuVZ9Iw3DHUqwrWrFeyDG5srGfrpDMdDhoKfyxiyp5W5DzvsBzbAkISvWuJfKTduX60HoiREu416DOJxCU9yQBn1V8EaqOFyyYwfi9gEvgcgh9Y3BDOICtd2ud_4ZDUMEFRWFVuYqanikqOWuGdBUc0pMaAwtr3=w512-h512-s-no?authuser=0"
+        }).then(() => {console.log(auth.currentUser?.displayName,auth.currentUser?.uid,auth.currentUser?.photoURL);
+          if(auth.currentUser!=null){this.navigation.setUser(auth.currentUser)}})
+      }
+
+        const userDocRef = doc(this.firestore, 'users', this.idParticipant!.toString());
+        const userDocSnapshot = await getDoc(userDocRef);
+      
+        if (userDocSnapshot.exists()) {
+          await updateDoc(userDocRef, { name:this.participantName, photoUrl : "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png"});
+        }
     }
   }
 
