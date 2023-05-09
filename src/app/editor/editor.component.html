@@ -12,7 +12,7 @@
           </div>
         </div>
       
-        <form #miahootForm="ngForm" (ngSubmit)="submitMiahoot()">
+        <form #miahootForm="ngForm" >
           <div class="row">
             <div class="col-12 mb-3">
               <label for="nom" class="form-label">Titre du Miahoot </label>
@@ -30,7 +30,7 @@
                     <label for="question-{{i}}"><b>Question {{i + 1}} </b>
                       <input type="text" class="form-control1" id="question-{{i}}" name="question-{{i}}" [(ngModel)]="question.label" placeholder="Ecrivez votre question " required>
                     </label>
-                    <button type="button" class="supp2" (click)="removeQuestion(i)">
+                    <button type="button" class="supp2" (click)="removeQuestion(question)">
                       <svg viewBox="0 0 15 17.5" height="17.5" width="15" xmlns="http://www.w3.org/2000/svg" class="icon">
                         <path transform="translate(-2.5 -1.25)" d="M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z" id="Fill"></path>
                       </svg>
@@ -38,34 +38,39 @@
                   </div>
                   <!---->
                   <div class="form-group2">
-                    <label class="listAnswers" for="answers-{{i}}"></label>
-                    <div id="answers-{{i}}">
+                    <label class="listreponses" for="reponses-{{i}}"></label>
+                    <div id="reponses-{{i}}">
                       <div *ngFor="let reponse of question?.reponses; let j = index" class="form-check">
-                        <label class="form-check-label" for="answer-{{i}}-{{j}}">Réponse {{j + 1}} : </label>
+                        <label class="form-check-label" for="reponse-{{i}}-{{j}}">Réponse {{j + 1}} : </label>
                         <input type="text"  class ="inputR" [(ngModel)]="reponse.label" [ngModelOptions]="{standalone: true}" placeholder="Entrez votre réponse" maxlength=100 required>
                         <label class="rpns">Réponse correcte ?</label> <input type="checkbox" [(ngModel)]="reponse.estValide" [disabled]="alreadyOneTrueOption(question, i)" [ngModelOptions]="{standalone: true}">
-                        <button  type="button" class="supp1" (click)="removeAnswer(question, i)">
+                        <button  type="button" class="supp1" (click)="removeAnswer(reponse)">
                           <svg viewBox="0 0 15 17.5" height="17.5" width="15" xmlns="http://www.w3.org/2000/svg" class="icon">
                             <path transform="translate(-2.5 -1.25)" d="M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z" id="Fill"></path>
                           </svg>
                         </button>
                       </div>
-                      <button type="button" class="ajout" (click)="addAnswer(question)">
+                      <button type="button" class="ajout" (click)="showReponseInput()">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path></svg>
                         <span> Ajouter une réponse</span>
-                        
                       </button>
+                      <div *ngIf="showNewReponseInput">
+                        <input type="text" [(ngModel)]="newReponseLabel" (keyup.enter)="addReponse(newReponseLabel,question)" [ngModelOptions]="{standalone: true}" placeholder="Entrez le label de la nouvelle reponse">
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-      
-          <button type="button" class="ajoutQ" (click)="addQuestion()">
+
+          <button type="button" class="ajoutQ" (click)="showQuestionInput()">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path></svg>
             <span> Ajouter une question</span>
           </button>
+          <div *ngIf="showNewQuestionInput">
+            <input type="text" [(ngModel)]="newQuestionLabel" (keyup.enter)="addQuestion(newQuestionLabel)" [ngModelOptions]="{standalone: true}" placeholder="Entrez le label de la nouvelle question">
+          </div>
           <hr>
       
           <div class="btn">
