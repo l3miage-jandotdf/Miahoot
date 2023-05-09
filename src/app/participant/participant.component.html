@@ -1,22 +1,19 @@
 <app-login></app-login>
-<div class="qr-code-wrapper">
-  <qrcode (qrCodeURL)="onCodeChange($event)" [width]="256" [qrdata]="getQrData(idMiahoot)"></qrcode>
-  <a [href]="url" download="QR code">Cliquez ici pour télécharger le QR code</a>
-</div>
 <div *ngIf="!login"><h2>Pour commencer, veuillez vous connecter anonymement ou via Google.</h2></div>
 <div *ngIf="login">
   <div *ngIf="!partieCommencee">
-    <h2>Bienvenue sur le Miahoot ! </h2>
+    <h2>Bienvenue sur le Miahoot !</h2>
         <form>
           <div class="label" *ngIf="!loginWithGoogle">
+            <h2>Pour commencer, veuillez renseigner les informations ci-dessous.</h2>
             <!--<label class="pseudo">Pseudonyme :</label>-->
 
             <div class="form">
                 <div class="subtitle">Renseignez votre pseudonyme ici ! </div>
                 <div class="input-container ic1">
-                  <input id="pseudo" class="input" type="text" placeholder="">
+                  <input id="firstname" class="input" type="text" placeholder="">
                 <div class="cut"></div>
-                <label for="pseudo" class="placeholder">Pseudonyme</label>
+                <label for="firstname" class="placeholder">Pseudonyme</label>
                 </div>
                 <div class="bouton1">
                   <button (click)="startGame()" class="start" (click)="updateAnonyme()">Commencer

@@ -33,9 +33,8 @@ export interface Reponse {
   styleUrls: ['./participant.component.scss']
 })
 export class ParticipantComponent {
-  url:SafeUrl=''
-  link: string = 'https://miahoot-jandot.web.app/participant/'; //la partie fix du lien
-  @Output() participant = new EventEmitter<boolean>();
+ 
+ @Output() participant = new EventEmitter<boolean>();
 
   idMiahoot! : number;
   partieCommencee = false
@@ -280,12 +279,6 @@ export class ParticipantComponent {
       await updateDoc(miahootDocRef, { nbVotesQuestionCourante: nbVotesPlusUn });
     }
     this.voteSubmited = true;
-  }
-  onCodeChange(url: SafeUrl) {
-    this.url=url; 
-  }
-  getQrData(idMiahoot:number):string{
-    return this.link + idMiahoot.toString();
   }
 
 

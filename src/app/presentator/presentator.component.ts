@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Firestore, doc, DocumentData, DocumentSnapshot, getDoc, updateDoc, collection, getDocs, query, orderBy, QuerySnapshot, onSnapshot } from '@angular/fire/firestore';
+import { SafeUrl } from '@angular/platform-browser';
 
 export interface Miahoot {
   id: number;
@@ -31,7 +32,8 @@ export interface Reponse {
 
 
 export class PresentatorComponent {
-
+  url:SafeUrl=''
+  link: string = 'https://miahoot-jandot.web.app/participant/'; //la partie fix du lien
   //On prend en entrée les QCMs
   @Input() questions: Question[] = [];
 
@@ -219,6 +221,12 @@ export class PresentatorComponent {
     } else {
       return null;
     }
+  }
+  onCodeChange(url: SafeUrl) {
+    this.url=url; 
+  }
+  getQrData(idMiahoot:number):string{
+    return this.link + idMiahoot.toString();
   }
 
   

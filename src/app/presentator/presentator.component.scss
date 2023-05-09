@@ -17,7 +17,12 @@
   font-size: 20px;
   margin-bottom: 20px;
 }
-
+.qr-code-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin: 16px;
+}
 .answers {
   display: flex;
   flex-direction: column ;
