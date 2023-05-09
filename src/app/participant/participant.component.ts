@@ -222,8 +222,7 @@ export class ParticipantComponent {
   goToPage(){
     this.router.navigate([`/presentator/1`]);
   }
-/*
-  commencerPartie() : void {
+ commencerPartie() : void {
     if(this.loginWithGoogle){
       this.partieCommencee=true;
     }
@@ -240,7 +239,7 @@ export class ParticipantComponent {
     }
     }
   }
-*/
+
   alreadyOneTrueOption(i : number) : boolean{
     return (this.selectedAnswerIndex === null || this.selectedAnswerIndex===i);
   }
