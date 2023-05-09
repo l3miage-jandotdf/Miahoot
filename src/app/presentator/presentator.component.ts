@@ -98,9 +98,11 @@ async ngOnInit(): Promise<void> {
   }
 
   async getQuestionByIndex(miahootId: number, index: number) {
+    //const questionsCollectionRef = collection(this.firestore, 'miahoots', miahootId.toString(), 'questions');
+    //const querySnapshot = await getDocs(questionsCollectionRef);
     const questionsCollectionRef = collection(this.firestore, 'miahoots', miahootId.toString(), 'questions');
-    const querySnapshot = await getDocs(questionsCollectionRef);
-    
+  const questionsQuery = query(questionsCollectionRef, orderBy("id","desc")); // Add orderBy() here
+  const querySnapshot = await getDocs(questionsQuery);
     if (querySnapshot.size > 0) {
       const questionDocSnapshot = querySnapshot.docs[index];
       if (questionDocSnapshot !== undefined){
