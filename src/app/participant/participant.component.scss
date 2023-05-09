@@ -35,6 +35,12 @@
     height: 2.5em;
     transform: rotate(165deg);
    }
+   .qr-code-wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 16px;
+  }
    
    .loader:before, .loader:after {
     content: "";

@@ -4,6 +4,7 @@ import { Firestore, doc, DocumentData, DocumentSnapshot, getDoc, collection, get
 import { interval } from 'rxjs';
 import { NavigationService } from '../navigation.service';
 import { getAuth, updateProfile } from 'firebase/auth';
+import { SafeUrl } from '@angular/platform-browser';
 
 export interface Miahoot {
   id: number;
@@ -32,6 +33,8 @@ export interface Reponse {
   styleUrls: ['./participant.component.scss']
 })
 export class ParticipantComponent {
+  url:SafeUrl=''
+  link: string = 'https://miahoot-jandot.web.app/participant/'; //la partie fix du lien
   @Output() participant = new EventEmitter<boolean>();
 
   idMiahoot! : number;
@@ -277,6 +280,12 @@ export class ParticipantComponent {
       await updateDoc(miahootDocRef, { nbVotesQuestionCourante: nbVotesPlusUn });
     }
     this.voteSubmited = true;
+  }
+  onCodeChange(url: SafeUrl) {
+    this.url=url; 
+  }
+  getQrData(idMiahoot:number):string{
+    return this.link + idMiahoot.toString();
   }
 
 
