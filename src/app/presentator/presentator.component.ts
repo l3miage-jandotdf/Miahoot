@@ -36,7 +36,7 @@ export class PresentatorComponent {
   @Input() questions: Question[] = [];
 
   currentQuestion? : Question | null;
-  currentQuestionIndex: number | null=1;
+  currentQuestionIndex: number | null=-1;
   nbVotesCurrentQuestion:number | null=0;
   idMiahoot! : number;
   nbParticipants: number | null = 0;
@@ -45,7 +45,7 @@ export class PresentatorComponent {
   topThree: [string, number][] = [];
 
   constructor(private route : ActivatedRoute, private router : Router, private firestore : Firestore) {}
-/*
+
   async ngOnInit(): Promise<void> {
     this.idMiahoot = +(this.route.snapshot.paramMap.get('idMiahoot'))!;
     this.currentQuestionIndex = await this.getQuestionCouranteIndex(this.idMiahoot);
@@ -53,14 +53,7 @@ export class PresentatorComponent {
     this.nbVotesCurrentQuestion = await this.getNbVotesCurrentQuestion();
     console.log("QUESTION n° :" +  this.currentQuestionIndex);
   }
-*/
-async ngOnInit(): Promise<void> {
-  this.idMiahoot = +(this.route.snapshot.paramMap.get('idMiahoot'))!;
-  this.currentQuestionIndex = await this.getQuestionCouranteIndex(this.idMiahoot);
-  this.nbParticipants = await this.getNbParticipants();
-  console.log("QUESTION n° :" +  this.currentQuestionIndex);
-  this.currentQuestion = await this.getQuestionByIndex(this.idMiahoot, this.currentQuestionIndex!);
-}
+
 
   async getQuestionCouranteIndex(miahootId: number): Promise<number | null> {
     const miahootDocRef = doc(this.firestore, 'miahoots', miahootId.toString());
@@ -98,11 +91,8 @@ async ngOnInit(): Promise<void> {
   }
 
   async getQuestionByIndex(miahootId: number, index: number) {
-    //const questionsCollectionRef = collection(this.firestore, 'miahoots', miahootId.toString(), 'questions');
-    //const querySnapshot = await getDocs(questionsCollectionRef);
     const questionsCollectionRef = collection(this.firestore, 'miahoots', miahootId.toString(), 'questions');
-  const questionsQuery = query(questionsCollectionRef, orderBy("id","desc")); // Add orderBy() here
-  const querySnapshot = await getDocs(questionsQuery);
+    const querySnapshot = await getDocs(questionsCollectionRef);
     if (querySnapshot.size > 0) {
       const questionDocSnapshot = querySnapshot.docs[index];
       if (questionDocSnapshot !== undefined){

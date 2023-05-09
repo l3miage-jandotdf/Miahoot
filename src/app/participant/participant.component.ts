@@ -84,15 +84,8 @@ export class ParticipantComponent {
   async ngOnInit(): Promise<void> {
     this.idMiahoot = +(this.route.snapshot.paramMap.get('idMiahoot'))!;
     this.currentQuestionIndex = await this.getQuestionCouranteIndex(this.idMiahoot);
-    this.displayVoteSubmited();
-
   }
-  displayVoteSubmited(): void {
-    setInterval(() => {
-      console.log(this.voteSubmited);
-    }, 50);
-  }
-
+  
   /**
    * Récupère l'indice de la question courante pour un miahoot donné et crée un observable Firebase pour suivre les mises à jour.
    * @param miahootId l'id du miahoot pour lequel on veut récupérer l'indice de la question courante.
