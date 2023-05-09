@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^15.2.0",
     "@angular/platform-browser-dynamic": "^15.2.0",
     "@angular/router": "^15.2.0",
+    "angularx-qrcode": "^15.0.1",
     "firebase": "^9.21.0",
     "firebase-function": "^1.4.37",
     "long": "4.0.0",

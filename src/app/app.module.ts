@@ -33,6 +33,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { AllMiahootComponent } from './all-miahoot/all-miahoot.component';
 //import { nbParticipantService } from './nbParticipantService';
 import { NavigationService } from './navigation.service';
+import { QRCodeModule } from 'angularx-qrcode';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { NavigationService } from './navigation.service';
     MatRadioModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    QRCodeModule
   ],
   providers: [NavigationService],
   bootstrap: [AppComponent]
