@@ -114,7 +114,9 @@ export class AllMiahootComponent implements OnInit {
     const miahootData = {
       nom: miahoot.nom,
       questionCourante: -1,  //ATTENTION C'EST UN INDEX
-      nbParticipants: 0
+      nbParticipants: 0,
+      nbVotesQuestionCourante: 0
+
     };
     await setDoc(miahootDocRef, miahootData);
     console.log('Miahoot document added:', miahootDocRef); // Add this line
