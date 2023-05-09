@@ -239,6 +239,10 @@ export class ParticipantComponent {
   }
 
   async submitVote(): Promise<void> {
+    let nbPointGagne = 0;
+    if (this.currentQuestion?.answers[this.selectedAnswerIndex!].estValide){
+      nbPointGagne = 1;
+    }
     this.voteSubmited = true;
     const questionDocRef = doc(
       this.firestore,
@@ -249,6 +253,7 @@ export class ParticipantComponent {
     );
     const voteData = {
       indexVoteSoumis: this.selectedAnswerIndex,
+      point : nbPointGagne
     };
     //enregistre le vote dans la collection "votes"
     const userId = this.idParticipant!.toString();
