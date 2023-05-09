@@ -41,12 +41,27 @@
                         <label class="form-check-label" for="answer-{{i}}-{{j}}">Réponse {{j + 1}}</label>
                         <input type="text"  class ="inputR" [(ngModel)]="reponse.label" [ngModelOptions]="{standalone: true}" placeholder="Entrez votre réponse" maxlength=100 required>
                         <label class="rpns">Réponse correcte ?</label><input type="checkbox" [(ngModel)]="reponse.estValide" [disabled]="alreadyOneTrueOption(question, i)" [ngModelOptions]="{standalone: true}">
-                        <button  type="button" class="btn btn-success" (click)="removeAnswer(question, i)">Supprimer la réponse</button>
+                        <button  type="button" class="supp1" (click)="removeAnswer(question, i)">
+
+                          <svg viewBox="0 0 15 17.5" height="17.5" width="15" xmlns="http://www.w3.org/2000/svg" class="icon">
+                            <path transform="translate(-2.5 -1.25)" d="M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z" id="Fill"></path>
+                          </svg>
+                          
+                          <!--Supprimer la réponse-->
+                        
+                        </button>
                       </div>
                       <button type="button" class="btn btn-success" (click)="addAnswer(question)">Ajouter une réponse</button>
                     </div>
                   </div>
-                  <button type="button" class="btn btn-success" (click)="removeQuestion(i)">Supprimer cette question</button>
+                  <button type="button" class="supp2" (click)="removeQuestion(i)">
+                    <svg viewBox="0 0 15 17.5" height="17.5" width="15" xmlns="http://www.w3.org/2000/svg" class="icon">
+                      <path transform="translate(-2.5 -1.25)" d="M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z" id="Fill"></path>
+                    </svg>
+                    
+                    <!--Supprimer cette question-->
+                  
+                  </button>
                 </div>
               </div>
             </div>
@@ -55,8 +70,15 @@
           <button type="button" class="btn btn-success" (click)="addQuestion()">Ajouter une question</button>
           <hr>
       
-          <button type="submit" class="btn btn-primary">Sauvegarder</button>
-          <button type="button" class="btn btn-danger mb-3" (click)="cancel()">Annuler</button>
+          <button type="submit" class="sauver"><span class="txt">Sauvegarder</span>
+            <span class="txt2">C'est fait !</span>
+            <span class="loader-container">
+              <span class="loader"></span>
+            </span>
+          </button>
+          <button type="button" class="bip" (click)="cancel()"><span class="button__text">Annuler</span>
+            <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="48" viewBox="0 0 48 48" height="48" class="svg"><path d="M35.3 12.7c-2.89-2.9-6.88-4.7-11.3-4.7-8.84 0-15.98 7.16-15.98 16s7.14 16 15.98 16c7.45 0 13.69-5.1 15.46-12h-4.16c-1.65 4.66-6.07 8-11.3 8-6.63 0-12-5.37-12-12s5.37-12 12-12c3.31 0 6.28 1.38 8.45 3.55l-6.45 6.45h14v-14l-4.7 4.7z"></path><path fill="none" d="M0 0h48v48h-48z"></path></svg></span>
+          </button>
         </form>
       </div> 
 
