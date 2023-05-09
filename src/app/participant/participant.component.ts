@@ -222,7 +222,8 @@ export class ParticipantComponent {
   goToPage(){
     this.router.navigate([`/presentator/1`]);
   }
- commencerPartie() : void {
+
+  updateAnonyme() : void {
     if(this.loginWithGoogle){
       this.partieCommencee=true;
     }
@@ -264,11 +265,11 @@ export class ParticipantComponent {
 
     const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
     const miahootDocSnapshot = await getDoc(miahootDocRef);
-  
+
     if (miahootDocSnapshot.exists()) {
       const miahootData = miahootDocSnapshot.data() as Miahoot;
       let nbVotesPlusUn = miahootData.nbVotesQuestionCourante +1;
-      await updateDoc(miahootDocRef, { nbVotesQuestionCourante: nbVotesPlusUn }); 
+      await updateDoc(miahootDocRef, { nbVotesQuestionCourante: nbVotesPlusUn });
     }
     this.voteSubmited = true;
   }
