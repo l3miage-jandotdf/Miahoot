@@ -44,7 +44,7 @@ export class EditorComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,  private router : Router, private http : HttpClient) { }
 
-  
+  /*
   ngOnInit() {
     this.idMiahoot = Number(this.route.snapshot.paramMap.get('idMiahoot')); //On récupère l'id du miahoot
     this.idCreator = String(this.route.snapshot.paramMap.get('idCreator')); //On réupère l'id du créateur 
@@ -60,6 +60,21 @@ export class EditorComponent implements OnInit {
     console.error("An error with the function getMiahootById occured",error);
   });
   }
+*/
+ngOnInit() {
+  this.idMiahoot = Number(this.route.snapshot.paramMap.get('idMiahoot')); //On récupère l'id du miahoot
+  this.idCreator = String(this.route.snapshot.paramMap.get('idCreator')); //On réupère l'id du créateur 
+
+  //On stocke le miahoot d'id idMiahoot 
+  this.getMiahootById(this.idMiahoot)
+  .then(miahoot => {
+    this.miahoot = miahoot;
+    this.questions = miahoot.questions;
+  })
+  .catch(error => {
+    console.error("An error with the function getMiahootById occured",error);
+  });
+}
 
 
 
@@ -117,7 +132,7 @@ export class EditorComponent implements OnInit {
 
 
 submitMiahoot() {
-  const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/';
+  const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/'+this.idMiahoot+ '/';
 
   // Les données à mettre à jour
   const update = {

@@ -114,7 +114,7 @@ export class LoginComponent implements OnInit {
   createCreator(creatorData: any) {
     this.dataService.createCreator(creatorData).subscribe(
       (response) => {
-        console.log('Creator a creé', response);
+        console.log('Creator est creé', response);
       },
       (error) => {
         console.log('Creator a echoué', error);

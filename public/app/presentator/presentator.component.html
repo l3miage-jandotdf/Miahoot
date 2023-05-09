@@ -3,7 +3,10 @@
 <div class="bg"></div>
 <div class="bg bg2"></div>
 <div class="bg bg3"></div>
-
+<div class="qr-code-wrapper">
+  <qrcode (qrCodeURL)="onCodeChange($event)" [width]="256" [qrdata]="getQrData(idMiahoot)"></qrcode>
+  <a [href]="url" download="QR code">Cliquez ici pour télécharger le QR code</a>
+</div>
 <div class="content">
   <div *ngIf="currentQuestionIndex==-1">
     <p> Nombre de participants connectés : {{nbParticipants}}</p>
@@ -16,6 +19,7 @@
       <div *ngFor="let answer of currentQuestion?.reponses; index as i">
         <p>{{answer.label}}</p>
       </div>
+      <p>Nombre de réponses : {{nbVotesCurrentQuestion}} / {{nbParticipants}}</p>
       <button [disabled]="miahootTermine" (click)="passerSuivant()"><span>SUIVANT</span>
 
         <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">

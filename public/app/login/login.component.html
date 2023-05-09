@@ -15,7 +15,7 @@
       <div class="div" *ngIf="isLoggedIn$ | async">
         <img [src]="currentUser!.photoURL" width="30">
         {{currentUser!.displayName}}
-        <button (click)="this.goToPage('/accountConfig')" *ngIf="!participant">Paramètres</button>
+        <button class="param" (click)="this.goToPage('/accountConfig')" *ngIf="!participant">Paramètres</button>
       </div>
         <div>
           <button *ngIf="isLoggedIn$ | async" class="LogoutBouton" (click)="logout()">Se déconnecter</button>

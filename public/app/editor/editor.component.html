@@ -15,8 +15,8 @@
         <form #miahootForm="ngForm" (ngSubmit)="submitMiahoot()">
           <div class="row">
             <div class="col-12 mb-3">
-              <label for="nom" class="form-label">Nom du Miahoot</label>
-              <input type="text" class="form-control" id="nom" name="nom" [ngModel]="miahoot.nom" required> 
+              <label for="nom" class="form-label">Titre du Miahoot </label>
+              <input type="text" class="form-control" id="nom" name="nom" [ngModel]="miahoot.nom"  placeholder ="Entrez votre titre" required> 
             </div>
           </div>
       
@@ -24,41 +24,64 @@
       
           <div *ngIf="miahoot.questions.length > 0" class="row">
             <div class="col-12">
-              <h3>Liste des questions</h3>
-            </div>
-            <div class="col-12">
               <div class="list-group">
                 <div *ngFor="let question of miahoot.questions; let i = index" class="list-group-item"> 
-                  <div class="form-group mb-3">
-                    <label for="question-{{i}}">Question {{i + 1}}</label>
-                    <input type="text" class="form-control" id="question-{{i}}" name="question-{{i}}" [(ngModel)]="question.label" required>
+                  <div class="form-group1">
+                    <label for="question-{{i}}"><b>Question {{i + 1}} </b>
+                      <input type="text" class="form-control1" id="question-{{i}}" name="question-{{i}}" [(ngModel)]="question.label" placeholder="Ecrivez votre question " required>
+                    </label>
+                    <button type="button" class="supp2" (click)="removeQuestion(i)">
+                      <svg viewBox="0 0 15 17.5" height="17.5" width="15" xmlns="http://www.w3.org/2000/svg" class="icon">
+                        <path transform="translate(-2.5 -1.25)" d="M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z" id="Fill"></path>
+                      </svg>
+                    </button>
                   </div>
                   <!---->
-                  <div class="form-group mb-3">
-                    <label for="answers-{{i}}">Réponses</label>
+                  <div class="form-group2">
+                    <label class="listAnswers" for="answers-{{i}}"></label>
                     <div id="answers-{{i}}">
                       <div *ngFor="let reponse of question?.reponses; let j = index" class="form-check">
-                        <label class="form-check-label" for="answer-{{i}}-{{j}}">Réponse {{j + 1}}</label>
+                        <label class="form-check-label" for="answer-{{i}}-{{j}}">Réponse {{j + 1}} : </label>
                         <input type="text"  class ="inputR" [(ngModel)]="reponse.label" [ngModelOptions]="{standalone: true}" placeholder="Entrez votre réponse" maxlength=100 required>
-                        <label class="rpns">Réponse correcte ?</label><input type="checkbox" [(ngModel)]="reponse.estValide" [disabled]="alreadyOneTrueOption(question, i)" [ngModelOptions]="{standalone: true}">
-                        <button  type="button" class="btn btn-success" (click)="removeAnswer(question, i)">Supprimer la réponse</button>
+                        <label class="rpns">Réponse correcte ?</label> <input type="checkbox" [(ngModel)]="reponse.estValide" [disabled]="alreadyOneTrueOption(question, i)" [ngModelOptions]="{standalone: true}">
+                        <button  type="button" class="supp1" (click)="removeAnswer(question, i)">
+                          <svg viewBox="0 0 15 17.5" height="17.5" width="15" xmlns="http://www.w3.org/2000/svg" class="icon">
+                            <path transform="translate(-2.5 -1.25)" d="M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z" id="Fill"></path>
+                          </svg>
+                        </button>
                       </div>
-                      <button type="button" class="btn btn-success" (click)="addAnswer(question)">Ajouter une réponse</button>
+                      <button type="button" class="ajout" (click)="addAnswer(question)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path></svg>
+                        <span> Ajouter une réponse</span>
+                        
+                      </button>
                     </div>
                   </div>
-                  <button type="button" class="btn btn-success" (click)="removeQuestion(i)">Supprimer cette question</button>
                 </div>
               </div>
             </div>
           </div>
       
-          <button type="button" class="btn btn-success" (click)="addQuestion()">Ajouter une question</button>
+          <button type="button" class="ajoutQ" (click)="addQuestion()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path></svg>
+            <span> Ajouter une question</span>
+          </button>
           <hr>
       
-          <button type="submit" class="btn btn-primary">Sauvegarder</button>
-          <button type="button" class="btn btn-danger mb-3" (click)="cancel()">Annuler</button>
+          <div class="btn">
+            <button type="submit" class="sauver">
+              <span class="circle1"></span>
+              <span class="circle2"></span>
+              <span class="circle3"></span>
+              <span class="circle4"></span>
+              <span class="circle5"></span>
+              <span class="text">Sauvegarder</span>
+            </button>
+            <button type="button" class="bip" (click)="cancel()"><span class="button__text">Annuler</span>
+              <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="48" viewBox="0 0 48 48" height="48" class="svg"><path d="M35.3 12.7c-2.89-2.9-6.88-4.7-11.3-4.7-8.84 0-15.98 7.16-15.98 16s7.14 16 15.98 16c7.45 0 13.69-5.1 15.46-12h-4.16c-1.65 4.66-6.07 8-11.3 8-6.63 0-12-5.37-12-12s5.37-12 12-12c3.31 0 6.28 1.38 8.45 3.55l-6.45 6.45h14v-14l-4.7 4.7z"></path><path fill="none" d="M0 0h48v48h-48z"></path></svg></span>
+            </button>
+          </div>
+          
         </form>
       </div> 
-  <script src="/__/firebase/11.29.1/firebase-app.js"></script>
-  <script src="/__/firebase/11.29.1/firebase-analytics.js"></script>
-  <script src="/__/firebase/init.js"></script>
+

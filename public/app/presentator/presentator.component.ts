@@ -1,12 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Firestore, doc, DocumentData, DocumentSnapshot, getDoc, updateDoc, collection, getDocs, query, orderBy, QuerySnapshot, onSnapshot } from '@angular/fire/firestore';
+import { SafeUrl } from '@angular/platform-browser';
 
 export interface Miahoot {
   id: number;
   nom: string;
   questionCourante: number | null;
-  nbParticipants : number;
+  nbParticipants: number;
+  nbVotesQuestionCourante: number;
   questions: Question[];
 }
 
@@ -30,12 +32,14 @@ export interface Reponse {
 
 
 export class PresentatorComponent {
-
+  url:SafeUrl=''
+  link: string = 'https://miahoot-jandot.web.app/participant/'; //la partie fix du lien
   //On prend en entrée les QCMs
   @Input() questions: Question[] = [];
 
   currentQuestion? : Question | null;
-  currentQuestionIndex: number | null=1;
+  currentQuestionIndex: number | null=-1;
+  nbVotesCurrentQuestion:number | null=0;
   idMiahoot! : number;
   nbParticipants: number | null = 0;
 
@@ -43,21 +47,15 @@ export class PresentatorComponent {
   topThree: [string, number][] = [];
 
   constructor(private route : ActivatedRoute, private router : Router, private firestore : Firestore) {}
-/*
+
   async ngOnInit(): Promise<void> {
     this.idMiahoot = +(this.route.snapshot.paramMap.get('idMiahoot'))!;
     this.currentQuestionIndex = await this.getQuestionCouranteIndex(this.idMiahoot);
     this.nbParticipants = await this.getNbParticipants();
+    this.nbVotesCurrentQuestion = await this.getNbVotesCurrentQuestion();
     console.log("QUESTION n° :" +  this.currentQuestionIndex);
   }
-*/
-async ngOnInit(): Promise<void> {
-  this.idMiahoot = +(this.route.snapshot.paramMap.get('idMiahoot'))!;
-  this.currentQuestionIndex = await this.getQuestionCouranteIndex(this.idMiahoot);
-  this.nbParticipants = await this.getNbParticipants();
-  console.log("QUESTION n° :" +  this.currentQuestionIndex);
-  this.currentQuestion = await this.getQuestionByIndex(this.idMiahoot, this.currentQuestionIndex!);
-}
+
 
   async getQuestionCouranteIndex(miahootId: number): Promise<number | null> {
     const miahootDocRef = doc(this.firestore, 'miahoots', miahootId.toString());
@@ -97,7 +95,6 @@ async ngOnInit(): Promise<void> {
   async getQuestionByIndex(miahootId: number, index: number) {
     const questionsCollectionRef = collection(this.firestore, 'miahoots', miahootId.toString(), 'questions');
     const querySnapshot = await getDocs(questionsCollectionRef);
-    
     if (querySnapshot.size > 0) {
       const questionDocSnapshot = querySnapshot.docs[index];
       if (questionDocSnapshot !== undefined){
@@ -126,8 +123,9 @@ async ngOnInit(): Promise<void> {
     const miahootData = miahootDocSnapshot.data() as Miahoot;
     const questions = miahootData.questions;
     let nextQuestionIndex = (miahootData.questionCourante ?? 0) + 1;
-    await updateDoc(miahootDocRef, { questionCourante: nextQuestionIndex });
+    await updateDoc(miahootDocRef, { questionCourante: nextQuestionIndex, nbVotesQuestionCourante : 0 });
   }
+  
 }
 
   async passerSuivant(){
@@ -162,8 +160,6 @@ async ngOnInit(): Promise<void> {
         const voteData = voteDoc.data();
         const point = voteData['point'] || 0;
         participantsScores[userId] = (participantsScores[userId] || 0) + point;
-        console.log("J'AI TROUVÉ UN PARTICIPANT !");
-        console.log("IL A " + participantsScores[userId] +" POINT");
       }
     }
   
@@ -207,6 +203,32 @@ async ngOnInit(): Promise<void> {
       return null;
     }
   }
+
+  //un peu répétitif... je n'ai pas réussi à faire marcher la fonction qui compte dynamiquement votes.length
+  async getNbVotesCurrentQuestion(): Promise<number | null> {
+    const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
+    const miahootDocSnapshot: DocumentSnapshot<DocumentData> = await getDoc(miahootDocRef);
+    if (miahootDocSnapshot.exists()) {
+      const miahootData = miahootDocSnapshot.data();
+      const nbVotes = miahootData?.['nbVotesQuestionCourante'];
+      const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
+      onSnapshot(miahootDocRef, async (docSnapshot) => {  //OBSERVABLE 
+        const miahootData = docSnapshot.data();
+        const nbVotes = miahootData?.['nbVotesQuestionCourante'];
+        this.nbVotesCurrentQuestion = nbVotes;
+      });
+      return nbVotes ?? null;
+    } else {
+      return null;
+    }
+  }
+  onCodeChange(url: SafeUrl) {
+    this.url=url; 
+  }
+  getQrData(idMiahoot:number):string{
+    return this.link + idMiahoot.toString();
+  }
+
   
   
 }

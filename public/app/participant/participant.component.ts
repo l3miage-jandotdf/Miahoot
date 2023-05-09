@@ -3,12 +3,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Firestore, doc, DocumentData, DocumentSnapshot, getDoc, collection, getDocs, onSnapshot, addDoc, setDoc, updateDoc } from '@angular/fire/firestore';
 import { interval } from 'rxjs';
 import { NavigationService } from '../navigation.service';
+import { getAuth, updateProfile } from 'firebase/auth';
+import { SafeUrl } from '@angular/platform-browser';
 
 export interface Miahoot {
   id: number;
   nom: string;
   questionCourante: number | null;
-  nbParticipants : number;
+  nbParticipants: number;
+  nbVotesQuestionCourante: number;
   questions: Question[];
 }
 
@@ -30,7 +33,8 @@ export interface Reponse {
   styleUrls: ['./participant.component.scss']
 })
 export class ParticipantComponent {
-  @Output() participant = new EventEmitter<boolean>();
+ 
+ @Output() participant = new EventEmitter<boolean>();
 
   idMiahoot! : number;
   partieCommencee = false
@@ -82,9 +86,8 @@ export class ParticipantComponent {
   async ngOnInit(): Promise<void> {
     this.idMiahoot = +(this.route.snapshot.paramMap.get('idMiahoot'))!;
     this.currentQuestionIndex = await this.getQuestionCouranteIndex(this.idMiahoot);
-
   }
-
+  
   /**
    * Récupère l'indice de la question courante pour un miahoot donné et crée un observable Firebase pour suivre les mises à jour.
    * @param miahootId l'id du miahoot pour lequel on veut récupérer l'indice de la question courante.
@@ -111,21 +114,24 @@ export class ParticipantComponent {
 
         // On extrait la nouvelle valeur de la questionCourante
         const miahootData = docSnapshot.data();
-        const questionCourante = miahootData?.['questionCourante'];
 
-        // On fait une mise à jour de la valeur de la question courante et on la récupère
-        this.currentQuestionIndex = questionCourante;
-        this.currentQuestion = await this.getQuestionByIndex(this.idMiahoot, this.currentQuestionIndex!);
-        if (this.currentQuestion === undefined && this.currentQuestionIndex !==-1) {
-          console.log("Le miahoot est terminé !");
-          // On met 'miahootterminé à true pour pouvoir désactiver et ne plus afficher le bouton 'Suivant'
-          this.miahootTermine = true;
+        if (miahootData?.['questionCourante'] !== this.currentQuestionIndex){
+          const questionCourante = miahootData?.['questionCourante'];
+
+          // On fait une mise à jour de la valeur de la question courante et on la récupère
+          this.currentQuestionIndex = questionCourante;
+          this.currentQuestion = await this.getQuestionByIndex(this.idMiahoot, this.currentQuestionIndex!);
+          if (this.currentQuestion === undefined && this.currentQuestionIndex !==-1) {
+            console.log("Le miahoot est terminé !");
+            // On met 'miahootterminé à true pour pouvoir désactiver et ne plus afficher le bouton 'Suivant'
+            this.miahootTermine = true;
+          }
+          this.voteSubmited = false;
+          this.selectedAnswerIndex = null;
+
+          // On affiche un message dans la console pour indiquer que la question courante a été mise à jour.
+          console.log("QUESTION COURANTE CHANGEE : " + questionCourante);
         }
-        this.voteSubmited = false;
-        this.selectedAnswerIndex = null;
-
-        // On affiche un message dans la console pour indiquer que la question courante a été mise à jour.
-        console.log("QUESTION COURANTE CHANGEE : " + questionCourante);
       });
 
       // On retourne la valeur initiale de la question courante ou null si elle n'existe pas.
@@ -211,29 +217,41 @@ export class ParticipantComponent {
   goToPage(){
     this.router.navigate([`/presentator/1`]);
   }
-/*
-  commencerPartie() : void {
+
+  async updateAnonyme() : Promise<void> {
     if(this.loginWithGoogle){
       this.partieCommencee=true;
     }
     else{
       this.partieCommencee = true;
-    const auth = getAuth();
-    if(auth.currentUser!=null){
-      updateProfile(auth.currentUser, {
-        displayName : this.participantName,
-        photoURL : "https://lh3.googleusercontent.com/36n3KSg9L1j79qoFeMyE17xeb73E3VzKQU3kWoloRKFmydtnVVFGRHk1nfRm3_Dv-fRX3a1bINDU5tuQ633ggaOFfPw9_KKsjDKppXNIHxPIq0v1aaAw8pXiVqKxYuxSDgYhVF8sGjuSJTzUGAx9614DnQKkbCqWay5W5DO6E8MJIa-aTF94ryRavLnzfL6Exf-tIqHsfpN-3Aplf0--e_Qtz8nDcEPfrzp5KyrI-7ys5WVqE0cb1B8iakOXCz239A3CcEkcJj3VWA_YPMe5P169CEWTsjvakENofQR7uQmYNBdzqECL8O1p5XNvjkNt4HaZl0TIxtSQs7nh_4NXkFXgbIADrZ49SE1UrCzb0zsn5xA1sURXpEVZfKYYc2Z3er-QZkq0vMMF_N5h5T9H47AuZhmx0WCpCjnmw6IhRWPM0ZUykOfdg3c-51ppod_S56Lm_9SVnEpP1Y7ry_SY2l1xipFHdGunBpx9rrKSz9H26FCx_oI3My-SlmDDbSXSrSUcZh6clnaaZJtXoxZLr5lNVfBc8fiXGXVqJ7FDFhjnjPKJvz9Qpj1Kdod5jUpa4KsH0qaUCE2VJDyCAuA2nxDR2GqAHo09DI_JfYc6gzWgeR4pqVJ8a4c0_b4eD7JpbTeTpFXhSHJ6h5IHwJyL6hQoDOZpQtjHH4jumv2kyqLLYk0QmdEunmtrg9XOv13FewYMlAbqzvBN9NWzyweGkPUYtA_or3MZ3crHeNnIIzDUCXtzDPFMfPeRZPJ2TCSOWpMhziCTwSPI3y51kzuVZ9Iw3DHUqwrWrFeyDG5srGfrpDMdDhoKfyxiyp5W5DzvsBzbAkISvWuJfKTduX60HoiREu416DOJxCU9yQBn1V8EaqOFyyYwfi9gEvgcgh9Y3BDOICtd2ud_4ZDUMEFRWFVuYqanikqOWuGdBUc0pMaAwtr3=w512-h512-s-no?authuser=0"
-      }).then(() => {console.log(auth.currentUser?.displayName,auth.currentUser?.uid,auth.currentUser?.photoURL);
-        if(auth.currentUser!=null){this.navigation.setUser(auth.currentUser)}})
-    }
+      const auth = getAuth();
+      if(auth.currentUser!=null){
+        if (this.participantName == null || this.participantName == undefined){this.participantName = "Anonyme";}
+        updateProfile(auth.currentUser, {
+          displayName : this.participantName,
+          photoURL : "https://lh3.googleusercontent.com/36n3KSg9L1j79qoFeMyE17xeb73E3VzKQU3kWoloRKFmydtnVVFGRHk1nfRm3_Dv-fRX3a1bINDU5tuQ633ggaOFfPw9_KKsjDKppXNIHxPIq0v1aaAw8pXiVqKxYuxSDgYhVF8sGjuSJTzUGAx9614DnQKkbCqWay5W5DO6E8MJIa-aTF94ryRavLnzfL6Exf-tIqHsfpN-3Aplf0--e_Qtz8nDcEPfrzp5KyrI-7ys5WVqE0cb1B8iakOXCz239A3CcEkcJj3VWA_YPMe5P169CEWTsjvakENofQR7uQmYNBdzqECL8O1p5XNvjkNt4HaZl0TIxtSQs7nh_4NXkFXgbIADrZ49SE1UrCzb0zsn5xA1sURXpEVZfKYYc2Z3er-QZkq0vMMF_N5h5T9H47AuZhmx0WCpCjnmw6IhRWPM0ZUykOfdg3c-51ppod_S56Lm_9SVnEpP1Y7ry_SY2l1xipFHdGunBpx9rrKSz9H26FCx_oI3My-SlmDDbSXSrSUcZh6clnaaZJtXoxZLr5lNVfBc8fiXGXVqJ7FDFhjnjPKJvz9Qpj1Kdod5jUpa4KsH0qaUCE2VJDyCAuA2nxDR2GqAHo09DI_JfYc6gzWgeR4pqVJ8a4c0_b4eD7JpbTeTpFXhSHJ6h5IHwJyL6hQoDOZpQtjHH4jumv2kyqLLYk0QmdEunmtrg9XOv13FewYMlAbqzvBN9NWzyweGkPUYtA_or3MZ3crHeNnIIzDUCXtzDPFMfPeRZPJ2TCSOWpMhziCTwSPI3y51kzuVZ9Iw3DHUqwrWrFeyDG5srGfrpDMdDhoKfyxiyp5W5DzvsBzbAkISvWuJfKTduX60HoiREu416DOJxCU9yQBn1V8EaqOFyyYwfi9gEvgcgh9Y3BDOICtd2ud_4ZDUMEFRWFVuYqanikqOWuGdBUc0pMaAwtr3=w512-h512-s-no?authuser=0"
+        }).then(() => {console.log(auth.currentUser?.displayName,auth.currentUser?.uid,auth.currentUser?.photoURL);
+          if(auth.currentUser!=null){this.navigation.setUser(auth.currentUser)}})
+      }
+
+        const userDocRef = doc(this.firestore, 'users', this.idParticipant!.toString());
+        const userDocSnapshot = await getDoc(userDocRef);
+      
+        if (userDocSnapshot.exists()) {
+          await updateDoc(userDocRef, { name:this.participantName, photoUrl : "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png"});
+        }
     }
   }
-*/
+
   alreadyOneTrueOption(i : number) : boolean{
     return (this.selectedAnswerIndex === null || this.selectedAnswerIndex===i);
   }
 
   async submitVote(): Promise<void> {
+    let nbPointGagne = 0;
+    if (this.currentQuestion?.answers[this.selectedAnswerIndex!].estValide){
+      nbPointGagne = 1;
+    }
     this.voteSubmited = true;
     const questionDocRef = doc(
       this.firestore,
@@ -244,11 +262,23 @@ export class ParticipantComponent {
     );
     const voteData = {
       indexVoteSoumis: this.selectedAnswerIndex,
+      point : nbPointGagne
     };
+    //enregistre le vote dans la collection "votes"
     const userId = this.idParticipant!.toString();
     const votesCollectionRef = collection(questionDocRef, 'votes');
     const voteDocRef = doc(votesCollectionRef, userId);
     await setDoc(voteDocRef, voteData);
+
+    const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
+    const miahootDocSnapshot = await getDoc(miahootDocRef);
+
+    if (miahootDocSnapshot.exists()) {
+      const miahootData = miahootDocSnapshot.data() as Miahoot;
+      let nbVotesPlusUn = miahootData.nbVotesQuestionCourante +1;
+      await updateDoc(miahootDocRef, { nbVotesQuestionCourante: nbVotesPlusUn });
+    }
+    this.voteSubmited = true;
   }
 
 
