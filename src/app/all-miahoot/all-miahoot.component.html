@@ -5,7 +5,10 @@
 <div class="bg bg3"></div>
 
 <div class="content">
-  <h2>Mes Miahoots</h2>
+  <div class="title">
+    <h2>Mes Miahoots</h2>
+  </div>
+  
 
 <div class="table-container">
   <table class="table">
@@ -17,7 +20,7 @@
   </thead>
   <tbody>
   <tr *ngFor="let miahoot of miahoots">
-    <td>{{ miahoot.nom }}</td>
+    <td class="titre">{{ miahoot.nom }}</td>
     <td class="boutons">
       <button type="button" class="Btn" (click)="editMiahoot(miahoot.id);playClickSound();"><span class="test">Modifier</span>
         <svg class="svg" viewBox="0 0 512 512">
@@ -37,6 +40,15 @@
   </tr>
   </tbody>
   </table>
+  <div class="boutonA">
+    <button type="button" class="ajouterMiahoot" (click)="ajouterMiahoot()">
+      <span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path></svg>Ajouter un nouveau miahoot
+    </span>
+  </button>
+  </div>
+  
+
 </div>
 
 
