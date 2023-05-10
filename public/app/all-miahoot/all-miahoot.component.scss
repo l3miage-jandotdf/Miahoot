@@ -9,7 +9,7 @@ body{
         table-layout: fixed;
         width: 100%;
         border-collapse: collapse;
-        border : 3px solid purple;
+        border : 3px solid rgb(6, 39, 207);
     }
 
     .table-container{
@@ -18,6 +18,17 @@ body{
         background-color: azure;
         padding : 10px;
         min-height: 100vh;
+    }
+
+    .titre{
+      text-align: center;
+      text-transform: uppercase;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      font-weight: bold;
+    }
+
+    .title{
+      background-color: #b1dae7;
     }
 
     h2{
@@ -281,6 +292,36 @@ body{
   width: 100%;
   margin-left: -20px;
 }
+
+
+.boutonA{
+  align-items: center;
+  margin-left: 190px ;
+  margin-top: 70px;
+}
+
+
+.ajouterMiahoot {
+  border: 2px solid #24b4fb;
+  background-color: #24b4fb;
+  border-radius: 0.9em;
+  padding: 0.8em 1.2em 0.8em 1em;
+  transition: all ease-in-out 0.2s;
+  font-size: 16px;
+  
+ }
+ 
+ .ajouterMiahoot span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: 600;
+ }
+ 
+ .ajouterMiahoot:hover {
+  background-color: #0071e2;
+ }
          
 }
 
@@ -297,7 +338,11 @@ body{
         table-layout: fixed;
         width: 100%;
         border-collapse: collapse;
-        border : 3px solid purple;
+        border : 3px solid rgb(6, 39, 207);
+    }
+
+    .col {
+      text-align: center;
     }
 
     .table-container{
@@ -319,6 +364,17 @@ body{
 
     th, td {
         padding : 20px;
+    }
+
+    .titre{
+      text-align: center;
+      text-transform: uppercase;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      font-weight: bold;
+    }
+
+    .title{
+      background-color: #b1dae7;
     }
 
 
@@ -567,53 +623,41 @@ body{
   width: 97%;
   margin-left: -20px;
 }
+
+//Bouton d'ajout de miahoot 
+
+.boutonA{
+  align-items: center;
+  margin-left: 450px ;
+  margin-top: 70px;
+}
+
+
+.ajouterMiahoot {
+  border: 2px solid #24b4fb;
+  background-color: #24b4fb;
+  border-radius: 0.9em;
+  padding: 0.8em 1.2em 0.8em 1em;
+  transition: all ease-in-out 0.2s;
+  font-size: 16px;
+  
+ }
+ 
+ .ajouterMiahoot span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: 600;
+ }
+ 
+ .ajouterMiahoot:hover {
+  background-color: #0071e2;
+ }
   
 }
 
 
-
-/*règles pour les écran de petite taille*/
-/*@media screen and (min-width : 768px){
-    .table{
-        table-layout: fixed;
-        width: 100%;
-        border-collapse: collapse;
-        border : 3px solid purple;
-    }
-
-    .table-container{
-        margin: auto;
-    }
-
-    h2{
-        text-align: center;
-    }
-
-
-    thead{
-        width: 35%;
-
-    }
-
-    th, td {
-        padding : 20px;
-    }
-
-    :host {
-        .row {
-          margin-bottom: 1rem;
-        }
-        button {
-          margin-left: 1rem;
-        }
-        .col-md-2 {
-          display: flex;
-        }
-        .col-md-2 .btn-danger {
-          align-items: center;
-        }
-      }
-}*/
 
 
 
@@ -630,9 +674,19 @@ body{
     table-layout: fixed;
     width: 100%;
     border-collapse: collapse;
-    border : 3px solid purple;
+    border : 3px solid rgb(6, 39, 207);
 }
 
+.titre{
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: bold;
+}
+
+.title{
+  background-color: #b1dae7;
+}
 .table-container{
     margin: auto;
     background-size: cover;
@@ -897,11 +951,41 @@ th, td {
 
 .boutons{
 
-display : block;
-justify-content: space-between;
-width: 97%;
-margin-left: -20px;
+  display : block;
+  justify-content: space-between;
+  width: 97%;
+  margin-left: -20px;
 }
+
+
+.boutonA{
+  align-items: center;
+  margin-left: 30px ;
+  margin-top: 70px;
+}
+
+
+.ajouterMiahoot {
+  border: 2px solid #24b4fb;
+  background-color: #24b4fb;
+  border-radius: 0.9em;
+  padding: 0.8em 1.2em 0.8em 1em;
+  transition: all ease-in-out 0.2s;
+  font-size: 16px;
+  
+ }
+ 
+ .ajouterMiahoot span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: 600;
+ }
+ 
+ .ajouterMiahoot:hover {
+  background-color: #0071e2;
+ }
 
 }
 
@@ -919,7 +1003,18 @@ margin-left: -20px;
     table-layout: fixed;
     width: 100%;
     border-collapse: collapse;
-    border : 3px solid purple;
+    border : 3px solid rgb(6, 39, 207);
+}
+
+.titre{
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: bold;
+}
+
+.title{
+  background-color: #b1dae7;
 }
 
 .table-container{
@@ -1191,6 +1286,36 @@ justify-content: space-between;
 width: 100%;
 margin-left: -20px;
 }
+
+
+.boutonA{
+  align-items: center;
+  margin-left: 0px ;
+  margin-top: 70px;
+}
+
+
+.ajouterMiahoot {
+  border: 2px solid #24b4fb;
+  background-color: #24b4fb;
+  border-radius: 0.9em;
+  padding: 0.8em 1.2em 0.8em 1em;
+  transition: all ease-in-out 0.2s;
+  font-size: 16px;
+  
+ }
+ 
+ .ajouterMiahoot span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: 600;
+ }
+ 
+ .ajouterMiahoot:hover {
+  background-color: #0071e2;
+ }
 
 }
 

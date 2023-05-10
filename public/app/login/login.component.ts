@@ -23,7 +23,6 @@ export class LoginComponent implements OnInit {
   public currentUser?: User | null;
   miahootUser: MiahootUser | undefined;
   participant=false;
-  isLogin = false;
 
   url = window.location.href;
 
@@ -69,7 +68,6 @@ export class LoginComponent implements OnInit {
     this.currentUser = this.navigation.user;
     this.navigation.setLog(true);
     this.navigation.setLogWithGoogle(false);
-    this.isLogin = true;
   }
 
 
@@ -102,13 +100,14 @@ export class LoginComponent implements OnInit {
         this.log.emit(true);
         this.navigation.setLog(true);
         this.navigation.setLogWithGoogle(true);
-        this.isLogin = true;
+
 
 
       }
     } finally {
       this.isAuthenticating = false;
     }
+
   }
 
   createCreator(creatorData: any) {
@@ -138,7 +137,6 @@ export class LoginComponent implements OnInit {
         this.goToPage('');
       }
     this.log.emit(false);
-    this.isLogin=false;
     this.navigation.setLog(false);
     this.navigation.setLogWithGoogle(false);
     return await signOut(this.auth);
