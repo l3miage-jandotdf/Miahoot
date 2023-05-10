@@ -200,5 +200,9 @@ export class AllMiahootComponent implements OnInit {
 
   }
 
+  ajouterMiahoot() : void {
+    this.router.navigate([`/creator/${this.idCreator}`]);
+
+  }
 
 }
