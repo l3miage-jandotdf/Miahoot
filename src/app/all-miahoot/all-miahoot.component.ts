@@ -34,6 +34,9 @@ export interface Reponse {
 export class AllMiahootComponent implements OnInit {
 
 
+  /**
+   * Sons pour les boutons 
+   */
   playClickSound() {
     const audio = new Audio();
     audio.src = '../assets/clickSoundAllMiahoot.mp3';
@@ -44,71 +47,24 @@ export class AllMiahootComponent implements OnInit {
   miahoots?: Miahoot[];     //les miahoots
   idCreator?: String;      //id du créateur
 
-  /*
-    miahootTest: Miahoot = {
-      id: 7777,
-      nom: 'Mon septième Miahoot',
-      questions: [
-        {
-          id: 1,
-          label: 'Quelle est la meilleure fillière de l im2ag ?',
-          answers: [
-            { id: 1, label: 'MIAGE', estValide: true },
-            { id: 2, label: 'Informatique général', estValide: false },
-            { id: 3, label: 'Maths-Informatique', estValide: false },
-          ],
-        },
-        {
-          id: 5,
-          label: 'Va t-on valider notre semestre ? ',
-          answers: [
-            { id: 1, label: 'Non, à cause de Gestion Comptable', estValide: false },
-            { id: 2, label: 'Non, à cause d Angular', estValide: true },
-            { id: 3, label: 'Non, à cause de BDD', estValide: false },
-          ],
-        },
-      ],
-    };
-  */
-  //constructeur
+ 
+  //Constructeur
   constructor(private firestore: Firestore, private auth: Auth, private http: HttpClient, private route: ActivatedRoute, private router: Router) {
-
   }
+
+
 
   async ngOnInit() {
     this.idCreator = String(this.route.snapshot.paramMap.get('idCreator'));
     await this.getMiahoots();
   }
 
-  /*
-    // Ajouter une partie (miahoot présenté)
-    async addMiahoot(miahoot: Miahoot): Promise<void> {
-      const miahootDocRef = doc(this.firestore, 'miahoots', miahoot.id.toString());
-      const miahootData = {
-        nom: miahoot.nom,
-        questionCourante: -1,  //ATTENTION C'EST UN INDEX
-        nbParticipants: 0,
-        nbVotesQuestionCourante: 0
-      };
-      await setDoc(miahootDocRef, miahootData);
   
-      for (const question of miahoot.questions) {
-        const questionDocRef = doc(miahootDocRef, 'questions', question.id.toString());
-        const questionData = {
-          id: question.id,
-          label: question.label,
-          answers: question.answers.map(answer => ({
-            label: answer.label,
-            estValide: answer.estValide
-          }))
-        };
-        await setDoc(questionDocRef, questionData);
-  
-        const votesCollectionRef = collection(questionDocRef, 'votes');
-      }
-    }
-    */
-  // Ajouter une partie (miahoot présenté)
+  /**
+   * addMiahoot ajoute un objet "miahoot" à la base de données Firestore de Firebase. 
+   * Elle crée un document pour chaque question associée à cet objet "miahoot" 
+   * et initialise une collection de votes pour chaque question.
+   */
   async addMiahoot(miahoot: Miahoot): Promise<void> {
     const miahootDocRef = doc(this.firestore, 'miahoots', miahoot.id.toString());
     const miahootData = {
@@ -148,25 +104,30 @@ export class AllMiahootComponent implements OnInit {
     console.log("idCreator:", this.idCreator);
     return this.http.get(url)
       .toPromise()
-      //.then(reponse => this.miahoots = reponse as Miahoot[])
       .then(reponse => {
         console.log('Raw response:', reponse);
         this.miahoots = reponse as Miahoot[];
         console.log('Miahoots:', this.miahoots);
         return this.miahoots;
       })
-
-
       .catch(this.handleError);
   }
 
+
+  /**
+   * Fonction gestionnaire d'erreurs
+   * @param error 
+   * @returns 
+   */  
   private handleError(error: any): Promise<Array<any>> {
     console.error('Une erreur est survenue.', error);
     return Promise.reject(error.message || error);
   }
 
+
+
   /**
-   * Modifie le miahoot en allant sur la page d'édition
+   * Fonction qui permet d'accéder à la page de modification du miahoot dont l'id est passé en paramètre
    * @param idMiahoot 
    */
   editMiahoot(idMiahoot: number): void {
@@ -176,7 +137,7 @@ export class AllMiahootComponent implements OnInit {
 
 
   /**
-   * Supprime le miahoot en le récupérant depuis le back avec la requête http
+   * Supprime le miahoot dont l'id est passé en paramètre en le récupérant depuis le backend avec la requête http
    * @param idMiahoot 
    * @returns Promise résolue si la raquête réussit, rejetée en cas d'erreur
    */
@@ -192,7 +153,7 @@ export class AllMiahootComponent implements OnInit {
 
 
   /**
-   * Présente le miahoot d'id idMiahoot en basculant sur la page du présentateur
+   * Fonction qui permet d'accéder à la page de présentation du miahoot dont l'id est passé en paramètre
    * @param idMiahoot 
    */
   presentMiahoot(idMiahoot: number): void {
@@ -200,9 +161,12 @@ export class AllMiahootComponent implements OnInit {
 
   }
 
+
+/**
+ * Fonction qui permet de pouvoir ajouter un nouveau miahoot à la liste des miahoots
+ */
   ajouterMiahoot() : void {
     this.router.navigate([`/creator/${this.idCreator}`]);
-
   }
 
 }

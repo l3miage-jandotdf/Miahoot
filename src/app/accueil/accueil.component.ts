@@ -22,18 +22,22 @@ constructor(private router: Router, private routeAct : ActivatedRoute, private n
   console.log("dans accueil id = ", this.idCreator);
 }
 
+  /**
+   * Fonction permettant d'accéder à la page de création du miahoot
+   */
   goToPage(){
     this.router.navigate(['/creator', this.idCreator]);
   }
 
-  ngOnInit(): void {
-    //this.idCreator = Number(this.routeAct.snapshot.paramMap.get('idCreator'));
-    //throw new Error('Method not implemented.');
-  }
+  ngOnInit(): void {}
 
+
+  /**
+   * Fonction qui, lorsqu'on clique sur le bouton 'Mes Miahoots' nous redirige vers la page de all-miahoots
+   */
   goToMyQuizzs(){
     this.router.navigate(['all-miahoot', this.idCreator]);
-  }  //le lien vers all-miahoot/{idCreator}... en cliquant sur le bouton Mes QCms
+  }
 
 
 }
