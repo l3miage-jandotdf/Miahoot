@@ -89,7 +89,7 @@ export class EditorComponent implements OnInit {
       questionId: question.id
     };
 
-    const url = 'http://localhost:8080/api/question/' + question.id + '/reponse/';
+    const url = 'http://129.88.210.85:8080/api/question/' + question.id + '/reponse/';
     const body = {
       label: newReponse.label,
       estValide: newReponseValide,
@@ -116,7 +116,7 @@ export class EditorComponent implements OnInit {
    * @param reponseId
    */
   async removeAnswer(reponse: Reponse): Promise<void> {
-    const url = 'http://localhost:8080/api/question/' + reponse.questionId + '/reponse/'+reponse.id;
+    const url = 'http://129.88.210.85:8080/api/question/' + reponse.questionId + '/reponse/'+reponse.id;
     try {
        await this.http.delete(url).toPromise();
       console.log('Reponse supprime');
@@ -145,7 +145,7 @@ export class EditorComponent implements OnInit {
       miahootId: this.idMiahoot
     };
 
-    const url = 'http://localhost:8080/api/miahoot/' + this.idMiahoot + '/question/';
+    const url = 'http://129.88.210.85:8080/api/miahoot/' + this.idMiahoot + '/question/';
     const body = {
       label: newQuestion.label,
       miahootId: this.idMiahoot,
@@ -172,7 +172,7 @@ export class EditorComponent implements OnInit {
    * @param question 
    */
   async removeQuestion(question: Question): Promise<void> {
-    const url = 'http://localhost:8080/api/miahoot/' + this.idMiahoot + '/question/'+question.id;
+    const url = 'http://129.88.210.85:8080/api/miahoot/' + this.idMiahoot + '/question/'+question.id;
     try {
       await this.http.delete(url).toPromise();
      console.log('Question supprime');
@@ -205,7 +205,7 @@ export class EditorComponent implements OnInit {
 
 
   submitMiahoot() {
-    const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/' + this.idMiahoot;
+    const url = 'http://129.88.210.85:8080/api/creator/' + this.idCreator + '/miahoot/' + this.idMiahoot;
 
     // Les données à mettre à jour
     const update = {
@@ -236,7 +236,7 @@ export class EditorComponent implements OnInit {
    */
 
   getMiahootById(idMiahoot: number): Promise<Miahoot> {
-    const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/id/' + this.idMiahoot;
+    const url = 'http://129.88.210.85:8080/api/creator/' + this.idCreator + '/miahoot/id/' + this.idMiahoot;
     return this.http.get(url)
       .toPromise()
       .then(response => {

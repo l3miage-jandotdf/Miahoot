@@ -132,7 +132,7 @@ ngOnInit() {
 
 
 submitMiahoot() {
-  const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/'+this.idMiahoot+ '/';
+  const url = 'http://129.88.210.85:8080/api/creator/' + this.idCreator + '/miahoot/'+this.idMiahoot+ '/';
 
   // Les données à mettre à jour
   const update = {
@@ -162,7 +162,7 @@ submitMiahoot() {
  */
 
 getMiahootById(idMiahoot: number): Promise<Miahoot> {
-  const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/id/' + this.idMiahoot;
+  const url = 'http://129.88.210.85:8080/api/creator/' + this.idCreator + '/miahoot/id/' + this.idMiahoot;
   return this.http.get(url)
     .toPromise()
     .then(response => {
