@@ -140,7 +140,12 @@ export class CreatorComponent {
     const url = 'http://localhost:8080/api/miahoot/' + idMiahoot + '/question/';
 
     for (let i = 0; i < this.questions.length; i++) {
-      const promise = this.http.post(url, {"label" : this.questions[i].label, "answers" : []}).toPromise()
+      const body={
+        label : this.questions[i].label,
+       reponses : [],
+       miahootId:idMiahoot
+      }
+      const promise = this.http.post(url, body).toPromise()
       .then(idQuestion => {
         console.log(`Question créée avec l'id ${idQuestion}`);
         return this.submitReponses(idMiahoot, idQuestion as Long, this.questions[i].answers);
@@ -166,7 +171,12 @@ export class CreatorComponent {
     const url = 'http://localhost:8080/api/question/' + idQuestion + '/reponse/';
 
     for (let i = 0; i < answersQuestion.length; i++) {
-      const promise = this.http.post(url, {"label" : answersQuestion[i].label, "estValide" : answersQuestion[i].estValide}).toPromise() as Promise<Long>;
+      const body ={
+        label : answersQuestion[i].label, 
+        estValide : answersQuestion[i].estValide,
+        questionId:idQuestion,
+      }
+      const promise = this.http.post(url,body ).toPromise() as Promise<Long>;
       promises.push(promise);
     }
 

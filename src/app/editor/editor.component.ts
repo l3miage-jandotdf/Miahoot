@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
@@ -40,6 +40,9 @@ export class EditorComponent implements OnInit {
   reponses !: Reponse[];    //variable qui contiendra les réponses de chaque question du miahoot
 
   showInputList: boolean[] = [];
+
+  @Output() refreshMiahootEvent = new EventEmitter();
+
   /**
    * 
    * CONSTRUCTEUR 
@@ -49,7 +52,9 @@ export class EditorComponent implements OnInit {
   ngOnInit() {
     this.idMiahoot = Number(this.route.snapshot.paramMap.get('idMiahoot')); //On récupère l'id du miahoot
     this.idCreator = String(this.route.snapshot.paramMap.get('idCreator')); //On réupère l'id du créateur 
-
+    this.refreshMiahootEvent.subscribe(() => {
+      this.refreshMiahoot();
+    });
     //On stocke le miahoot d'id idMiahoot 
     this.getMiahootById(this.idMiahoot)
       .then(miahoot => {
@@ -96,6 +101,7 @@ export class EditorComponent implements OnInit {
       const response = await this.http.post(url, body).toPromise();
       console.log('Reponse créé');
       question.reponses.push(response as Reponse);
+      this.refreshMiahootEvent.emit();
     } catch (error) {
       console.error('Erreur lors de la création de la reponse:', error);
     }
@@ -150,6 +156,7 @@ export class EditorComponent implements OnInit {
       const response = await this.http.post(url, body).toPromise();
       console.log('Question créé');
       this.miahoot.questions.push(response as Question);
+      this.refreshMiahootEvent.emit();
     } catch (error) {
       console.error('Erreur lors de la création de la question:', error);
     }
@@ -185,7 +192,16 @@ export class EditorComponent implements OnInit {
   }
 
 
-
+  refreshMiahoot() {
+    this.getMiahootById(this.idMiahoot)
+      .then(miahoot => {
+        this.miahoot = miahoot;
+        this.questions = miahoot.questions;
+      })
+      .catch(error => {
+        console.error("An error with the function getMiahootById occured", error);
+      });
+  }
 
 
   submitMiahoot() {
