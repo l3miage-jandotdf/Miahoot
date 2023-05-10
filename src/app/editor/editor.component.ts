@@ -39,7 +39,7 @@ export class EditorComponent implements OnInit {
 
   reponses !: Reponse[];    //variable qui contiendra les réponses de chaque question du miahoot
 
-
+  showInputList: boolean[] = [];
   /**
    * 
    * CONSTRUCTEUR 
@@ -70,12 +70,13 @@ export class EditorComponent implements OnInit {
    */
   showNewReponseInput: boolean = false;
   newReponseLabel: string = '';
+  newReponseValide: boolean = false;
 
-  showReponseInput() {
-    this.showNewReponseInput = !this.showNewReponseInput;
+  showReponseInput(index: number) {
+    this.showInputList[index] = true;
   }
 
-  async addReponse(reponseLabel: string, question: Question) {
+  async addReponse(newReponseValide: boolean,reponseLabel: string, question: Question) {
     const newReponse: Reponse = {
       id: null,
       label: reponseLabel,
@@ -85,7 +86,9 @@ export class EditorComponent implements OnInit {
 
     const url = 'http://localhost:8080/api/question/' + question.id + '/reponse/';
     const body = {
-      label: newReponse.label
+      label: newReponse.label,
+      estValide: newReponseValide,
+      questionId: question.id
     };
     console.log('Reponse créé avec label :' + newReponse.label);
 
@@ -138,7 +141,8 @@ export class EditorComponent implements OnInit {
 
     const url = 'http://localhost:8080/api/miahoot/' + this.idMiahoot + '/question/';
     const body = {
-      label: newQuestion.label
+      label: newQuestion.label,
+      miahootId: this.idMiahoot,
     };
     console.log('Question créé avec label :' + newQuestion.label);
 
@@ -244,6 +248,8 @@ export class EditorComponent implements OnInit {
   cancel() {
     location.reload();
   }
-
+  sauvgarde(){
+    this.router.navigate(['all-miahoot', this.idCreator]);
+  }
 }
 
