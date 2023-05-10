@@ -9,14 +9,14 @@ interface Miahoot {
 }
 
 interface Question {
-  id: number | null;
+  id: number;
   label: String;
   reponses: Reponse[];
   miahootId:number | null;
 }
 
 interface Reponse {
-  id: number | null;
+  id: number ;
   label: String;
   estValide: boolean;
   questionId:number | null;
@@ -83,7 +83,7 @@ export class EditorComponent implements OnInit {
 
   async addReponse(newReponseValide: boolean,reponseLabel: string, question: Question) {
     const newReponse: Reponse = {
-      id: null,
+      id: 0,
       label: reponseLabel,
       estValide: false,
       questionId: question.id
@@ -120,12 +120,32 @@ export class EditorComponent implements OnInit {
     try {
        await this.http.delete(url).toPromise();
       console.log('Reponse supprime');
+      this.refreshMiahootEvent.emit();
     } catch (error) {
       console.error('Erreur lors de la supprime de la reponse:', error);
     }
   }
 
+  async updateReponse(reponse:Reponse,question:Question){
 
+    const url = 'http://localhost:8080/api/question/' + question.id + '/reponse/'+reponse.id;
+    const body = {
+      id:reponse.id,
+      label: reponse.label,
+      estValide: reponse.estValide,
+      questionId: question.id
+    };
+    console.log('Reponse update avec label :' + reponse.label);
+
+    try {
+      const response = await this.http.patch(url, body).toPromise();
+      console.log('Reponse update');
+      question.reponses.push(response as Reponse);
+      this.refreshMiahootEvent.emit();
+    } catch (error) {
+      console.error('Erreur lors de la update de la reponse:', error);
+    }
+  }
   /**
    * Fonction qui rajoute une question supplémentaire aux questions du miahoot
    * @param questionLabel
@@ -139,9 +159,9 @@ export class EditorComponent implements OnInit {
 
   async addQuestion(questionLabel: string) {
     const newQuestion: Question = {
-      id: null,
+      id: 0,
       label: questionLabel,
-      reponses: [{ id: null, label: '', estValide: false, questionId : null}],
+      reponses: [{ id: 0, label: '', estValide: false, questionId : null}],
       miahootId: this.idMiahoot
     };
 
@@ -155,6 +175,7 @@ export class EditorComponent implements OnInit {
     try {
       const response = await this.http.post(url, body).toPromise();
       console.log('Question créé');
+      //this.questions.sort((a, b) => a.id - b.id);
       this.miahoot.questions.push(response as Question);
       this.refreshMiahootEvent.emit();
     } catch (error) {
@@ -162,6 +183,7 @@ export class EditorComponent implements OnInit {
     }
     this.newQuestionLabel = '';
     this.showNewQuestionInput = false;
+
 
   }
 
@@ -176,12 +198,33 @@ export class EditorComponent implements OnInit {
     try {
       await this.http.delete(url).toPromise();
      console.log('Question supprime');
+     this.refreshMiahootEvent.emit();
    } catch (error) {
      console.error('Erreur lors de la supprime de la question:', error);
    }
   }
 
+  async updateQuestion(question:Question) {
+    const url = 'http://localhost:8080/api/miahoot/' + this.idMiahoot + '/question/'+question.id;
+    const body = {
+      id:question.id,
+      label: question.label,
+      miahootId: this.idMiahoot,
+    };
+    console.log('Question update avec label :' + question.label);
 
+    try {
+      const response = await this.http.patch(url, body).toPromise();
+      console.log('Question update');
+      this.questions.sort((a, b) => a.id - b.id);
+      this.miahoot.questions.push(response as Question);
+      this.refreshMiahootEvent.emit();
+    } catch (error) {
+      console.error('Erreur lors de la update de la question:', error);
+    }
+  }
+
+/*
   alreadyOneTrueOption(question: Question, index: number): boolean {
     if (question.reponses.length > 1 && question.reponses[index].estValide == false) {
       return question.reponses.reduce((acc, val) => acc || val.estValide, false);
@@ -191,18 +234,38 @@ export class EditorComponent implements OnInit {
     }
   }
 
-
+*/
   refreshMiahoot() {
     this.getMiahootById(this.idMiahoot)
       .then(miahoot => {
         this.miahoot = miahoot;
         this.questions = miahoot.questions;
+        this.questions.sort((a, b) => a.id - b.id);
+        this.questions.forEach(question => {
+          question.reponses.sort((a, b) => a.id - b.id);
+        });
       })
       .catch(error => {
         console.error("An error with the function getMiahootById occured", error);
       });
   }
+  async updateMiahoot() {
+    const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/'+ this.idMiahoot;
+    const body = {
+      id:this.miahoot.id,
+      nom: this.miahoot.nom,
+    };
+    console.log('Miahoot update avec label :' + this.miahoot.nom);
 
+    try {
+      const response = await this.http.patch(url, body).toPromise();
+      console.log('Miahoot update');
+      //this.miahoot.push(response as Miahoot);
+      this.refreshMiahootEvent.emit();
+    } catch (error) {
+      console.error('Erreur lors de la update de la miahoot:', error);
+    }
+  }
 
   submitMiahoot() {
     const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/' + this.idMiahoot;

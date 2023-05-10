@@ -15,7 +15,7 @@
           <div class="row">
             <div class="col-12 mb-3">
               <label for="nom" class="form-label">Titre du Miahoot </label>
-              <input type="text" class="form-control" id="nom" name="nom" [ngModel]="miahoot.nom"  placeholder ="Entrez votre titre" required> 
+              <input type="text" class="form-control" id="nom" name="nom" [ngModel]="miahoot.nom"  (keyup.enter)="updateMiahoot()" placeholder ="Entrez votre titre" required> 
             </div>
           </div>
       
@@ -27,7 +27,7 @@
                 <div *ngFor="let question of miahoot.questions; let i = index" class="list-group-item"> 
                   <div class="form-group1">
                     <label for="question-{{i}}"><b>Question {{i + 1}} </b>
-                      <input type="text" class="form-control1" id="question-{{i}}" name="question-{{i}}" [(ngModel)]="question.label" placeholder="Ecrivez votre question " required>
+                      <input type="text" class="form-control1" id="question-{{i}}" name="question-{{i}}" [(ngModel)]="question.label" (keyup.enter)="updateQuestion(question)" placeholder="Ecrivez votre question " required>
                     </label>
                     <button type="button" class="supp2" (click)="removeQuestion(question)">
                       <svg viewBox="0 0 15 17.5" height="17.5" width="15" xmlns="http://www.w3.org/2000/svg" class="icon">
@@ -41,8 +41,8 @@
                     <div id="reponses-{{i}}">
                       <div *ngFor="let reponse of question?.reponses; let j = index" class="form-check">
                         <label class="form-check-label" for="reponse-{{i}}-{{j}}">Réponse {{j + 1}} : </label>
-                        <input type="text"  class ="inputR" [(ngModel)]="reponse.label" [ngModelOptions]="{standalone: true}" placeholder="Entrez votre réponse" maxlength=100 required>
-                        <label class="rpns">Réponse correcte ?</label> <input type="checkbox" [(ngModel)]="reponse.estValide" [disabled]="alreadyOneTrueOption(question, i)" [ngModelOptions]="{standalone: true}">
+                        <input type="text"  class ="inputR" [(ngModel)]="reponse.label" [ngModelOptions]="{standalone: true}" (keyup.enter)="updateReponse(reponse,question)" placeholder="Entrez votre réponse" maxlength=100 required>
+                        <label class="rpns">Réponse correcte ?</label> <input type="checkbox" [(ngModel)]="reponse.estValide" [ngModelOptions]="{standalone: true}">
                         <button  type="button" class="supp1" (click)="removeAnswer(reponse)">
                           <svg viewBox="0 0 15 17.5" height="17.5" width="15" xmlns="http://www.w3.org/2000/svg" class="icon">
                             <path transform="translate(-2.5 -1.25)" d="M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z" id="Fill"></path>
