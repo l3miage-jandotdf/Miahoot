@@ -27,15 +27,20 @@ export class CreatorComponent {
   idCreator ? : String;
 
 
-  constructor(private http: HttpClient, private route : ActivatedRoute, private router : Router) {
+  //Constructeur
+  constructor(private http: HttpClient, private route : ActivatedRoute, private router : Router) {}
 
-  }
+
 
   ngOnInit(): void {
     this.idCreator = String(this.route.snapshot.paramMap.get('idCreator'));
     //throw new Error('Method not implemented.');
   }
 
+
+  /**
+   * Sons pour les boutons
+   */
   playClickSound() {
     const audio = new Audio();
     audio.src = '../assets/Pika.mp3'; 
@@ -43,26 +48,60 @@ export class CreatorComponent {
     audio.play();
   }
 
-  addOption(question: Question): void {
-    question.answers.push({label:'', estValide:false});
-  }
-
-  removeOption(question: Question, index: number): void {
-    question.answers.splice(index, 1);
-  }
-
+ 
+  /**
+   * Fonction qui permet d'ajouter une question aux questions du miahoot en cours de création
+   */
   addQuestion(): void{
     this.questions.push({label:'', answers:[]});
   }
 
+
+  /**
+   * Fonction qui permet de supprimer la question à l'indice index de la listes des questions du miahoot
+   * en cours de création
+   * @param index 
+   */
   removeQuestion(index: number): void{
     this.questions.splice(index, 1);
   }
 
+   /**
+   * Fonction qui permet d'ajouter une réponse à la liste des réponses possibles de la question passée en paramètre
+   * @param question 
+   */
+   addOption(question: Question): void {
+    question.answers.push({label:'', estValide:false});
+  }
+
+/**
+ * Fonction qui permet de supprimer la réponse à l'indice index de la listes des réponses de la question passée en paramètre
+ * @param question 
+ * @param index 
+ */
+  removeOption(question: Question, index: number): void {
+    question.answers.splice(index, 1);
+  }
+
+
+  /**
+   * Fonction qui nous permet de gérer le fait qu'on ne puisse dépasser 4 réponses pour une question dans un miahoot
+   * en cours de création
+   * @param question 
+   * @returns 
+   */
   moreThanFourOptions(question : Question) : boolean{
     return (question.answers.length < 4);
   }
 
+  
+  /**
+   * Fonction qui vérifie si une question donnée possède déjà une réponse valide sélectionnée parmi ses réponses, 
+   * sauf la réponse à l'indice donné en paramètre.
+   * @param question 
+   * @param index 
+   * @returns 
+   */
   alreadyOneTrueOption(question : Question, index : number) : boolean{
     if (question.answers.length > 1 && question.answers[index].estValide == false){
       return question.answers.reduce((acc, val) => acc || val.estValide, false);
@@ -72,8 +111,13 @@ export class CreatorComponent {
     }
   }
 
+
+/**
+ * Fonction qui permet de soumettre le miahoot créé et redirige vers la page de tous les miahoots créés
+ * @returns 
+ */
   submitMiahoot(){
-      const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/';
+      const url = 'http://129.88.210.85:8080/api/creator/' + this.idCreator + '/miahoot/';
       const promise = this.http.post(url, { "nom": this.nom })
       .toPromise()
       .then(idMiahoot => {
@@ -86,12 +130,22 @@ export class CreatorComponent {
       return promise;  
   }
 
+  /**
+   * Fonction qui permet de soumettre les QCMs 
+   * @param idMiahoot 
+   * @returns 
+   */
   submitQuestions(idMiahoot : Long){
     const promises: Promise<Long>[] = [];
-    const url = 'http://localhost:8080/api/miahoot/' + idMiahoot + '/question/';
+    const url = 'http://129.88.210.85:8080/api/miahoot/' + idMiahoot + '/question/';
 
     for (let i = 0; i < this.questions.length; i++) {
-      const promise = this.http.post(url, {"label" : this.questions[i].label, "answers" : []}).toPromise()
+      const body={
+        label : this.questions[i].label,
+       reponses : [],
+       miahootId:idMiahoot
+      }
+      const promise = this.http.post(url, body).toPromise()
       .then(idQuestion => {
         console.log(`Question créée avec l'id ${idQuestion}`);
         return this.submitReponses(idMiahoot, idQuestion as Long, this.questions[i].answers);
@@ -104,12 +158,25 @@ export class CreatorComponent {
     }).catch(this.handleError);
   }
 
+
+  /**
+   * Fonction qui permet de soumettre les réponses
+   * @param idMiahoot 
+   * @param idQuestion 
+   * @param answersQuestion 
+   * @returns 
+   */
   submitReponses(idMiahoot : Long, idQuestion : Long, answersQuestion : Answer[] ){
     const promises: Promise<Long>[] = [];
-    const url = 'http://localhost:8080/api/question/' + idQuestion + '/reponse/';
+    const url = 'http://129.88.210.85:8080/api/question/' + idQuestion + '/reponse/';
 
     for (let i = 0; i < answersQuestion.length; i++) {
-      const promise = this.http.post(url, {"label" : answersQuestion[i].label, "estValide" : answersQuestion[i].estValide}).toPromise() as Promise<Long>;
+      const body ={
+        label : answersQuestion[i].label, 
+        estValide : answersQuestion[i].estValide,
+        questionId:idQuestion,
+      }
+      const promise = this.http.post(url,body ).toPromise() as Promise<Long>;
       promises.push(promise);
     }
 
@@ -118,14 +185,14 @@ export class CreatorComponent {
     }).catch(this.handleError);
   }
 
+  /**
+   * Fonction gestionnaire d'erreurs
+   * @param error 
+   * @returns 
+   */
   private handleError(error: any): Promise<Array<any>> {
     console.error('Une erreur est survenue.', error);
     return Promise.reject(error.message || error);
-  }
-
-  
-  createMiahoot(){
-    this.router.navigate(['all-miahoot', this.idCreator]);
   }
 
 }

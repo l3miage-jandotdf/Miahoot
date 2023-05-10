@@ -100,7 +100,7 @@ export class AllMiahootComponent implements OnInit {
    * @returns Promise résolue si la requête réussit, rejetée sinon
    */
   getMiahoots(): Promise<Miahoot[]> {
-    const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/all';
+    const url = 'http://129.88.210.85:8080/api/creator/' + this.idCreator + '/miahoot/all';
     console.log("idCreator:", this.idCreator);
     return this.http.get(url)
       .toPromise()
@@ -142,7 +142,7 @@ export class AllMiahootComponent implements OnInit {
    * @returns Promise résolue si la raquête réussit, rejetée en cas d'erreur
    */
   deleteMiahoot(idMiahoot: number): Promise<any> {
-    const url = 'http://localhost:8080/api/creator/' + this.idCreator + '/miahoot/' + idMiahoot;
+    const url = 'http://129.88.210.85:8080/api/creator/' + this.idCreator + '/miahoot/' + idMiahoot;
     return this.http.delete(url).toPromise()
       .then(() => {
         console.log(`Le Miahoot avec l'id ${idMiahoot} a été supprimé avec succès.`);

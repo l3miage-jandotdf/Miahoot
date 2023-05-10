@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Firestore, doc, DocumentData, DocumentSnapshot, getDoc, updateDoc, collection, getDocs, query, orderBy, QuerySnapshot, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, doc, DocumentData, DocumentSnapshot, getDoc, updateDoc, collection, getDocs, query, orderBy, QuerySnapshot, onSnapshot, deleteDoc, collectionGroup } from '@angular/fire/firestore';
 import { SafeUrl } from '@angular/platform-browser';
 
 export interface Miahoot {
@@ -182,9 +182,44 @@ export class PresentatorComponent {
         topThree.push([participantData['name'], score]);
       }
     }
-  
+    //la partie est terminée : effacement du miahoot présenté dans FireBase
+    this.deleteMiahoot();
     return topThree;
   }
+
+  async deleteMiahoot(): Promise<void> {
+    const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
+    const questionsCollectionRef = collection(miahootDocRef, 'questions');
+  
+    // Supprimer chaque question de la collection de questions
+    const questionsQuerySnapshot = await getDocs(questionsCollectionRef);
+    await Promise.all(questionsQuerySnapshot.docs.map(async (questionDocSnapshot) => {
+      const questionId = questionDocSnapshot.id;
+      const questionDocRef = doc(questionsCollectionRef, questionId);
+      const votesCollectionRef = collection(questionDocRef, 'votes');
+  
+      // Supprimer chaque collection votes de la collection de questions
+      const votesQuerySnapshot = await getDocs(votesCollectionRef);
+      await Promise.all(votesQuerySnapshot.docs.map(async (voteDocSnapshot) => {
+        const voteId = voteDocSnapshot.id;
+        const voteDocRef = doc(votesCollectionRef, voteId);
+        await deleteDoc(voteDocRef);
+        console.log("le vote a été supprimé");
+      }));
+  
+      // Supprimer la question
+      await deleteDoc(questionDocRef);
+      console.log("la question a été supprimée");
+    }));
+  
+    // Supprimer le document miahoot
+    await deleteDoc(miahootDocRef);
+  
+    console.log(`Le Miahoot ${this.idMiahoot} et toutes ses données ont été supprimés.`);
+  }
+  
+  
+  
   
   async getNbParticipants(): Promise<number | null> {
     const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());

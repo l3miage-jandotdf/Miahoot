@@ -44,9 +44,7 @@ export class ParticipantComponent {
   idParticipant?: String;
   voteSubmited : boolean = false;
 
-  participantName !: string;
-  participantFirstName !: string;
-  participantAge !: number;
+  participantName!: string;
   miahootTermine: boolean = false;
 
   login : boolean = false;
@@ -189,11 +187,6 @@ export class ParticipantComponent {
 
   //Début de jeu
   async startGame() {
-    const participantData = {
-      name: this.participantName,
-      firstName: this.participantFirstName,
-      age: this.participantAge
-    };
     //augmenter nbParticipants de 1
     const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
     const miahootDocSnapshot = await getDoc(miahootDocRef);
@@ -212,10 +205,6 @@ export class ParticipantComponent {
     else{
       this.selectedAnswerIndex = i;
     }
-  }
-
-  goToPage(){
-    this.router.navigate([`/presentator/1`]);
   }
 
   async updateAnonyme() : Promise<void> {

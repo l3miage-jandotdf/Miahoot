@@ -47,7 +47,7 @@ export class DataService {
     );
   }
   createCreator(creatorData: any): Observable<any> {
-    return this.http.post('http://localhost:8080/api/creator/', creatorData);
+    return this.http.post('http://129.88.210.85:8080/api/creator/', creatorData);
   }
 
   checkIfCreatorExists(uid: string): Observable<boolean> {
