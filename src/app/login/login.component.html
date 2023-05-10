@@ -2,7 +2,7 @@
   <p></p>
 
   <mat-toolbar>
-    <img src="../../assets/logo.png" width="90" height="90" *ngIf="!isLogin"/>
+    <img src="../../assets/logo.png" width="90" height="90" *ngIf="!(isLoggedIn$ | async) && !isAuthenticating"/>
     <!--!(isLoggedIn$ | async) && !isAuthenticating || participant && -->
       <div class="mat-toolbar-row">
         <div *ngIf="!(isLoggedIn$ | async) && !isAuthenticating" class="mat-toolbar-spacer">
