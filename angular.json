@@ -80,7 +80,8 @@
               "browserTarget": "Miahoot:build:production"
             },
             "development": {
-              "browserTarget": "Miahoot:build:development"
+              "browserTarget": "Miahoot:build:development",
+              "host": "0.0.0.0"
             }
           },
           "defaultConfiguration": "development"

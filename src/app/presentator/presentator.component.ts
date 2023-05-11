@@ -258,6 +258,9 @@ export class PresentatorComponent {
         const miahootData = docSnapshot.data();
         const nbVotes = miahootData?.['nbVotesQuestionCourante'];
         this.nbVotesCurrentQuestion = nbVotes;
+        if (this.nbParticipants!==0 && this.nbVotesCurrentQuestion === this.nbParticipants && this.miahootTermine==false){
+          this.passerSuivant();
+        }
       });
       return nbVotes ?? null;
     } else {

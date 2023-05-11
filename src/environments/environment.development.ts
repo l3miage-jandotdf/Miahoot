@@ -1,4 +1,5 @@
 export const environment = {
+  springServer: "", // on utilise le proxy "http://129.88.210.85:8080",
   firebase: {
     projectId: 'miahoot-jandot',
     appId: '1:940541457557:web:8227c2faf362a3ccc0979c',

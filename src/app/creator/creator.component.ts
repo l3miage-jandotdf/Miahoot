@@ -117,17 +117,18 @@ export class CreatorComponent {
  * @returns 
  */
   submitMiahoot(){
-      const url = 'http://129.88.210.85:8080/api/creator/' + this.idCreator + '/miahoot/';
-      const promise = this.http.post(url, { "nom": this.nom })
-      .toPromise()
-      .then(idMiahoot => {
-        console.log('Miahoot créé avec l id '+ idMiahoot)
-        this.submitQuestions(idMiahoot as Long);
-        
-      })
-      .catch(this.handleError);
+    const url = 'http://129.88.210.85:8080/api/creator/' + this.idCreator + '/miahoot/';
+    const promise = this.http.post(url, { "nom": this.nom })
+    .toPromise()
+    .then(idMiahoot => {
+      console.log('Miahoot créé avec l id '+ idMiahoot)
+      this.submitQuestions(idMiahoot as Long);
+    })
+    .catch(this.handleError)
+    .finally(() => {
       this.router.navigate(['all-miahoot', this.idCreator]);
-      return promise;  
+    });
+    return promise;  
   }
 
   /**

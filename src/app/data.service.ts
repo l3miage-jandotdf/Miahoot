@@ -5,7 +5,9 @@ import { Auth, authState } from '@angular/fire/auth';
 import { Observable, of, switchMap } from 'rxjs';
 import { setDoc } from 'firebase/firestore';
 import { MatIconAnchor } from '@angular/material/button';
+import { environment } from "src/environments/environment"
 
+const {springServer} = environment;
 
 export interface MiahootUser {
   readonly name: string | null,
@@ -47,11 +49,12 @@ export class DataService {
     );
   }
   createCreator(creatorData: any): Observable<any> {
-    return this.http.post('http://129.88.210.85:8080/api/creator/', creatorData);
+    return this.http.post(`${springServer}/api/creator/`, creatorData);
   }
 
   checkIfCreatorExists(uid: string): Observable<boolean> {
-    return this.http.get<boolean>(`/api/creator/check/${uid}`);
+    // J'ai modifié les fichiers d'environnement pour que le serveur soit paramétrable
+    return this.http.get<boolean>(`${springServer}/api/creator/check/${uid}`);
   }
 }
 
