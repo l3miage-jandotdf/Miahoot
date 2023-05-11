@@ -95,6 +95,8 @@ export class AllMiahootComponent implements OnInit {
   }
 
 
+
+
   /**
    * Récupère tous les miahoots
    * @returns Promise résolue si la requête réussit, rejetée sinon

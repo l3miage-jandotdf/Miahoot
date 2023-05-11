@@ -10,7 +10,6 @@
     <input type="text" class="champ-de-saisie" placeholder="Entrez le titre de votre Miahoot ici" maxlength=100 [(ngModel)]="nom">
   </p>
 
-  <p class="map">Veuillez à présent éditer votre QCM</p>
 
   <form (ngSubmit)="submitMiahoot()">
       <div class="form-group1">
@@ -21,7 +20,7 @@
               <p class="inputQ">
                 <input type="text" class="champ" [(ngModel)]="question.label" [ngModelOptions]="{standalone: true}" placeholder="Écrivez votre question ici" maxlength=100 required>
               </p>
-              <button type="button" class="sup" (click)="removeQuestion(j);playClickSound();"><span class="text">Supprimer la question</span>
+              <button type="button" class="sup" (click)="removeQuestion(j)"><span class="text">Supprimer la question</span>
                 <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path></svg></span>
               </button>
             </div>
@@ -31,12 +30,12 @@
                 <label>Réponse {{i+1}}: </label>
                 <input type="text" class ="answer" [(ngModel)]="answer.label" [ngModelOptions]="{standalone: true}" placeholder="Entrez votre réponse" maxlength=100 required>
                 <label class="rpns">Réponse correcte ? </label> <label class="cl-checkbox"> <input checked="" type="checkbox" [(ngModel)]="answer.estValide" [disabled]="alreadyOneTrueOption(question, i)" [ngModelOptions]="{standalone: true}"><span></span> </label>
-                <button type="button" class="sup" (click)="removeOption(question, i);playClickSound();"><span class="text">Supprimer la réponse</span>
+                <button type="button" class="sup" (click)="removeOption(question, i)"><span class="text">Supprimer la réponse</span>
                   <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path></svg></span>
                 </button>
               </div>
               <div *ngIf='moreThanFourOptions(question)' class="right">
-                <button type="button" class="ajout" (click)="addOption(question);playClickSound();"><span class="button__text">Ajouter une réponse</span>
+                <button type="button" class="ajout" (click)="addOption(question)"><span class="button__text">Ajouter une réponse</span>
                   <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
                 </button>
               </div>
@@ -45,12 +44,12 @@
 
           </div>
           <p class="class">
-            <button type="button" class="ajout" (click)="addQuestion();playClickSound();"><span class="button__text">Ajouter une question</span>
+            <button type="button" class="ajout" (click)="addQuestion()"><span class="button__text">Ajouter une question</span>
 
               <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
             </button>
           </p>
-    <button type="submit" class="btn" (click)="playClickSound()">Créer votre Miahoot</button>
+    <button type="submit" class="btn">Créer votre Miahoot</button>
   </form>
 </div>
 <script src="/__/firebase/11.29.1/firebase-app.js"></script>

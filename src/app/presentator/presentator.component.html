@@ -15,6 +15,9 @@
   
   <div *ngIf="!miahootTermine">
     <div *ngIf="currentQuestionIndex!=-1">
+      <audio autoplay loop preload="auto" >
+        <source src="../assets/come-on-boy-8018.mp3">
+      </audio>
       <h1>{{currentQuestion?.label}}</h1>
       <div *ngFor="let answer of currentQuestion?.reponses; index as i">
         <p>{{answer.label}}</p>
@@ -30,6 +33,9 @@
     </div>
   </div>
   <div *ngIf="miahootTermine">
+    <audio autoplay id="audio" preload="auto" >
+      <source src="../assets/claps-44774.mp3">
+    </audio>
     <h2>La partie est terminée !</h2>
     <h3>Bravo aux trois gagnants :</h3>
       <ol>

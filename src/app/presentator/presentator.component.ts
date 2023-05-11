@@ -57,6 +57,13 @@ export class PresentatorComponent {
   }
 
 
+  /*playSong() {
+    const audio = document.getElementById('audio') as HTMLAudioElement;
+    audio.play();
+  }*/
+  
+  
+
   async getQuestionCouranteIndex(miahootId: number): Promise<number | null> {
     const miahootDocRef = doc(this.firestore, 'miahoots', miahootId.toString());
     const miahootDocSnapshot: DocumentSnapshot<DocumentData> = await getDoc(miahootDocRef);

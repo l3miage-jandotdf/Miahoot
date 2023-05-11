@@ -49,14 +49,17 @@
                           </svg>
                         </button>
                       </div>
-                      <button type="button" class="ajout" (click)="showReponseInput(i)">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path></svg>
-                        <span> Ajouter une réponse</span>
-                      </button>
-                      <div *ngIf="showInputList[i]">
-                        <input type="checkbox" [(ngModel)]="newReponseValide"  [ngModelOptions]="{standalone: true}">
-                        <input type="text" [(ngModel)]="newReponseLabel" (keyup.enter)="addReponse(newReponseValide,newReponseLabel,question)" [ngModelOptions]="{standalone: true}" placeholder="Entrez le label de la nouvelle reponse">
+                      <div *ngIf='moreThanFourOptions(question)'>
+                        <button type="button" class="ajout" (click)="showReponseInput(i)">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path></svg>
+                          <span> Ajouter une réponse</span>
+                        </button>
+                        <div *ngIf="showInputList[i]">
+                          <input type="checkbox" [(ngModel)]="newReponseValide"  [ngModelOptions]="{standalone: true}">
+                          <input class="input2" type="text" [(ngModel)]="newReponseLabel" (keyup.enter)="addReponse(newReponseValide,newReponseLabel,question)" [ngModelOptions]="{standalone: true}" placeholder="Entrez le label de la nouvelle reponse">
+                        </div>
                       </div>
+                      
                     </div>
                   </div>
                 </div>
@@ -69,8 +72,10 @@
             <span> Ajouter une question</span>
           </button>
           <div *ngIf="showNewQuestionInput">
-            <input type="text" [(ngModel)]="newQuestionLabel" (keyup.enter)="addQuestion(newQuestionLabel)" [ngModelOptions]="{standalone: true}" placeholder="Entrez le label de la nouvelle question">
+            <input class="input2" type="text" [(ngModel)]="newQuestionLabel" (keyup.enter)="addQuestion(newQuestionLabel)" [ngModelOptions]="{standalone: true}" placeholder="Entrez le label de la nouvelle question">
           </div>
+
+
           <hr>
       
           <div class="btn">

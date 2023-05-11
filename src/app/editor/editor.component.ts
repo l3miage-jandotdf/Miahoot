@@ -315,6 +315,15 @@ export class EditorComponent implements OnInit {
   }
 
 
+ /**
+   * Fonction qui nous permet de gérer le fait qu'on ne puisse dépasser 4 réponses pour une question dans un miahoot
+   * en cours de création
+   * @param question 
+   * @returns 
+   */
+ moreThanFourOptions(question : Question) : boolean{
+  return (question.reponses.length < 4);
+}
 
   private handleError(error: any): Promise<Array<any>> {
     console.error('Une erreur est survenue.', error);
