@@ -72,7 +72,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "Miahoot:build"
+            "browserTarget": "Miahoot:build",
+            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {

@@ -1,6 +1,6 @@
 {
-    "/pipoXXXX/apiXXXX/": {
-      "target": "http://129.88.210.85:8080",
+    "/api/": {
+      "target": "http://localhost:8080",
       "secure": false, 
       "changeOrigin" : true,
       "logLevel": "debug"
