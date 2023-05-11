@@ -60,6 +60,7 @@ export class EditorComponent implements OnInit {
       .then(miahoot => {
         this.miahoot = miahoot;
         this.questions = miahoot.questions;
+        this.refreshMiahootEvent.emit();
       })
       .catch(error => {
         console.error("An error with the function getMiahootById occured", error);
@@ -224,7 +225,7 @@ export class EditorComponent implements OnInit {
     }
   }
 
-/*
+
   alreadyOneTrueOption(question: Question, index: number): boolean {
     if (question.reponses.length > 1 && question.reponses[index].estValide == false) {
       return question.reponses.reduce((acc, val) => acc || val.estValide, false);
@@ -234,7 +235,7 @@ export class EditorComponent implements OnInit {
     }
   }
 
-*/
+
   refreshMiahoot() {
     this.getMiahootById(this.idMiahoot)
       .then(miahoot => {
