@@ -72,15 +72,15 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "Miahoot:build",
-            "proxyConfig": "src/proxy.conf.json"
+            "browserTarget": "Miahoot:build"
           },
           "configurations": {
             "production": {
               "browserTarget": "Miahoot:build:production"
             },
             "development": {
-              "browserTarget": "Miahoot:build:development"
+              "browserTarget": "Miahoot:build:development",
+              "host": "0.0.0.0"
             }
           },
           "defaultConfiguration": "development"
