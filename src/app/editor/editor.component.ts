@@ -325,6 +325,12 @@ export class EditorComponent implements OnInit {
   return (question.reponses.length < 4);
 }
 
+
+  /**
+   * Fonction gestionnaire d'erreurs
+   * @param error 
+   * @returns 
+   */
   private handleError(error: any): Promise<Array<any>> {
     console.error('Une erreur est survenue.', error);
     return Promise.reject(error.message || error);
@@ -332,11 +338,16 @@ export class EditorComponent implements OnInit {
 
 
   /**
-   * Fonction qui recharge la page pour annuler les modifications
+   * Fonction qui recharge la page pour annuler les modifications et redirige vers la page de all-miahoot
    */
   cancel() {
     location.reload();
+    this.router.navigate(['all-miahoot', this.idCreator]);
   }
+
+  /**
+   * Fonction qui redirige vers la page de all-miahoot
+   */
   sauvgarde(){
     this.router.navigate(['all-miahoot', this.idCreator]);
   }

@@ -56,14 +56,13 @@ export class PresentatorComponent {
     console.log("QUESTION n° :" +  this.currentQuestionIndex);
   }
 
-
-  /*playSong() {
-    const audio = document.getElementById('audio') as HTMLAudioElement;
-    audio.play();
-  }*/
   
   
-
+  /**
+   * fonction qui permet de récupérer l'indice de la question courante pour le miahoot dont l'id est passé en paramètre
+   * @param miahootId 
+   * @returns 
+   */
   async getQuestionCouranteIndex(miahootId: number): Promise<number | null> {
     const miahootDocRef = doc(this.firestore, 'miahoots', miahootId.toString());
     const miahootDocSnapshot: DocumentSnapshot<DocumentData> = await getDoc(miahootDocRef);
@@ -77,6 +76,14 @@ export class PresentatorComponent {
     }
   }
 
+  /**
+   * Cette fonction permet de récupérer une question spécifique d'un Miahoot dans la base de données Firestore. 
+   * Elle prend en paramètres l'objet Firestore, l'identifiant du Miahoot et l'identifiant de la question à récupérer.
+   * @param firestore 
+   * @param miahootId 
+   * @param idQuestion 
+   * @returns 
+   */
   async getQuestionById(firestore: Firestore, miahootId: number, idQuestion: number): Promise<Question | null> {
     try {
       const miahootDocRef = doc(firestore, 'miahoots', miahootId.toString());
@@ -99,6 +106,13 @@ export class PresentatorComponent {
     }
   }
 
+
+  /**
+   * Fonction qui permet de récupérer une question à partir de son index dans une liste de questions pour un miahoot dont l'id est passé en paramètre. 
+   * @param miahootId 
+   * @param index 
+   * @returns 
+   */
   async getQuestionByIndex(miahootId: number, index: number) {
     const questionsCollectionRef = collection(this.firestore, 'miahoots', miahootId.toString(), 'questions');
     const querySnapshot = await getDocs(questionsCollectionRef);
@@ -121,7 +135,9 @@ export class PresentatorComponent {
   
   
 
-
+  /**
+   * Fonction qui met à jour la question courante
+   */
   async setNextQuestionCourante(): Promise<void> {
   const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
   const miahootDocSnapshot = await getDoc(miahootDocRef);
@@ -135,6 +151,9 @@ export class PresentatorComponent {
   
 }
 
+  /**
+   * Fonction qui permet de passer à la question suivante
+   */
   async passerSuivant(){
     await this.setNextQuestionCourante();
     this.currentQuestionIndex = await this.getQuestionCouranteIndex(this.idMiahoot);
@@ -151,6 +170,10 @@ export class PresentatorComponent {
     
   }
 
+  /**
+   * Fonction qui calcule et récupère le score de chaque participant
+   * @returns 
+   */
   async getParticipantsScores(): Promise<[string, number][]> {
     const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
     const miahootSnapshot = await getDoc(miahootDocRef);
@@ -173,6 +196,12 @@ export class PresentatorComponent {
     return Object.entries(participantsScores);
   }
 
+
+  /**
+   * Fonction qui permet de récuperer les trois gagnants de la partie
+   * Les trois gagnants sont ceux qui ont obtenu le plus de points
+   * @returns 
+   */
   async getTopThreeParticipants(): Promise<[string, number][]> {
     const participantsScores = await this.getParticipantsScores();
     participantsScores.sort((a, b) => b[1] - a[1]); // trier par ordre décroissant de score
@@ -194,6 +223,10 @@ export class PresentatorComponent {
     return topThree;
   }
 
+  /**
+   * FOnction qui supprime un Miahoot, c'est-à-dire un document dans la collection 'miahoots' de Firestore, 
+   * ainsi que toutes les questions associées et leurs votes.
+   */
   async deleteMiahoot(): Promise<void> {
     const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
     const questionsCollectionRef = collection(miahootDocRef, 'questions');
@@ -227,7 +260,10 @@ export class PresentatorComponent {
   
   
   
-  
+  /**
+   * Fonction qui calcule et récupère le nombre de participants connectés pour une partie
+   * @returns 
+   */
   async getNbParticipants(): Promise<number | null> {
     const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
     const miahootDocSnapshot: DocumentSnapshot<DocumentData> = await getDoc(miahootDocRef);

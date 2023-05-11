@@ -63,6 +63,10 @@ export class LoginComponent implements OnInit {
   }
 
 
+  /**
+   * Fonction qui effectue une connexion anonyme à l'aide d'un service d'authentification Firebase
+   *  et met à jour l'état de l'application en conséquence.
+   */
   async loginAnonymously() {
     const result  = await signInAnonymously(this.auth);
     this.currentUser = this.navigation.user;
@@ -72,6 +76,10 @@ export class LoginComponent implements OnInit {
 
 
 
+  /**
+   * Fonction qui permet à un utilisateur de se connecter à une application en utilisant le fournisseur d'authentification Google. 
+   * Elle met également à jour l'état de l'application pour refléter la connexion de l'utilisateur.
+   */
   async login() {
     this.isAuthenticating = true;
     try {
@@ -110,6 +118,12 @@ export class LoginComponent implements OnInit {
 
   }
 
+
+  /**
+   *  Fonction qui crée un nouvel enregistrement de créateur dans la base de données 
+   * en utilisant les données de créateur passées en paramètre (dans l'objet creatorData).
+   * @param creatorData 
+   */
   createCreator(creatorData: any) {
     this.dataService.createCreator(creatorData).subscribe(
       (response) => {
@@ -123,12 +137,19 @@ export class LoginComponent implements OnInit {
   }
 
 
-
+  /**
+   * Fonction assurant la navigation entre pages
+   * @param pageName 
+   */
   goToPage(pageName: string) {
     console.log(pageName);
     this.router.navigate([`${pageName}`]);
   }
 
+  /**
+   * Fonction qui permet de se déconnecter de l'application
+   * @returns 
+   */
   async logout() {
     if(this.url.startsWith("http://localhost:4200/participant/")){
       this.navigation.setLog(false);

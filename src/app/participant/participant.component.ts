@@ -185,7 +185,11 @@ export class ParticipantComponent {
     return undefined;
   }
 
-  //Début de jeu
+  
+  /**
+   * Début de jeu
+   * Fonction met à jour le nombre de participants dans un document Miahoot spécifique stocké dans une base de données Firestore
+   */
   async startGame() {
     //augmenter nbParticipants de 1
     const miahootDocRef = doc(this.firestore, 'miahoots', this.idMiahoot.toString());
@@ -207,6 +211,9 @@ export class ParticipantComponent {
     }
   }
 
+  /**
+   * Son rôle est de mettre à jour les informations d'un utilisateur anonyme enregistré dans la base de données Firestore de Firebase.
+   */
   async updateAnonyme() : Promise<void> {
     if(this.loginWithGoogle){
       this.partieCommencee=true;
@@ -232,10 +239,19 @@ export class ParticipantComponent {
     }
   }
 
+  /**
+   * Fonction qui permet de gérer le choix de réponses du participant (un seul choix)
+   * @param i 
+   * @returns 
+   */
   alreadyOneTrueOption(i : number) : boolean{
     return (this.selectedAnswerIndex === null || this.selectedAnswerIndex===i);
   }
 
+
+  /**
+   * Fonction qui permet à l'utilisateur de soumettre un vote pour la question courante.
+   */
   async submitVote(): Promise<void> {
     let nbPointGagne = 0;
     if (this.currentQuestion?.answers[this.selectedAnswerIndex!].estValide){
