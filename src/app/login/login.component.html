@@ -6,9 +6,9 @@
     <!--!(isLoggedIn$ | async) && !isAuthenticating || participant && -->
       <div class="mat-toolbar-row">
         <div *ngIf="!(isLoggedIn$ | async) && !isAuthenticating" class="mat-toolbar-spacer">
-          <button class="mat-raised-button mat-primary" (click)="login()">
+         <button class="mat-raised-button mat-primary" (click)="login()">
             Se connecter</button>
-          <button class="mat-raised-button mat-primary" (click)="loginAnonymously()" *ngIf="participant">Se connecter anonymement</button>
+          <button class="mat-raised-button-anonymous mat-primary" (click)="loginAnonymously()" *ngIf="participant">Se connecter anonymement</button>
         </div>
 
       </div>
